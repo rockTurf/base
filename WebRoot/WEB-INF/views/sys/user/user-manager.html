@@ -1,0 +1,145 @@
+<ul id="myTab" class="nav nav-tabs">
+	<li class="active"><a href="#home" data-toggle="tab">用户列表</a></li>
+	<li><a href="#addUser" data-toggle="tab">增加用户</a>
+	</li>
+</ul>
+
+<div class="matter">
+	<div id="myTabContent" class="tab-content">
+		<div class="tab-pane fade in active" id="home">
+			<div class="widget-head">
+				<div class="widget">
+					<div class="widget-head">
+						<div class="pull-left">搜索框</div>
+						<div class="widget-icons pull-right">
+							<a href="#" class="wminimize"><i class="icon-chevron-up"></i>
+							</a> <a href="#" class="wclose"><i class="icon-remove"></i> </a>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="widget-content">
+						<div class="padd">
+							<div class="form quick-post">
+								<!-- Edit profile form (not working)-->
+								<form class="form-horizontal"
+									action="${ctxPath}/userCenter/list" method="post"
+									id="search-form" target="list-page">
+									<!-- search -->
+									<div class="form-group">
+										<label class="control-label col-lg-3">姓名</label>
+										<div class="col-lg-9">
+											<input type="text" name="name" /> <input type="text"
+												onclick="getTotalList('search-form','search-btn')"
+												class="btn btn-success" value="全部" readonly /> <input
+												type="text" id="search-btn" class="btn btn-success"
+												value="条件查询" readonly />
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div id="list-page"></div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="addUser">
+			<div class="widget wgreen">
+				<div class="widget-head">
+					<div class="pull-left">增加用户</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="widget-content">
+					<div class="padd">
+						<!-- Form starts.  -->
+						<form class="form-horizontal" role="form" id="save-form" action="${ctxPath!}/userCenter/save" method="post">
+							<div class="form-group">
+								<label class="col-lg-4 control-label">用户名</label>
+								<div class="col-lg-8">
+									<input type="text" name="username" id="username" datatype="*"  nullmsg="此项必填！" class="form-control" onblur="checkUser()">
+								</div>
+								<div id="result">
+									
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-4 control-label">姓名</label>
+								<div class="col-lg-8">
+									<input type="text" name="name" datatype="*"  nullmsg="此项必填！" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-4 control-label">密码</label>
+								<div class="col-lg-8">
+									<input type="password" name="password" datatype="*"  nullmsg="此项必填！" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-4 control-label">Email</label>
+								<div class="col-lg-8">
+									<input type="text" id="email" datatype="*"  nullmsg="此项必填！" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-4 control-label">电话</label>
+								<div class="col-lg-8">
+									<input type="text" id="phone" datatype="*"  nullmsg="此项必填！" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-4 control-label">选择角色</label>
+								<div class="col-lg-8">
+									@if(!isEmpty(params.roleList)){ 
+									<select id="role_id" class="form-control"> 
+									@for(item in params.roleList){
+										<option value="${item.id}">${item.name}</option> 
+									@}
+									</select> 
+									@}else{ 
+										暂无 
+									@}
+								</div>
+							</div>
+							<div>
+								<span class="btn btn-info btn-block" style="background-color:#f8ac59" id="save-btn">保 存</span>
+							</div>
+							<#save isHide="yes" subBtnId="save-btn" formId="save-form"
+							config="true"> 
+							</#save>
+						</form>
+					</div>
+				</div>
+				<div class="widget-foot">
+					<!-- Footer goes here -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$("#search-form").getPageList({'submitBtnId':'search-btn'});
+	
+function checkUser(){
+	username = $('#username').val();
+	$.ajax({
+		//async:false,
+		type: "POST",
+		url: '${ctxPath}/userCenter/checkUser',
+    	data: {
+    		loginName:username
+    	},
+		dataType:'json',
+		cache: true,
+		success: function(data){ 
+			$("#result").html('');
+			if(data=="0"){
+				$("#result").append('<font color="green"><i class="fa fa-check-circle-o fa-2x"></i></font>');
+			}else{
+				$("#result").append('<font color="red"><i class="fa fa-times fa-2x"></i></font>');
+			}		
+		}
+	});
+}
+	
+ </script>

@@ -1,0 +1,16 @@
+<div class="main-container" id="main-container">	
+	<!-- 左部树结构 -->
+@layout("/layout/tree.html",{menuList:menuList!}){}
+	<script type="text/javascript">
+		try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+	</script>
+	<!-- Main bar -->
+  	<div class="mainbar">
+      
+		${layoutContent!}
+
+	</div>
+   <!-- Mainbar ends -->
+   <div class="clearfix"></div>
+   
+</div>

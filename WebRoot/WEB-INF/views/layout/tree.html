@@ -1,0 +1,22 @@
+<!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-dropdown"><a href="#">导航</a></div>
+
+        <!--- Sidebar navigation -->
+        <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+        <ul id="nav">
+          <!-- Main menu with font awesome icon -->
+          @for(menu in menuList){
+          <li class="has_sub"><a href="#"><i class="fa fa-${menu.icon}"></i> ${menu.name}</a>
+          	@if(menu.hasChild==true){
+            <ul>
+              @for(child in menu.children){
+              <li><a href="${child.url}">${child.name}</a></li>
+              @}
+            </ul>
+            @}
+          </li>  
+          @}
+        </ul>
+    </div>
+    <!-- Sidebar ends -->
