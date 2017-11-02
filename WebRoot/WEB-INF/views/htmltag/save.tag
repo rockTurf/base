@@ -21,8 +21,6 @@
 <script type="text/javascript">
 
 var count = 0;
-$(function(){
-	
 var ${validId} = $("#${formId}").Validform({
 		ajaxPost : true,
 		beforeSubmit:function(curform){
@@ -89,5 +87,4 @@ var ${validId} = $("#${formId}").Validform({
 		return false;
 	})
 
-});
 </script>

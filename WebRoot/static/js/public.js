@@ -32,11 +32,15 @@ $(function(){
 		$.ajax({
 			type: "GET",
 			url: href,
-			success: function(data) {
+			success: function(str, action, token) {
 			/*	$main_content.load(href, data, function(){
 					//alert("The last 25 entries in the feed have been loaded");
 				});*/
 				 $main_content.load(href);
+				// $main_content.html(loadHtmlPage(str));
+				   var curMenu = $("#sidebar-menu li").find("a[href='#"+token+"']");
+				   changeMenu(curMenu);
+				 //  changeMenu(curMenu);
 			}
 		});
 		//阻止跳转
@@ -59,6 +63,85 @@ function loadHtmlPage(path) {
     });
     return result;
 };
+
+function changeMenu(obj){
+	$this = $curmenu = obj,pli = $this.parents("li");
+	var $sibling = $this.closest("li[data-level='1']").siblings("li.open");
+	if($sibling.size()>0){
+		$sibling.removeClass("open").find("li.open").removeClass("open");
+		$sibling.find("ul.nav-show").attr("class","submenu nav-hide").hide();
+	}
+	if($this.attr('haschild') == "false"){
+		$this.closest("li[data-level='1']").addClass("open");
+		var pul = $this.parents("ul.submenu");
+		pul.attr("class","submenu nav-show").show();
+		$("#sidebar-menu").find("li").removeClass("active");
+		pli.addClass("active");
+		//$(".page-header h1").text($this.find(">span").text());
+
+		var menuArray = [];
+		var cur = $this.find(".menu-text").text();
+		menuArray.push(cur);
+
+		pli = $this.parent().parent().parent();
+		while(pli.data("level") >= 1){
+			var ts = pli.find(".dropdown-toggle .menu-text");
+			if(ts.length > 1){
+				cur = $(ts[0]).text();
+			}else{
+				cur = $(ts).text();
+			}
+//			if(cur.indexOf("审批流程")!=-1){
+//				cur="审批申请";
+//			}
+			pli = pli.parents("li");
+			menuArray.push(cur);
+		}
+		var crumb = $("#breadcrumb");
+		crumb.html("");
+		crumb.append('<li><i class="ace-icon fa fa-home home-icon"></i><a href="'+ctxPath+'" >首页</a></li>')
+
+		for(var i = menuArray.length - 1 ; i >= 0;i-- ){
+			if(i == 0){
+				crumb.append('<li class="active"> '+menuArray[i]+' </li>');
+			}else{
+				crumb.append('<li> <a href="#">'+menuArray[i]+'</a> </li>');
+			}
+		}
+		
+		//
+		var $historyM = $("#historyMenu");
+		$historyM.find("li").show();
+
+		var href = $this.attr("href");
+		var $li = $historyM.find("li[h='"+href+"']");
+		if($li.length > 0){
+			$li.remove();
+		}
+
+
+		var html = '<li h="'+href +'" >'+
+						'<a href="javascript:void(0)" >'+
+							'<span class="mail-tag badge badge-success "></span>'+
+							'<span class="success">'+$this.find(".menu-text").text()+'</span>'+
+						'</a>'+
+					'</li>'
+		
+		$li = $historyM.find("li");
+		if($li.length <= 0){
+			$historyM.append(html);
+		}else{
+			$historyM.find("li:first").before(html);
+		}
+		$historyM.find("li:first").hide();
+		if($historyM.find("li").length > 1){
+			$historyM.parents(".widget-toolbar").show();
+		}else{
+			$historyM.parents(".widget-toolbar").hide();
+		}
+
+	}
+}
 
 function getTotalList(formid,searchbtn){
 	 $("#"+formid)[0].reset();

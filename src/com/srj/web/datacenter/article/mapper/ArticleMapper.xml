@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.srj.web.datacenter.article.mapper.ArticleMapper">
+	<!--查询用户列表-->
+	<select id="findPageInfo" parameterType="com.srj.web.datacenter.article.model.Article" resultType="com.srj.web.datacenter.article.model.Article">
+		SELECT
+			id,
+			NAME,
+			create_name,
+			create_time
+		FROM
+			article
+		<where>
+			1 = 1
+			<if test="@Ognl@isNotBlank(name)">
+		 	and name like concat('%',#{name} ,'%')
+		    </if>
+		</where>
+		ORDER BY
+			id DESC
+	</select>
+	
+	
+
+</mapper>

@@ -1,3 +1,4 @@
+
 function checkKeyword(){
 	name = $('#name').val();
 	$.ajax({
@@ -41,5 +42,4 @@ function submitForm(){
 			}		
 		}
 	});
-	
 }

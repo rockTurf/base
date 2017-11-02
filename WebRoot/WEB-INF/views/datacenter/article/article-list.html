@@ -1,0 +1,34 @@
+<div class="widget">
+<div class="widget-head">
+	<div class="pull-left">关键词列表</div>
+	<div class="widget-icons pull-right">
+		<a href="#" class="wminimize"><i class="icon-chevron-up"></i>
+		</a> <a href="#" class="wclose"><i class="icon-remove"></i>
+		</a>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<div class="widget-content">
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>名称</th>
+				<th>创建人</th>
+				<th>创建时间</th>
+			</tr>
+		</thead>
+		@for(item in page.list){
+		<tbody>
+			<tr>
+				<td>${item.id!}</td>
+				<td>${item.name!}</td>
+				<td>${item.createName!}</td>
+				<td>${item.createTime!}</td>
+			</tr>
+			@}
+		</tbody>
+	</table>
+	<#paginate page="${page}" />
+</div>
+</div>
