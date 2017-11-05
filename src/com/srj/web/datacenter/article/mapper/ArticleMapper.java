@@ -12,4 +12,6 @@ public interface ArticleMapper extends Mapper<Article>{
 
 	Integer insertArticleKeyword(Map<String, Object> params);
 
+	Integer deleteArticleKeyword(Long id);
+
 }

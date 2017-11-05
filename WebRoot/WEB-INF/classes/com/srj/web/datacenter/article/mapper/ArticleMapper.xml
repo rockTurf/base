@@ -31,5 +31,11 @@
 		</foreach>
 	</insert>
 	
+	<!-- 删除中间表 -->
+	<delete id="deleteArticleKeyword">
+		delete from article_keyword
+		where a_id = #{id}
+	</delete>
+	
 
 </mapper>

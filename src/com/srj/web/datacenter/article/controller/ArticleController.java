@@ -76,5 +76,14 @@ public class ArticleController {
 		return count;
 	}
 	
+	/**
+	 * 删除文章
+	 */
+	@RequestMapping(value = "delete")
+	public @ResponseBody Integer delete(@RequestParam Long id,Model model,HttpServletRequest request,HttpServletResponse response){
+		//新增文章
+		int count = articleService.deleteArticle(id);
+		return count;
+	}
 
 }

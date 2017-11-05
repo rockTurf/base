@@ -8,11 +8,13 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -709,7 +711,7 @@ public class FileUtil extends org.apache.commons.io.FileUtils {
 		}
 	}
 	
-	public static void downloadFile(HttpServletResponse response,
+	/*public static void downloadFile(HttpServletResponse response,
 			String filePath, String fileName,boolean inline) throws Exception {
 		File file = new File(filePath);
 		downloadFile(response, file, fileName, inline);
@@ -726,13 +728,13 @@ public class FileUtil extends org.apache.commons.io.FileUtils {
 		downloadFile(response, file, fileName, false);
 	}
 	
-	/**
+	*//**
 	 * 下载
 	* @param filePath 文件路径
 	* @param fileName 下载的文件名
 	* @param inline   是否在线浏览
 	* @throws Exception
-	 */
+	 *//*
 	public static void downloadFile(HttpServletResponse response,
 			File file, String fileName,boolean inline) throws Exception {
 		
@@ -764,7 +766,7 @@ public class FileUtil extends org.apache.commons.io.FileUtils {
 			}
 		}
 		
-	}
+	}*/
 
 	/**
 	 * 下载(流的方式)
@@ -772,36 +774,24 @@ public class FileUtil extends org.apache.commons.io.FileUtils {
 	* @param is 输入流
 	* @param realName 下载的文件名字
 	 */
-	public static void downloadFile(HttpServletResponse response, InputStream is, String realName) {
-		BufferedInputStream bis = null;
-		BufferedOutputStream bos = null;
-		try {
-			response.setContentType("text/html;charset=UTF-8");
-			//request.setCharacterEncoding("UTF-8");
-			long fileLength = is.available();
-
-			response.setContentType("application/octet-stream");
-			realName = new String(realName.getBytes("GBK"), "ISO8859-1");
-			response.setHeader("Content-disposition", "attachment; filename="
-					+ realName);
-			response.setHeader("Content-Length", String.valueOf(fileLength));
-			bis = new BufferedInputStream(is);
-			bos = new BufferedOutputStream(response.getOutputStream());
-			byte[] buff = new byte[2048];
-			int bytesRead;
-			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
-				bos.write(buff, 0, bytesRead);
-			}
-		} catch (Exception e) {
-			// e.printStackTrace();//如果取消下载，这里会捕捉到异常
-		} finally {
-			try {
-				bos.close();
-				bis.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	@SuppressWarnings("unused")
+	public static void downloadFile(String fileUrl, HttpServletResponse response,
+			File previewFile) throws FileNotFoundException,
+			UnsupportedEncodingException, IOException {
+		InputStream is = new FileInputStream(previewFile); 
+		response.reset(); 
+		response.setContentType("application/xls;charset=UTF-8"); 
+		String header = ("attachment") + ";filename="
+				+ new String(fileUrl.getBytes(), "ISO8859-1");
+		response.addHeader("Content-Disposition", header);
+		byte[] b = new byte[1024]; 
+		int len; 
+		while ((len=is.read(b)) >0) {
+		response.getOutputStream().write(b,0,len); 
+		} 
+		is.close(); 
+		response.getOutputStream().flush(); 
+		response.getOutputStream().close();
 	}
 	
 	/**

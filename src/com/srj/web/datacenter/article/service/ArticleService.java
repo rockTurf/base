@@ -53,5 +53,18 @@ public class ArticleService {
 		}
 		return count;
 	}
+	/*
+	 * 删除文章
+	 * */
+	public int deleteArticle(Long id) {
+		int count = articleMapper.deleteByPrimaryKey(id);
+		if(count>0){
+			//删除article_keyword中间表
+			articleMapper.deleteArticleKeyword(id);
+			//删除附件表数据
+			sysFileService.deleteFile(Constant.FILE_FLAG_ARTICLE,id);
+		}
+		return count;
+	}
 
 }
