@@ -16,21 +16,12 @@ public class SysFile extends BaseEntity{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(generator = "JDBC")
-	private Long id;// 主键ID
 	private Long table_id;//表id
 	private String flag;//表标识
 	private String filename;//文件名
 	private String fileurl;//路径
 	private String create_time;//创建时间
 	private String create_name;//创建人
-	public Long getId() {
-		return this.getLong("id");
-	}
-	public void setId(Long id) {
-		this.set("id", id) ;
-	}
 	public Long getTable_id() {
 		return this.getLong("table_id");
 	}

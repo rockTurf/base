@@ -10,4 +10,6 @@ public interface ArticleMapper extends Mapper<Article>{
 
 	List<Article> findPageInfo(Map<String, Object> params);
 
+	Integer insertArticleKeyword(Map<String, Object> params);
+
 }

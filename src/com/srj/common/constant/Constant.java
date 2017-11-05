@@ -1,10 +1,13 @@
 package com.srj.common.constant;
 
 import java.util.List;
+import java.util.Properties;
 
 import com.google.common.collect.Lists;
 
 public class Constant {
+	
+	private static Properties props = null;
 
 	// 用cookie 记录登录用户的用户名 和 密码
 	public static final String SET_COOKIE_USERNAME = "CookieRemUserName";
@@ -61,14 +64,11 @@ public class Constant {
 	
 	public static final Integer COMMON_FILE = 1;
 	public static final Integer ATTACH_FILE = 2;
-	
 	public static final int TIME=24*60*60;
+	
 	/**
 	 *附件表flag参数设置
 	 */
-	public static final String FILE_FLAG_PEOPLE = "people";//人员审核表
-	public static final String FILE_FLAG_GOODS = "goods";//物品审核表
-	public static final String FILE_FLAG_TASK = "task";//任务表
-	public static final String FILE_FLAG_FLOWCONTENT = "flowitem";//流子项表
+	public static final String FILE_FLAG_ARTICLE = "article";//文档附件
 	
 }

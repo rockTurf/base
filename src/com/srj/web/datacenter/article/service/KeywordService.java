@@ -52,6 +52,14 @@ public class KeywordService {
 		}
 		return b;
 	}
+
+	//获取全部keyword
+	public List<Keyword> getAllKeyword() {
+		List<Keyword> list = keyMapper.getAllKeyword();
+		return list;
+	}
+
+	
 	
 	
 

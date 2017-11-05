@@ -50,6 +50,12 @@ $(function(){
 	
 });
 
+//文件下载
+function doloadfile(fileUrl){
+ 	var url = "download/file?fileUrl="+fileUrl;
+ 	window.open(url).focus();
+}
+
 function loadHtmlPage(path) {
     //path = "/base" + "/" + path;
     var result;

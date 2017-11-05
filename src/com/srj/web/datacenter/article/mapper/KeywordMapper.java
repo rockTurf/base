@@ -12,5 +12,7 @@ public interface KeywordMapper extends Mapper<Keyword>{
 
 	Long checkKeyword(Map<String, Object> params);
 
+	List<Keyword> getAllKeyword();
+
 	
 }

@@ -27,5 +27,11 @@
 			name = #{name}
 		</where>
 	</select>
+	
+	<!-- 获取所有关键词 -->
+	<select id="getAllKeyword" resultType="com.srj.web.datacenter.article.model.Keyword">
+		SELECT id,name from keyword
+	</select>
+	
 
 </mapper>

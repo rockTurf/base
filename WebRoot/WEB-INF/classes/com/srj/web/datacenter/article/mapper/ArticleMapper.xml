@@ -4,22 +4,32 @@
 	<!--查询用户列表-->
 	<select id="findPageInfo" parameterType="com.srj.web.datacenter.article.model.Article" resultType="com.srj.web.datacenter.article.model.Article">
 		SELECT
-			id,
-			NAME,
-			create_name,
-			create_time
+			a.id,
+			a.title,
+			a.create_name,
+			a.create_time,
+			GROUP_CONCAT(c.name) as keywords
 		FROM
-			article
+			article a 
+			LEFT JOIN article_keyword b ON a.id = b.a_id
+			LEFT JOIN keyword c ON b.k_id = c.id
 		<where>
 			1 = 1
-			<if test="@Ognl@isNotBlank(name)">
-		 	and name like concat('%',#{name} ,'%')
+			<if test="@Ognl@isNotBlank(title)">
+		 	and a.title like concat('%',#{title} ,'%')
 		    </if>
 		</where>
-		ORDER BY
-			id DESC
+		GROUP BY a.id DESC
+		ORDER BY a.id DESC
 	</select>
 	
+	<!-- 插入article_keyword中间表 -->
+	<insert id="insertArticleKeyword">
+		insert IGNORE into article_keyword (a_id,k_id) values 
+		<foreach collection="kids" index="index" item="kid" separator=",">
+			(#{id},#{kid,jdbcType=NUMERIC})
+		</foreach>
+	</insert>
 	
 
 </mapper>
