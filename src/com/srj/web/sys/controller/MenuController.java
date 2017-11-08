@@ -2,7 +2,9 @@ package com.srj.web.sys.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import com.srj.common.utils.SysUserUtil;
 import com.srj.web.sys.model.SysResource;
+import com.srj.web.sys.model.SysUser;
 import com.srj.web.sys.service.SysResourceService;
 
 import org.apache.commons.lang3.StringUtils;
@@ -38,9 +40,12 @@ public class MenuController{
 	 * @return 菜单管理模块html
 	 */
 	@RequestMapping
-	public String toMenu(Model model) {
-		model.addAttribute("treeList", JSON.toJSONString(sysResourceService.getMenuTree()));
-		System.out.println(JSON.toJSONString(sysResourceService.getMenuTree()));
+	public String toMenu(@RequestParam Map<String, Object> params,Model model) {
+		//model.addAttribute("treeList", JSON.toJSONString(sysResourceService.getMenuTree()));
+		SysUser u = SysUserUtil.getSessionLoginUser();
+		List<SysResource> menuList = sysResourceService.getAllResourcesList();
+		params.put("menuList", menuList);
+		model.addAttribute("params", params);
 		return "sys/menu/menu";
 	}
 
@@ -59,36 +64,5 @@ public class MenuController{
 		model.addAttribute("page", page);
 		return "sys/menu/menu-list";
 	}
-
-	/**
-	 * 弹窗
-	 * 
-	 * @param id
-	 * @param parentId
-	 *            父类id
-	 * @param mode
-	 *            模式(add,edit,detail)
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "{mode}/showlayer", method = RequestMethod.POST)
-	public String showLayer(Long id, Long parentId,
-			@PathVariable("mode") String mode, Model model) {
-		SysResource resource = null, pResource = null;
-		if (StringUtils.equalsIgnoreCase(mode, "add")) {
-			//pResource = sysResourceService.selectByPrimaryKey(parentId);
-		} else if (StringUtils.equalsIgnoreCase(mode, "edit")) {
-			//resource = sysResourceService.selectByPrimaryKey(id);
-			//pResource = sysResourceService.selectByPrimaryKey(parentId);
-		} else if (StringUtils.equalsIgnoreCase(mode, "detail")) {
-			//resource = sysResourceService.selectByPrimaryKey(id);
-			//pResource = sysResourceService.selectByPrimaryKey(resource.getParentId());
-		}
-		model.addAttribute("pResource", pResource).addAttribute("sysResource",
-				resource);
-		return mode.equals("detail") ? "sys/menu/menu-detail"
-				: "sys/menu/menu-save";
-	}
-
 
 }

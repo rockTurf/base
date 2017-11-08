@@ -15,6 +15,7 @@
 				<th>ID</th>
 				<th>角色名</th>
 				<th>备注</th>
+				<th>操作</th>
 			</tr>
 		</thead>
 		@for(item in page.list){
@@ -23,6 +24,13 @@
 				<td>${item.id!}</td>
 				<td>${item.name!}</td>
 				<td>${item.remark!}</td>
+				<td>
+				<button class="btn btn-xs btn-warning" data-mode="page" data-title="编辑"
+							data-url="${ctxPath}/userRole/detail"
+							data-data="{id:'${item.id}'}" data-height="85%" data-width="60%">
+				<i class="fa fa-pencil"></i>
+				</button>
+				</td>
 			</tr>
 			@}
 		</tbody>

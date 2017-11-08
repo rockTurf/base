@@ -14,6 +14,8 @@
 			<tr>
 				<th>ID</th>
 				<th>菜单名</th>
+				<th>图标</th>
+				<th>url</th>				
 			</tr>
 		</thead>
 		@for(item in page.list){
@@ -21,6 +23,8 @@
 			<tr>
 				<td>${item.id!}</td>
 				<td>${item.name!}</td>
+				<td>${item.icon!}</td>
+				<td>${item.url!}</td>
 			</tr>
 			@}
 		</tbody>

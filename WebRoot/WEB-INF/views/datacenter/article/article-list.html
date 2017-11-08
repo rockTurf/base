@@ -38,7 +38,12 @@
 				@}
 				</td>
 				<td>
-				<button class="btn btn-xs btn-danger"><i class="fa fa-remove"></i></button>
+				<button class="btn btn-xs btn-danger" data-mode="del" data-title="删除"
+							data-msg="你确定删除此数据吗?"
+							data-url="${ctxPath}/article/delete"
+							data-data="{id:'${item.id}'}">
+				<i class="fa fa-remove"></i>
+				</button>
 				</td>
 			</tr>
 			@}

@@ -27,4 +27,17 @@ public class SysRoleService {
 	public List<SysRole> getAllRole() {
 		return sysRoleMapper.getAllRole();
 	}
+	//新增角色
+	public int addRole(SysRole record) {
+		return sysRoleMapper.insertSelective(record);
+	}
+	//修改角色
+	public int editRole(SysRole record) {
+		return 0;
+	}
+	//根据id取出角色和其对应权限
+	public SysRole getRoleById(Long id) {
+		return sysRoleMapper.selectByPrimaryKey(id);
+	}
+	
 }

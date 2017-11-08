@@ -53,11 +53,12 @@
 				<div class="widget-content">
 					<div class="padd">
 						<!-- Form starts.  -->
-						<form class="form-horizontal" role="form" action="${ctxPath!}/userRole/save" method="post">
+						<form class="form-horizontal" role="form" action="${ctxPath!}/userRole/save" 
+								method="post" id="save-form">
 							<div class="form-group">
 								<label class="col-lg-4 control-label">角色名</label>
 								<div class="col-lg-8">
-									<input type="text" id="name" class="form-control">
+									<input type="text" name="name" class="form-control">
 								</div>
 							</div>
 							<div class="form-group">
@@ -68,7 +69,6 @@
 							</div>
 							<div>
 								<span class="btn btn-info btn-block "
-									onSubmit="return CheckForm(this);"
 									style="background-color:#f8ac59" id="save-btn">保 存</span>
 							</div>
 							<#save isHide="yes" subBtnId="save-btn" formId="save-form"

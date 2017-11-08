@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +34,7 @@ public class SysRoleController {
 	private SysRoleService sysRoleService;
 	
 	/**
-	 * 跳转到任务页面
+	 * 跳转到页面
 	 */
 	@RequestMapping
 	public String toPage(Model model,Map<String, Object> params){
@@ -42,7 +43,7 @@ public class SysRoleController {
 	}
 	
 	/**
-	 * 分页显示用户列表
+	 * 分页显示角色列表
 	 * 
 	 * @param params
 	 * @param model
@@ -55,4 +56,44 @@ public class SysRoleController {
 		return "sys/role/role-list";
 	}
 	
+	/**
+	 * 新增角色
+	 * 
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/save")
+	public @ResponseBody Integer roleSave(@ModelAttribute SysRole record,Model model,HttpServletRequest request,HttpServletResponse response){
+		int count = sysRoleService.addRole(record);
+		return count;
+	}
+	
+	/**
+	 * 修改角色
+	 * 
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/edit")
+	public @ResponseBody Integer roleEdit(@ModelAttribute SysRole record,Model model,HttpServletRequest request,HttpServletResponse response){
+		int count = sysRoleService.editRole(record);
+		return count;
+	}
+	
+	/**
+	 * 跳转编辑角色页面
+	 * 
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "detail", method = RequestMethod.POST)
+	public String showDetail(Long id,@RequestParam Map<String, Object> params,Model model){
+		SysUser u = SysUserUtil.getSessionLoginUser();
+		SysRole role = sysRoleService.getRoleById(id);
+		model.addAttribute("role", role);
+		return "sys/role/role-detail";
+	}
 }

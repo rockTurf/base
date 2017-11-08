@@ -38,7 +38,7 @@ $(function(){
 				});*/
 				 $main_content.load(href);
 				// $main_content.html(loadHtmlPage(str));
-				   var curMenu = $("#sidebar-menu li").find("a[href='#"+token+"']");
+				   var curMenu = $("#nav li").find("a[href='"+token+"']");
 				   changeMenu(curMenu);
 				 //  changeMenu(curMenu);
 			}
@@ -48,7 +48,225 @@ $(function(){
 		return false;
 	});
 	
+	//属性模式
+	$(document).on('click','[data-mode]',function(){
+		var data = $(this).data();
+		if(undefined != data['data'] && typeof data['data'] != "object") {
+			data['data'] = eval("("+data.data+")");
+		}
+		$.cuslayer(data);
+	});
+	
 });
+
+;(function($){
+	var cuslayer = function(params){
+		var defaults = {
+			mode:'normal',
+			type:1, //0：信息框（默认），1：页面层，2：iframe层，3：加载层，4：tips层。
+			title:false,
+			shade: [0.5, '#000'], //[遮罩透明度, 遮罩颜色]
+			border:[3, 0.5, '#666'],
+			closeBtn:[0, true],
+			url:undefined, //请求回来弹窗的url
+			data:{}, //请求弹窗携带的参数
+			maxmin:true, //是否输出窗口最小化/全屏/还原按钮。 
+			width:'0',
+			height:'0',
+			btns:2,
+			btn:['确 定','取 消'],
+			msg:'',
+			reloadurl:false //是否url刷新,默认false当前右侧刷新
+		};
+		
+		params = $.extend(defaults, params);
+		
+		var mode = params.mode;
+		if(undefined != params.closebtn){
+			params.closeBtn = params.closebtn;
+		}
+		
+		if (mode == 'xjdel' || mode == 'del' || mode == 'delete' || mode == 'page'
+			|| mode == 'delSelect' || mode == 'detail') {
+			if(undefined == params.url) {
+				alert("请求url未填写");
+				return false;
+			}
+		}
+		if (mode == 'xjdel' || mode == 'del' || mode == 'delete' || mode == 'delSelect') {
+			// 处理delSelect情况，删除bootstrap table数据
+			if (mode == 'delSelect') {
+				var rows = $('#' + params.table).bootstrapTable("getAllSelections");
+				if (rows.length <= 0) {
+					layer.msg('<span class="red bigger-120">请选择需要操作的数据</span>');
+					return;
+				} else {
+					var ids = [];
+					for (var i = 0; i < rows.length; i++) {
+						ids.push(rows[i].id);
+					}
+					params.data = {
+						ids : ids
+					};
+				}
+			}
+			
+			var loadi;
+			layer.confirm(params.msg,function(index){
+				$.ajax({
+					url:params.url,
+					data:params.data,
+					type:'post',
+					beforeSend:function(){
+						loadi = layer.load(5,0);
+					}
+				}).done(function(data){
+					layer.close(loadi);
+        			if(data>0) {
+        				if(params.success == undefined){
+        					layer.msg('<span class="red bigger-120">操作成功</span>', 1, 1,function(){
+        						if(mode == 'xjdel'){
+        							var dateType = $("#dateType").val();
+        							var typeName = $("#typeName").val();
+        							show(dateType,typeName);
+        						}else{
+        							if(params.reloadurl){
+                						location.reload();
+                					}else{
+                						//$curmenu.trigger('click');
+                						if(params.callback != undefined) {
+                							if(typeof params.callback === "string"){
+                								eval(params.callback)
+                							}else{
+                								params.callback();
+                							}
+                						}else{
+                							$curmenu.trigger('click');
+                						}
+                					}
+        						}
+            				});
+        				}else{
+        					params.success();
+        				}
+        			}else if(data<0){
+        				layer.alert('<span class="red bigger-120">删除失败，数据正在被使用！</span>', 8, !1);
+        			}
+        		}).fail(function(error){
+        			layer.msg('<span class="red bigger-120">删除失败</span>', 2, 8);
+        		});
+			},params.title);
+			return false;
+		}
+		if(mode == 'page' || mode == 'detail'){
+			var loadi; //加载窗
+			var oheight,owidth;
+			$.ajax({
+				url:params.url,
+				data:params.data,
+				type:'post',
+				dataType:'html',
+				beforeSend:function(){
+					loadi = layer.load(5,0);
+				}
+			}).done(function(data){
+				var layerObj; //弹窗
+				var increment = 36,dheight = params.height,dwidth = params.width;
+				var _scrollHeight = $(document).scrollTop();
+				var _windowHeight = $(window).height();
+				var _windowWidth = $(window).width();
+				var borderWidth = params.borderwidth==undefined?4:params.borderwidth;
+				layer.close(loadi); //关闭加载框
+				lastIndex = $.layer({
+				    type : 1,
+				    title : params.title,
+				    maxmin: params.maxmin,
+				    closeBtn: params.closeBtn,
+				    //area : ['99%','100%'],
+				    border:[borderWidth, 0.5, '#888'],
+				    page : {html:data},
+				    success:function(layero){
+				    	layerObj = layero;
+				    },
+				    full:function(layero){
+				    	layero.find('.xuboxPageHtml').css({'height':_windowHeight-increment-(borderWidth*2)});
+				    },
+				    restore: function(layero){
+				    	layerObj.css({
+				    		'width':owidth,
+				    		'height':oheight
+				    	});
+				    	layerObj.find(".xubox_main").css({
+				    		'width':owidth,
+				    		'height':oheight
+				    	});
+				    	layero.find('.xuboxPageHtml').css({'height':oheight-increment});
+				    	layerObj.find(".xubox_border").width(owidth+8).height(oheight+8);
+				    },
+				    close: function(index){
+				    	layer.closeTips();
+				    }
+				});
+				var saveTag = layerObj.find('div[tag-save-btn]');
+				if(saveTag.length > 0) increment = 36*2;
+				oheight = layerObj.find("div.layer").outerHeight()+increment;
+				owidth = layerObj.find("div.layer").outerWidth();
+				if(oheight>_windowHeight) oheight = _windowHeight;
+				if(owidth>_windowWidth) owidth = _windowWidth;
+				//默认设置
+				if(dheight!=0 && dheight!="") { //显式的指定高度情况
+					var bf = dheight.indexOf('%');
+					if(bf != -1) { //百分比
+						oheight = parseInt($.trim(dheight.substring (0,bf)))/100.0 * _windowHeight;
+					}else{ //px
+						var px = dheight.indexOf('px');
+						oheight = parseInt($.trim(dheight.substring (0,px)));
+					}
+				}
+				if(dwidth!=0 && dwidth!="") {//显式的指定宽度情况
+					var bf = dwidth.indexOf('%');
+					if(bf != -1){
+						owidth = parseInt($.trim(dwidth.substring (0,bf)))/100.0 * _windowWidth;
+					}else{
+						var px = dwidth.indexOf('px');
+						owidth = parseInt($.trim(dwidth.substring (0,px)));
+					}
+				}else{
+					//owidth = 0.46 * _windowWidth;
+				}
+				var _posiTop = _posiLeft = 0;
+				if(oheight != _windowHeight){
+					_posiTop = (_windowHeight - oheight-8)/2;
+				}else{
+					oheight = _windowHeight-8;
+				}
+				if(owidth != _windowWidth){
+					_posiLeft = (_windowWidth - owidth-8)/2;
+				}else{
+					owidth = _windowWidth-8;
+				}
+				
+				layer.area(lastIndex, {width:owidth,height:oheight,top:_posiTop,left:_posiLeft});
+		    	
+				var bottom = '0px';
+				if(saveTag.length > 0) {
+					bottom = '-36px';
+				}
+		    	layerObj.find('.xuboxPageHtml').css({
+		    		'overflowY':'auto',
+		    		'height':layerObj.height()-increment,
+		    	});
+		    	saveTag.css({'bottom':bottom});
+		    	layerObj.find(".xubox_page").css({width:'100%'});
+		    	
+			}).fail(function(err){
+				layer.msg('操作失败', 2, 8);
+			});
+		}
+		
+	};
+	$.cuslayer = cuslayer;
+})(jQuery);
 
 //文件下载
 function doloadfile(fileUrl){
@@ -81,7 +299,7 @@ function changeMenu(obj){
 		$this.closest("li[data-level='1']").addClass("open");
 		var pul = $this.parents("ul.submenu");
 		pul.attr("class","submenu nav-show").show();
-		$("#sidebar-menu").find("li").removeClass("active");
+		$("#nav").find("li").removeClass("active");
 		pli.addClass("active");
 		//$(".page-header h1").text($this.find(">span").text());
 
@@ -213,6 +431,12 @@ function getCenterHeight(){
 function getCenterWidth(){
 	$(window).width() - $("#sidebar").width();
 }
+
+//刷新url
+function reloadUrl(){
+	window.location.href = (window.location.href).split("?")[0]+"?menuid="+$curmenu.attr("id");
+}
+
 (function(jQuery){ 
 
 	if(jQuery.browser) return; 

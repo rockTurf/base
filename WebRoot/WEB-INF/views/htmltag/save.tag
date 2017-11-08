@@ -38,7 +38,8 @@ var ${validId} = $("#${formId}").Validform({
 						if("${reloadUrl}" == "true"){
 							location.reload();
 						}else{
-							$curmenu.trigger('click');
+							 console.info($curmenu);
+							$curmenu.trigger('click'); 
 						}
 					}
 					
