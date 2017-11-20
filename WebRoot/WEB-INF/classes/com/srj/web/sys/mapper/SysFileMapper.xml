@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+		<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		<mapper namespace="com.srj.web.sys.mapper.SysFileMapper">
+
+	<insert id="saveFileList">
+		insert into sys_file (table_id,flag,filename,fileurl,create_name,create_time) values 
+		<foreach collection="list" index="index" item="command" separator=",">
+			('${command.table_id}','${command.flag}','${command.filename}','${command.fileurl}','${command.create_name}','${command.create_time}')
+		</foreach>
+	</insert>
+
+		
+</mapper>

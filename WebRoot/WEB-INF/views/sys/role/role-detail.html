@@ -1,0 +1,24 @@
+
+<div class="widget wgreen">
+	<div class="widget-content">
+		<div class="padd">
+			<!-- Form starts.  -->
+			<form class="form-horizontal" role="form"
+				action="${ctxPath!}/userRole/edit" method="post" id="save-form">
+				<div class="form-group">
+					<label class="col-lg-4 control-label">角色名</label>
+					<div class="col-lg-8">
+						<input type="text" name="name" value="${role.name!}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-4 control-label">备注</label>
+					<div class="col-lg-8">
+						<input type="text" name="remark" value="${role.remark!}" class="form-control">
+					</div>
+				</div>
+				<#save formId="form-save" />
+			</form>
+		</div>
+	</div>
+</div>
