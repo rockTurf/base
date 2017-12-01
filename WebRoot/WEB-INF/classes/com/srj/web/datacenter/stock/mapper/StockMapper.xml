@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.srj.web.datacenter.stock.mapper.StockMapper">
+	<!--查询用户列表-->
+	<select id="findPageInfo" parameterType="com.srj.web.datacenter.stock.model.Stock" resultType="com.srj.web.datacenter.stock.model.Stock">
+		SELECT
+			id,
+			CODE,
+			NAME,
+			industry,
+			area
+		FROM
+			stock
+		<where>
+		1 = 1
+		<if test="@Ognl@isNotBlank(code)">
+	 		and code = #{code}
+	    </if>
+	    <if test="@Ognl@isNotBlank(name)">
+		 	and name like concat('%',#{name} ,'%')
+		</if>
+		</where>
+		GROUP BY
+			id DESC
+	</select>
+	
+</mapper>

@@ -17,6 +17,7 @@ public class Article extends BaseEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String title;
+	private String introduction;
 	private String create_name;
 	private String create_time;
 	
@@ -34,6 +35,13 @@ public class Article extends BaseEntity implements Serializable{
 	}
 	public void setTitle(String title) {
 		this.set("title",title);
+	}
+	
+	public String getIntroduction() {
+		return this.getString("introduction");
+	}
+	public void setIntroduction(String introduction) {
+		this.set("introduction",introduction);
 	}
 	public String getCreate_name() {
 		return this.getString("createName");

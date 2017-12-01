@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.srj.web.datacenter.stock.mapper.StockPriceMapper">
+	<!--查询用户列表-->
+	<select id="findPageInfo" parameterType="com.srj.web.datacenter.stock.model.StockPrice" resultType="com.srj.web.datacenter.stock.model.StockPrice">
+		SELECT
+			*
+		FROM
+			stock_price
+		GROUP BY
+			id DESC
+	</select>
+	
+</mapper>
