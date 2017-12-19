@@ -55,7 +55,19 @@
 					</div>
 					<div class="widget-content">
 						<div class="padd">
-							<!-- Form starts.  -->
+							<table class="table table-bordered">
+								<tr>
+								<td style="width: 80%">
+								<input id="upload_file" type="file">
+								<div id="tip-queue"></div>
+								 <span class="btn btn-info btn-sm width-100 bigger-120">开始上传</span> 
+								</a>
+								</td>
+								<td style="width: 20%;text-align: center;padding-top: 26px;">
+								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span>
+								</td>
+								</tr>
+							</table>
 						</div>
 					</div>
 					<div class="widget-foot">
@@ -68,4 +80,27 @@
 </div>
 <script>
 $("#search-form").getPageList({'submitBtnId':'search-btn'});
+
+function downloadModel(){
+	window.open("download/model?model=stockPrice").focus();
+}
+
+$('#upload_file').uploadifive({
+    'auto' : false,
+    'uploadScript' : '${ctxPath}/upload/uploadFile',
+    'queueID' : 'tip-queue',
+    'fileObjName' : 'files',
+    'buttonText' : '上传附件',
+    'fileType' : '.xlsx',//'image/*',
+    'multi' : false,
+    'fileSizeLimit'   : 5242880,
+    'uploadLimit' : 1,
+    onFallback : function() {
+        alert("该浏览器无法使用!");
+    },
+    onUpload : function(file) {
+	
+    },
+});
+
  </script>

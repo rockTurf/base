@@ -23,18 +23,8 @@ public class DownloadController {
 	@RequestMapping("model")
 	public void model(String filename,String model,HttpServletResponse response,HttpServletRequest request) throws Exception{
 		 //采购项目进展
-		 if("keyproject".equals(model)){
-			 filename="采购项目进展表格（模板）.xls";
-		 }else if("duty".equals(model)){
-			 filename="xxxx年x月值班表（模板）.xlsx";
-		 }else if("stock".equals(model)){
-			 filename="库存模板.xlsx";
-		 }else if("equipment".equals(model)){
-			 filename="设备模板.xlsx";
-		 }else if("project".equals(model)){
-			 filename="备案表含项目模板.xlsx";
-		 }else if("noProject".equals(model)){
-			 filename="备案表不含项目模板.xlsx";
+		 if("stockPrice".equals(model)){
+			 filename="行情模板.xlsx";
 		 }
 		File previewFile = new File(SysConstant.DownloadUrl()+filename); 
 		FileUtil.downloadFile(filename, response, previewFile); 
