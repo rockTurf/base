@@ -1,3 +1,22 @@
+<script type="text/javascript">
+$('#excelKey').uploadify({
+     'swf': '${ctxPath}/static/uploadify/scripts/uploadify.swf',
+     'uploader':"${ctxPath}/stockEnter/upload",
+	'fileObjName' : 'excel',
+	'buttonText' : '请选择上传文件', //控件上显示的内容
+	'auto' : false, //选定文件后是否自动上传，默认false
+	'fileTypeDesc' : 'xlsx文件或xls文件', //出现在上传对话框中的文件类型描述
+	'fileTypeExts' : '*.xlsx;*.xls', //控制可上传文件的扩展名，启用本项时需同时声明fileDesc
+	'sizeLimit': 86400, //控制上传文件的大小，单位byte
+	'uploadLimit' :1, //多文件上传时，同时上传文件数目限制
+	'onQueueComplete' : function(queueData) {  
+          alert(queueData.uploadsSuccessful + ' 个文件上传成功');  
+          $("#search-form").getPageList({'submitBtnId':'search-btn'});
+          location.reload();
+       } 
+});
+</script>
+
 <div>
 	<ul id="myTab" class="nav nav-tabs">
 		<li class="active"><a href="#home" data-toggle="tab">行情列表</a>
@@ -58,14 +77,17 @@
 							<table class="table table-bordered">
 								<tr>
 								<td style="width: 80%">
-								<input id="upload_file" type="file">
-								<div id="tip-queue"></div>
+								<input type="file" size="30" id="excelKey" />
+								<a href="javascript:$('#excelKey').uploadify('upload','*')">
+								<style>
+					            .uploadify-button{background:green;color:#fff}
+					            .uploadify:hover .uploadify-button{background:transparent;color:red}
+					            </style>
 								 <span class="btn btn-info btn-sm width-100 bigger-120">开始上传</span> 
 								</a>
 								</td>
 								<td style="width: 20%;text-align: center;padding-top: 26px;">
 								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span>
-								</td>
 								</tr>
 							</table>
 						</div>
@@ -80,27 +102,7 @@
 </div>
 <script>
 $("#search-form").getPageList({'submitBtnId':'search-btn'});
-
 function downloadModel(){
 	window.open("download/model?model=stockPrice").focus();
 }
-
-$('#upload_file').uploadifive({
-    'auto' : false,
-    'uploadScript' : '${ctxPath}/upload/uploadFile',
-    'queueID' : 'tip-queue',
-    'fileObjName' : 'files',
-    'buttonText' : '上传附件',
-    'fileType' : '.xlsx',//'image/*',
-    'multi' : false,
-    'fileSizeLimit'   : 5242880,
-    'uploadLimit' : 1,
-    onFallback : function() {
-        alert("该浏览器无法使用!");
-    },
-    onUpload : function(file) {
-	
-    },
-});
-
  </script>
