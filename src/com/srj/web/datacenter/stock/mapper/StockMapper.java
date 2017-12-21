@@ -10,4 +10,6 @@ public interface StockMapper extends Mapper<Stock>{
 
 	List<Stock> findPageInfo(Map<String, Object> params);
 
+	String findStockIdByCode(String code);
+
 }

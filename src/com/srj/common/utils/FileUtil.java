@@ -1008,4 +1008,41 @@ public class FileUtil extends org.apache.commons.io.FileUtils {
 	      }
 	   }
 	
+	/**
+	 * 下载(流的方式)
+	* @param response
+	* @param is 输入流
+	* @param realName 下载的文件名字
+	 */
+	public static void downloadFile(HttpServletResponse response, InputStream is, String realName) {
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+		try {
+			response.setContentType("text/html;charset=UTF-8");
+			//request.setCharacterEncoding("UTF-8");
+			long fileLength = is.available();
+
+			response.setContentType("application/octet-stream");
+			realName = new String(realName.getBytes("GBK"), "ISO8859-1");
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ realName);
+			response.setHeader("Content-Length", String.valueOf(fileLength));
+			bis = new BufferedInputStream(is);
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (Exception e) {
+			// e.printStackTrace();//如果取消下载，这里会捕捉到异常
+		} finally {
+			try {
+				bos.close();
+				bis.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

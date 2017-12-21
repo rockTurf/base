@@ -24,4 +24,8 @@
 			id DESC
 	</select>
 	
+	<select id="findStockIdByCode" parameterType="java.lang.String" resultType="java.lang.String">
+		select id FROM stock where code = #{code}
+	</select>
+	
 </mapper>

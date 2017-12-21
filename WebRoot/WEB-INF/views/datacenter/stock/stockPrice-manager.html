@@ -1,7 +1,7 @@
 <script type="text/javascript">
 $('#excelKey').uploadify({
      'swf': '${ctxPath}/static/uploadify/scripts/uploadify.swf',
-     'uploader':"${ctxPath}/stockEnter/upload",
+     'uploader':"${ctxPath}/stockPrice/upload",
 	'fileObjName' : 'excel',
 	'buttonText' : '请选择上传文件', //控件上显示的内容
 	'auto' : false, //选定文件后是否自动上传，默认false
@@ -10,10 +10,13 @@ $('#excelKey').uploadify({
 	'sizeLimit': 86400, //控制上传文件的大小，单位byte
 	'uploadLimit' :1, //多文件上传时，同时上传文件数目限制
 	'onQueueComplete' : function(queueData) {  
-          alert(queueData.uploadsSuccessful + ' 个文件上传成功');  
-          $("#search-form").getPageList({'submitBtnId':'search-btn'});
-          location.reload();
-       } 
+        alert(queueData.uploadsSuccessful + ' 个文件上传成功');  
+        $("#search-form").getPageList({'submitBtnId':'search-btn'});
+        location.reload();
+    },
+    'onUploadSuccess' : function(data){
+    	alert(data);  
+    }
 });
 </script>
 

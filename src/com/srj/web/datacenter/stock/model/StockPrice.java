@@ -27,7 +27,7 @@ public class StockPrice extends BaseEntity implements Serializable{
 	private String total_amount;//总金额
 	private String qrr;//量比
 	
-	private Integer stock_id;//股票id
+	private Long stock_id;//股票id
 
 	public String getRise() {
 		return this.getString("rise");
@@ -157,11 +157,11 @@ public class StockPrice extends BaseEntity implements Serializable{
 		this.set("qrr",qrr);
 	}
 
-	public Integer getStock_id() {
-		return this.getInteger("stockId");
+	public Long getStock_id() {
+		return this.getLong("stockId");
 	}
 
-	public void setStock_id(Integer stock_id) {
+	public void setStock_id(Long stock_id) {
 		this.set("stock_id",stock_id);
 	}
 	

@@ -1,5 +1,7 @@
 package com.srj.web.datacenter.stock.controller;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ import com.srj.web.datacenter.stock.service.StockService;
 import com.srj.web.sys.model.SysUser;
 
 @Controller
+@Transactional
 @RequestMapping("stockPrice")
 public class StockPriceManageController {
 	
@@ -53,4 +57,24 @@ public class StockPriceManageController {
 		model.addAttribute("page", page);
 		return "datacenter/stock/stockPrice-list";
 	}
+	/**
+	 * 文件上传行情列表
+	 * 
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "upload")
+	public String addByExcel(HttpServletRequest request,HttpServletResponse response,Model model) throws IOException, ParseException{
+		String s = stockPriceService.analyzeFile(request);
+		if(s==null){
+			return "sccuess";
+		}else{
+			return s;
+		}
+	}
+	
+	
+	
+	
 }
