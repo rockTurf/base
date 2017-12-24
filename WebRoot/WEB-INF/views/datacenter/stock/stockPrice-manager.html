@@ -1,5 +1,5 @@
 <script type="text/javascript">
-$('#excelKey').uploadify({
+/* $('#excelKey').uploadify({
      'swf': '${ctxPath}/static/uploadify/scripts/uploadify.swf',
      'uploader':"${ctxPath}/stockPrice/upload",
 	'fileObjName' : 'excel',
@@ -17,7 +17,27 @@ $('#excelKey').uploadify({
     'onUploadSuccess' : function(data){
     	alert(data);  
     }
-});
+}); */
+$('#upload_file').uploadifive({
+       'auto' : true,
+       'uploadScript' : '${ctxPath}/upload/uploadTemp',
+       'fileObjName' : 'files',
+       'buttonText' : '上传附件',
+       'queueID' : 'tip-queue',
+       'fileType' : '*',//'image/*',
+       'multi' : false,
+       'fileSizeLimit'   : 5242880,
+       'uploadLimit' : 10,
+       'queueSizeLimit'  : 10,   
+       'onUploadComplete' : function(file, data) {
+           $("#fileUrl").val(data);
+       },
+       
+       onFallback : function() {
+           alert("该浏览器无法使用!");
+       },
+      
+   });
 </script>
 
 <div>
@@ -77,22 +97,28 @@ $('#excelKey').uploadify({
 					</div>
 					<div class="widget-content">
 						<div class="padd">
+						<form class="form-horizontal" role="form" id="save-form"
+								action="${ctxPath!}/stockPrice/addStockPrice" method="post">
 							<table class="table table-bordered">
 								<tr>
 								<td style="width: 80%">
-								<input type="file" size="30" id="excelKey" />
-								<a href="javascript:$('#excelKey').uploadify('upload','*')">
-								<style>
-					            .uploadify-button{background:green;color:#fff}
-					            .uploadify:hover .uploadify-button{background:transparent;color:red}
-					            </style>
-								 <span class="btn btn-info btn-sm width-100 bigger-120">开始上传</span> 
-								</a>
+				                <input id="upload_file" type="file">
+				                            <input type="hidden" name="filepath" id="filepath">
+				                        	<div id="tip-queue"></div>
+				                <input type="hidden" name="fileUrl" id="fileUrl">
 								</td>
 								<td style="width: 20%;text-align: center;padding-top: 26px;">
 								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span>
 								</tr>
 							</table>
+							<div>
+									<span class="btn btn-info btn-block " 
+										style="background-color:#f8ac59" id="save-btn">保 存</span>
+								</div>
+								<#save isHide="yes" subBtnId="save-btn" formId="save-form"
+									 config="true">
+								</#save>
+							</form>
 						</div>
 					</div>
 					<div class="widget-foot">

@@ -58,20 +58,16 @@ public class StockPriceManageController {
 		return "datacenter/stock/stockPrice-list";
 	}
 	/**
-	 * 文件上传行情列表
+	 * 通过上传的添加行情列表
 	 * 
 	 * @param params
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "upload")
-	public String addByExcel(HttpServletRequest request,HttpServletResponse response,Model model) throws IOException, ParseException{
-		String s = stockPriceService.analyzeFile(request);
-		if(s==null){
-			return "sccuess";
-		}else{
-			return s;
-		}
+	@RequestMapping(value = "addStockPrice")
+	public @ResponseBody Integer addByExcel(@RequestParam String fileUrl,Model model) throws IOException, ParseException{
+		
+		return stockPriceService.saveFile(fileUrl);
 	}
 	
 	

@@ -63,5 +63,30 @@ public class UploadController {
 		}
 		return null;
 	}
+	//临时文件上传到临时文件夹
+	@ResponseBody
+	@RequestMapping("/uploadTemp")
+	public String uploadTemp (HttpServletRequest request,HttpServletResponse response) throws IOException{
+		MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;  
+        MultipartFile file  =  multipartRequest.getFile("files");
+        Map<String,String> map = new HashMap<String, String>();
+	    String fileName = file.getOriginalFilename();//真实文件名
+		int  startIndex =fileName.lastIndexOf(".");
+		String suffix =fileName.substring(startIndex);//文件类型
+	    String filePath = SysConstant.TempUrl();//文件上传路径 (后加随机文件夹)
+	    //文件真实路径:temp文件夹下
+	    String fileUrl = UUIDUtils.getUUID()+suffix;
+	    File targetFile = new File(filePath, fileUrl);
+	    if(!targetFile.exists()){  
+            targetFile.mkdirs();  
+        }  
+        //保存  
+        try {  
+            file.transferTo(targetFile);  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+        return fileUrl;
+	}
 
 }
