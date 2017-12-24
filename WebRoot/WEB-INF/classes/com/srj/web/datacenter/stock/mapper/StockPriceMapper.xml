@@ -4,9 +4,10 @@
 	<!--查询用户列表-->
 	<select id="findPageInfo" parameterType="com.srj.web.datacenter.stock.model.StockPrice" resultType="com.srj.web.datacenter.stock.model.StockPrice">
 		SELECT
-			*
+			a.*,b.name as stock_name,b.code as stock_code
 		FROM
-			stock_price
+			stock_price a
+			LEFT JOIN stock b ON a.stock_id = b.id
 		GROUP BY
 			id DESC
 	</select>

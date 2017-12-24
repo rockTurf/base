@@ -2,6 +2,11 @@ package com.srj.web.datacenter.stock.model;
 
 import java.io.Serializable;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
 import com.srj.common.base.BaseEntity;
 
 public class StockPrice extends BaseEntity implements Serializable{
@@ -27,7 +32,27 @@ public class StockPrice extends BaseEntity implements Serializable{
 	private String total_amount;//总金额
 	private String qrr;//量比
 	
+	private String create_time;
+	
 	private Long stock_id;//股票id
+	
+	@Transient
+	private String stock_name;//股票名
+	@Transient
+	private String stock_code;//股票代码
+	
+	
+	
+
+	public String getStock_name() {
+		return this.getString("stockName");
+	}
+
+
+	public String getStock_code() {
+		return this.getString("StockCode");
+	}
+
 
 	public String getRise() {
 		return this.getString("rise");
@@ -163,6 +188,16 @@ public class StockPrice extends BaseEntity implements Serializable{
 
 	public void setStock_id(Long stock_id) {
 		this.set("stock_id",stock_id);
+	}
+
+
+	public String getCreate_time() {
+		return this.getString("createTime");
+	}
+
+
+	public void setCreate_time(String create_time) {
+		this.set("create_time",create_time);
 	}
 	
 	

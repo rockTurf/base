@@ -30,13 +30,14 @@
 				<th>市盈（动）</th>
 				<th>总金额</th>
 				<th>量比</th>
+				<th>操作</th>
 			</tr>
 		</thead>
 		@for(item in page.list){
 		<tbody>
 			<tr>
-				<td>${item.code!}</td>
-				<td>${item.name!}</td>
+				<td>${item.stockCode!}</td>
+				<td>${item.stockName!}</td>
 				<td>${item.rise!}</td>
 				<td>${item.presentPrice!}</td>
 				<td>${item.riseFull!}</td>

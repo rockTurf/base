@@ -25,6 +25,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.srj.common.excel.template.ExcelUtils;
 import com.srj.common.utils.SysConstant;
+import com.srj.common.utils.UUIDUtils;
 import com.srj.web.datacenter.stock.mapper.StockMapper;
 import com.srj.web.datacenter.stock.mapper.StockPriceMapper;
 import com.srj.web.datacenter.stock.model.Stock;
@@ -46,6 +47,9 @@ public class StockPriceService {
 	public PageInfo<StockPrice> findPageInfo(Map<String, Object> params) {
 		PageHelper.startPage(params);
 		List<StockPrice> list = stockPriceMapper.findPageInfo(params);
+		for(StockPrice sp:list){
+			sp.set("totalAmount",ExcelUtils.changeBigNumber(sp.getTotal_amount()));
+		}
 		return new PageInfo<StockPrice>(list);
 	}
 	
@@ -95,18 +99,19 @@ public class StockPriceService {
 			
 			//验证股票代码是否在stock表中存在，如存在则使用该id，不存在则新建
 			String sid = stockMapper.findStockIdByCode(code);
-			Long stock_id = 0L;//股票id
+			Long stock_id = Long.parseLong(UUIDUtils.getRandomInteger(12));//股票id,12位UUID
 			if(StringUtils.isEmpty(sid)){
+				stock.setId(stock_id);
 				stock.setCode(code);
 				stock.setName(stockName);
 				stock.setIndustry(industry);
 				stock.setArea(area);
 				stockMapper.insert(stock);
-				stock_id = stock.getId();
 			}else{
 				stock_id = Long.parseLong(sid);
 			}
 			//给stockPrice行情实体类加数据
+			sp.setId(Long.parseLong(UUIDUtils.getRandomInteger(12)));//12位UUID
 			sp.setRise(rise);
 			sp.setPresent_price(presentPrice);
 			sp.setRise_full(rise_full);
@@ -124,9 +129,6 @@ public class StockPriceService {
 			sp.setTotal_amount(totalAmont);
 			sp.setQrr(qrr);
 			sp.setStock_id(stock_id);
-			/*if(temp2>1){
-				sp.setId(temp2+1);//自增
-			}*/
 			count = stockPriceMapper.insert(sp);
 			if(count==0){
 				System.out.println("第"+i+"行出错！");
