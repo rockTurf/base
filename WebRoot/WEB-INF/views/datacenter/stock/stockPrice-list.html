@@ -1,6 +1,6 @@
 <div class="widget">
 <div class="widget-head">
-	<div class="pull-left">文档列表</div>
+	<div class="pull-left">行情列表</div>
 	<div class="widget-icons pull-right">
 		<a href="#" class="wminimize"><i class="icon-chevron-up"></i>
 		</a> <a href="#" class="wclose"><i class="icon-remove"></i>
@@ -30,7 +30,6 @@
 				<th>市盈（动）</th>
 				<th>总金额</th>
 				<th>量比</th>
-				<th>操作</th>
 			</tr>
 		</thead>
 		@for(item in page.list){
@@ -54,14 +53,6 @@
 				<td>${item.prowave!}</td>
 				<td>${item.totalAmount!}</td>
 				<td>${item.qrr!}</td>
-				<td>
-				<button class="btn btn-xs btn-danger" data-mode="del" data-title="删除"
-							data-msg="你确定删除此数据吗?"
-							data-url="${ctxPath}/stock/delete"
-							data-data="{id:'${item.id}'}">
-				<i class="fa fa-remove"></i>
-				</button>
-				</td>
 			</tr>
 			@}
 		</tbody>

@@ -25,9 +25,9 @@ $('#upload_file').uploadifive({
 
 <div>
 	<ul id="myTab" class="nav nav-tabs">
-		<li class="active"><a href="#home" data-toggle="tab">行情列表</a>
+		<li class="active"><a href="#home" data-toggle="tab">交易列表</a>
 		</li>
-		<li><a href="#addUser" data-toggle="tab">导入行情</a></li>
+		<li><a href="#addUser" data-toggle="tab">导入交易</a></li>
 	</ul>
 
 	<div class="matter">
@@ -47,7 +47,7 @@ $('#upload_file').uploadifive({
 							<div class="padd">
 								<div class="form quick-post">
 									<!-- Edit profile form (not working)-->
-									<form class="form-horizontal" action="${ctxPath}/stockPrice/list"
+									<form class="form-horizontal" action="${ctxPath}/stockTrade/list"
 										method="post" id="search-form" target="list-page">
 										<!-- search -->
 										<div class="form-group">
@@ -81,7 +81,7 @@ $('#upload_file').uploadifive({
 					<div class="widget-content">
 						<div class="padd">
 						<form class="form-horizontal" role="form" id="save-form"
-								action="${ctxPath!}/stockPrice/addStockPrice" method="post">
+								action="${ctxPath!}/stockTrade/addStockTrade" method="post">
 							<table class="table table-bordered">
 								<tr>
 								<td style="width: 80%">
@@ -115,6 +115,6 @@ $('#upload_file').uploadifive({
 <script>
 $("#search-form").getPageList({'submitBtnId':'search-btn'});
 function downloadModel(){
-	window.open("download/model?model=stockPrice").focus();
+	window.open("download/model?model=stockTrade").focus();
 }
  </script>

@@ -28,4 +28,8 @@
 		select id FROM stock where code = #{code}
 	</select>
 	
+	<select id="getAll" resultType="com.srj.web.datacenter.stock.model.Stock">
+		select * FROM stock
+	</select>
+	
 </mapper>

@@ -37,5 +37,12 @@ public class StockService {
 	public Integer deleteRecord(Long id) {
 		return stockMapper.deleteByPrimaryKey(id);
 	}
+	/*
+	 * 查找所有股票
+	 * */
+	public List<Stock> getAllStock(){
+		List<Stock> list = stockMapper.getAll();
+		return list;
+	}
 	
 }

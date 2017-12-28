@@ -22,9 +22,11 @@ public class DownloadController {
 
 	@RequestMapping("model")
 	public void model(String filename,String model,HttpServletResponse response,HttpServletRequest request) throws Exception{
-		 //采购项目进展
+		 //模板列表
 		 if("stockPrice".equals(model)){
 			 filename="行情模板.xlsx";
+		 }else if("stockTrade".equals(model)){
+			 filename="交易模板 .xlsx";
 		 }
 		File previewFile = new File(SysConstant.DownloadUrl()+filename); 
 		FileUtil.downloadFile(filename, response, previewFile); 
