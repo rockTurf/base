@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -30,6 +31,7 @@ import com.srj.web.datacenter.stock.mapper.StockMapper;
 import com.srj.web.datacenter.stock.mapper.StockPriceMapper;
 import com.srj.web.datacenter.stock.model.Stock;
 import com.srj.web.datacenter.stock.model.StockPrice;
+import com.srj.web.util.DateUtils;
 import com.srj.web.util.UpAndDownUtils;
 
 @Service("stockPriceService")
@@ -129,6 +131,7 @@ public class StockPriceService {
 			sp.setTotal_amount(totalAmont);
 			sp.setQrr(qrr);
 			sp.setStock_id(stock_id);
+			sp.setCreate_time(DateUtils.formatDateTime(new Date()));
 			count = stockPriceMapper.insert(sp);
 			if(count==0){
 				System.out.println("第"+i+"行出错！");

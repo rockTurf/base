@@ -8,8 +8,8 @@
 		FROM
 			stock_price a
 			LEFT JOIN stock b ON a.stock_id = b.id
-		GROUP BY
-			id DESC
+		ORDER BY
+			create_time DESC
 	</select>
 	
 </mapper>
