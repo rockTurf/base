@@ -12,7 +12,6 @@ $('#upload_file').uploadifive({
        'queueSizeLimit'  : 10,   
        'onUploadComplete' : function(file, data) {
            $("#fileUrl").val(data);
-           location.reload();
        },
        
        onFallback : function() {
@@ -84,6 +83,18 @@ $('#upload_file').uploadifive({
 								action="${ctxPath!}/stockTrade/addStockTrade" method="post">
 							<table class="table table-bordered">
 								<tr>
+									<td>
+										选择股票：<select name="stock_id" class="selectpicker show-tick form-control" id="stock_id">
+										@for(item in stockList){
+									      <option value="${item.id}">${item.code}-${item.name}-${item.industry}-${item.area}</option>
+										@}
+									</select>
+									</td>
+									<td>
+									选择日期：<input size="16" type="text" name="trade_time" readonly class="form_datetime">
+									</td>
+								</tr>
+								<tr>
 								<td style="width: 80%">
 				                <input id="upload_file" type="file">
 				                            <input type="hidden" name="filepath" id="filepath">
@@ -107,13 +118,23 @@ $('#upload_file').uploadifive({
 					<div class="widget-foot">
 						<!-- Footer goes here -->
 					</div>
-				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script>
 $("#search-form").getPageList({'submitBtnId':'search-btn'});
+$(".form_datetime").datetimepicker({
+	format: 'yyyy-mm-dd',
+	autoclose:true,
+	minView:2,
+	bootcssVer:3,
+	todayBtn : true
+});
+$('#stock_id').selectpicker({
+   liveSearch: true,
+   width : 200
+});
 function downloadModel(){
 	window.open("download/model?model=stockTrade").focus();
 }

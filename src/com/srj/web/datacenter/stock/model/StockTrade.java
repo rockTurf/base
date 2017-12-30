@@ -2,6 +2,8 @@ package com.srj.web.datacenter.stock.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Transient;
+
 import com.srj.common.base.BaseEntity;
 
 public class StockTrade extends BaseEntity implements Serializable{
@@ -15,6 +17,21 @@ public class StockTrade extends BaseEntity implements Serializable{
 	private Integer count;//笔数
 	private String bs;//BS
 	private Long stock_id;//股票id
+	
+	@Transient
+	private String stock_name;//股票名
+	@Transient
+	private String stock_code;//股票代码
+	
+	public String getStock_name() {
+		return this.getString("stockName");
+	}
+
+
+	public String getStock_code() {
+		return this.getString("StockCode");
+	}
+	
 	public String getTime() {
 		return this.getString("time");
 	}

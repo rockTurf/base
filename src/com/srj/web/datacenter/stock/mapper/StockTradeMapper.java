@@ -10,4 +10,6 @@ public interface StockTradeMapper extends Mapper<StockTrade>{
 	
 	List<StockTrade> findPageInfo(Map<String, Object> params);
 
+	Integer insertList(List<StockTrade> list);
+
 }

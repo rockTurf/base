@@ -12,7 +12,6 @@ $('#upload_file').uploadifive({
        'queueSizeLimit'  : 10,   
        'onUploadComplete' : function(file, data) {
            $("#fileUrl").val(data);
-           location.reload();
        },
        
        onFallback : function() {

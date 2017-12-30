@@ -122,7 +122,16 @@ public class ExcelUtils {
             break;      
         }  */    
         return cellValue;      
-    }   
+    }
+	//时间(时分)
+	public String getHHmmTimeValue(Cell cell){
+		 Date date = new Date(0) ;
+		 date = HSSFDateUtil.getJavaDate(new Double(cell.getNumericCellValue()));
+		 SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+		 return df.format(date);
+	}
+	
+    
 	//大数值
 	public String getBigIntegerValue(Cell cell) { 
 		 DecimalFormat df = new DecimalFormat("#");//将1.700001234E10转换成整型的字符串

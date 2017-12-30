@@ -4,11 +4,20 @@
 	<!--查询用户列表-->
 	<select id="findPageInfo" parameterType="com.srj.web.datacenter.stock.model.StockTrade" resultType="com.srj.web.datacenter.stock.model.StockTrade">
 		SELECT
-			*
+			a.*,b.name as stock_name,b.code as stock_code
 		FROM
-			stock_trade
+			stock_trade a
+			LEFT JOIN stock b ON a.stock_id = b.id
 		ORDER BY
 			id DESC
 	</select>
+	
+	<insert id="insertList">
+		INSERT INTO stock_trade (time,price,deal,count,bs,stock_id) values
+		<foreach collection="list" index="index" item="command" separator=",">
+			('${command.time}','${command.price}','${command.deal}','${command.count}',
+			'${command.bs}','${command.stock_id}')
+		</foreach>
+	</insert>
 	
 </mapper>

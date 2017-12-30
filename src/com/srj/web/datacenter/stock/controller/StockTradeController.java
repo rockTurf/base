@@ -1,5 +1,7 @@
 package com.srj.web.datacenter.stock.controller;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.srj.common.utils.SysUserUtil;
@@ -53,4 +56,19 @@ public class StockTradeController {
 		model.addAttribute("page", page);
 		return "datacenter/stock/stockTrade-list";
 	}
+	
+	/**
+	 * 通过上传的添加行情列表
+	 * 
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "addStockTrade")
+	public @ResponseBody Integer addByExcel(@RequestParam Map<String, Object> params,Model model) throws IOException, ParseException{
+		
+		return stockTradeService.saveFile(params);
+	}
+	
+	
 }
