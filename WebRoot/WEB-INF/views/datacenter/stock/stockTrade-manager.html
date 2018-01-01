@@ -51,10 +51,10 @@ $('#upload_file').uploadifive({
 										<!-- search -->
 										<div class="form-group">
 											<div class="col-lg-9">
-											<label class="control-label">名称：</label>
+											<label class="control-label">股票名称：</label>
 											<input type="text" name="name" /> 
-											<label class="control-label">编码：</label>
-											<input type="text" name="code" /> 
+											<label class="control-label">时间：</label>
+											<input size="16" type="text" name="trade_time" readonly class="form_datetime" id="search_time">
 												<input type="text"
 													onclick="getTotalList('search-form','search-btn')"
 													class="btn btn-success" value="全部" readonly /> <input
@@ -84,24 +84,30 @@ $('#upload_file').uploadifive({
 							<table class="table table-bordered">
 								<tr>
 									<td>
-										选择股票：<select name="stock_id" class="selectpicker show-tick form-control" id="stock_id">
+									<div>
+										<label class="control-label">选择股票：</label>
+										<select name="stock_id" class="selectpicker show-tick form-control" id="stock_id">
 										@for(item in stockList){
 									      <option value="${item.id}">${item.code}-${item.name}-${item.industry}-${item.area}</option>
 										@}
 									</select>
+									</div>
 									</td>
 									<td>
-									选择日期：<input size="16" type="text" name="trade_time" readonly class="form_datetime">
+									</div>
+									<label class="control-label">选择日期：</label>
+									<input size="16" type="text" name="trade_time" readonly class="form_datetime" id="pick_time">
+									<span class="add-on"><i class="fa fa-th"></i></span>
 									</td>
 								</tr>
 								<tr>
-								<td style="width: 80%">
+								<td>
 				                <input id="upload_file" type="file">
 				                            <input type="hidden" name="filepath" id="filepath">
 				                        	<div id="tip-queue"></div>
 				                <input type="hidden" name="fileUrl" id="fileUrl">
 								</td>
-								<td style="width: 20%;text-align: center;padding-top: 26px;">
+								<td style="text-align: center;">
 								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span>
 								</tr>
 							</table>

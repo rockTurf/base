@@ -8,8 +8,17 @@
 		FROM
 			stock_trade a
 			LEFT JOIN stock b ON a.stock_id = b.id
+		<where>
+		1 = 1
+		<if test="@Ognl@isNotBlank(name)">
+	 		and b.name like concat('%',#{name} ,'%')
+	    </if>
+	    <if test="@Ognl@isNotBlank(trade_time)">
+		 	and a.time like concat('%',#{trade_time} ,'%')
+		</if>
+		</where>
 		ORDER BY
-			id DESC
+			a.id DESC
 	</select>
 	
 	<insert id="insertList">
