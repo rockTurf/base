@@ -11,7 +11,8 @@ public class StockTrade extends BaseEntity implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String time;//时间
+	private String trade_date;//日期
+	private String trade_time;//时间
 	private Float price;//价格
 	private String deal;//成交
 	private Integer count;//笔数
@@ -32,12 +33,27 @@ public class StockTrade extends BaseEntity implements Serializable{
 		return this.getString("StockCode");
 	}
 	
-	public String getTime() {
-		return this.getString("time");
+	
+	public String getTrade_date() {
+		return this.getString("tradeDate");
 	}
-	public void setTime(String time) {
-		this.set("time",time);
+
+
+	public void setTrade_date(String trade_date) {
+		this.set("trade_date",trade_date);
 	}
+
+
+	public String getTrade_time() {
+		return this.getString("tradeTime");
+	}
+
+
+	public void setTrade_time(String trade_time) {
+		this.set("trade_time",trade_time);
+	}
+
+
 	public Float getPrice() {
 		return this.getFloat("price");
 	}

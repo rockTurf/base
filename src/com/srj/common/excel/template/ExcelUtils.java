@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -81,46 +83,7 @@ public class ExcelUtils {
 	public String getCellStringValue(Cell cell) {      
         String cellValue = "";
         cellValue = cell.getStringCellValue().trim(); 
-        cellValue = cellValue.replaceAll("\"","");
-       /* if(cell==null)
-        	return "";
-        switch (cell.getCellType()) {      
-        case Cell.CELL_TYPE_STRING://字符串类型   
-            cellValue = cell.getStringCellValue().trim();      
-            if(cellValue ==null ||"".equals(cellValue.trim()))      
-                cellValue="";      
-            break;      
-        case Cell.CELL_TYPE_NUMERIC: //数值类型   
-        	 if(HSSFDateUtil.isCellDateFormatted(cell)){//yyyy-MM-dd, d/m/yyyy h:mm, HH:mm 等不含文字的日期格式
-        		 Date date = new Date(0) ;
-        		 date = HSSFDateUtil.getJavaDate(new Double( cell.getNumericCellValue()));
-        		 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        		 cellValue = df.format(date);
-        	 }else{
-        		 DecimalFormat df = new DecimalFormat("#");//将1.700001234E10转换成整型的字符串
-        		 cellValue = df.format(cell.getNumericCellValue());
-        	 }
-        	 
-            break;      
-        case Cell.CELL_TYPE_FORMULA: //公式   
-            // DataFormatter formatter = new DataFormatter();     
-            // cellValue = formatter.formatCellValue(cell);
-    	    try {
-    		    cellValue = String.valueOf(cell.getNumericCellValue());
-    	    } catch (IllegalStateException e) {
-    		    cellValue = String.valueOf(cell.getNumericCellValue());
-    	    }
-            break;      
-        case Cell.CELL_TYPE_BLANK:      
-            cellValue="";      
-            break;      
-        case Cell.CELL_TYPE_BOOLEAN:      
-            break;      
-        case Cell.CELL_TYPE_ERROR:      
-            break;      
-        default:      
-            break;      
-        }  */    
+        cellValue = cellValue.replaceAll("\"","");   
         return cellValue;      
     }
 	//时间(时分)
@@ -151,6 +114,19 @@ public class ExcelUtils {
    	 
 		return cellValue;
 	}
+	//获取股票代码
+	public String getStockCodeValue(Cell cell){
+    	String cellValue = "";
+        cellValue = cell.getStringCellValue().trim(); 
+        cellValue = cellValue.replaceAll("\"","");
+        if(isNumeric(cellValue)){
+        	return cellValue;
+        }else{
+        	return null;
+        }
+              
+    }
+	
 	
 	//将1.700001234E10转换成整型的字符串
 	public static String changeBigNumber(String num){
@@ -169,6 +145,21 @@ public class ExcelUtils {
             s = s.replaceAll("[.]$", "");//如最后一位是.则去掉    
         }    
         return Integer.parseInt(s);    
-    }    
+    }
+    /**  
+     * 使用正则表达式校验是否数字
+     * @param s  
+     * @return   
+     */ 
+	public boolean isNumeric(String str) {
+		Pattern pattern = Pattern.compile("[0-9]*");
+		Matcher isNum = pattern.matcher(str);
+		if (!isNum.matches()) {
+			return false;
+		}
+		return true;
+	}
+    
+    
 
 }

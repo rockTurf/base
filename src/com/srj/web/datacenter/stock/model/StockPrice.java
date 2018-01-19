@@ -15,6 +15,7 @@ public class StockPrice extends BaseEntity implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String price_date;//日期
 	private String rise;//涨幅
 	private String present_price;//现价
 	private String rise_full;//涨跌
@@ -51,6 +52,18 @@ public class StockPrice extends BaseEntity implements Serializable{
 
 	public String getStock_code() {
 		return this.getString("StockCode");
+	}
+
+
+	
+
+	public String getPrice_date() {
+		return this.getString("priceDate");
+	}
+
+
+	public void setPrice_date(String price_date) {
+		this.set("price_date",price_date);
 	}
 
 

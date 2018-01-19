@@ -78,7 +78,7 @@ public class StockPriceService {
 		//从第二行开始读
 		for(int i=1;i<=lastRowNum;i++){
 			Row row = s1.getRow(i);
-			String code=excelUtils.getCellStringValue(row.getCell(0));//股票代码
+			String code=excelUtils.getStockCodeValue(row.getCell(0));//股票代码
 			String stockName = excelUtils.getCellStringValue(row.getCell(1));//股票名称
 			String rise = excelUtils.getSmallIntegerValue(row.getCell(2));//涨幅
 			String presentPrice = excelUtils.getSmallIntegerValue(row.getCell(3));//现价

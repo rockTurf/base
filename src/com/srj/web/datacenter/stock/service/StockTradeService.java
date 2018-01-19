@@ -65,13 +65,13 @@ public class StockTradeService {
 			Row row = s1.getRow(i);
 			StockTrade arg0 = new StockTrade();
 			String time=excelUtils.getHHmmTimeValue(row.getCell(0));//时间
-			time = params.get("trade_time")+" "+time;//加上年月日
 			String price = excelUtils.getSmallIntegerValue(row.getCell(1));//价格
 			String deal = excelUtils.getSmallIntegerValue(row.getCell(2));//成交
 			String count = excelUtils.getSmallIntegerValue(row.getCell(3));//笔数
 			String bs = excelUtils.getCellStringValue(row.getCell(4));//BS
 			//赋值
-			arg0.setTime(time);
+			arg0.setTrade_date(params.get("trade_date").toString());
+			arg0.setTrade_time(time);
 			arg0.setPrice(Float.parseFloat(price));
 			arg0.setDeal(deal);
 			arg0.setCount(Integer.parseInt(count));
