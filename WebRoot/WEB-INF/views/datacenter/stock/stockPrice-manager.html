@@ -1,19 +1,33 @@
 <script type="text/javascript">
+var fileMap = new Map();
 $('#upload_file').uploadifive({
        'auto' : true,
        'uploadScript' : '${ctxPath}/upload/uploadTemp',
        'fileObjName' : 'files',
        'buttonText' : '上传附件',
        'queueID' : 'tip-queue',
-       'fileType' : '*',//'image/*',
-       'multi' : false,
+       'fileTypeExts' : '.txt',//'image/*',
+       'multi' : true,
        'fileSizeLimit'   : 5242880,
        'uploadLimit' : 10,
        'queueSizeLimit'  : 10,   
        'onUploadComplete' : function(file, data) {
-           $("#fileUrl").val(data);
+           fileMap.put(data);//添加到附件map
+           $("#filedata").val(fileMap);
        },
-       
+      onCancel : function(file) {
+           $data    = $(this).data('uploadifive'),
+           settings = $data.settings;
+           settings.uploadLimit++;
+           /* $.ajax({
+			 type: "POST",
+			 url:"upload/deleteFile",
+			 dataType: 'JSON',
+			 data:"filename="+fileMap.get(file.name),
+			});  */
+           fileMap.remove(file.name);//删除附件map
+           $("#filedata").val(fileMap);
+	   },
        onFallback : function() {
            alert("该浏览器无法使用!");
            location.reload();
@@ -86,10 +100,10 @@ $('#upload_file').uploadifive({
 				                <input id="upload_file" type="file">
 				                            <input type="hidden" name="filepath" id="filepath">
 				                        	<div id="tip-queue"></div>
-				                <input type="hidden" name="fileUrl" id="fileUrl">
+				                <input type="hidden" name="filedata" id="filedata">
 								</td>
-								<td style="width: 20%;text-align: center;padding-top: 26px;">
-								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span>
+								<!-- <td style="width: 20%;text-align: center;padding-top: 26px;">
+								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span> -->
 								</tr>
 							</table>
 							<div>

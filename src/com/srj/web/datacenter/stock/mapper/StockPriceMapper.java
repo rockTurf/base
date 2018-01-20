@@ -11,4 +11,6 @@ public interface StockPriceMapper extends Mapper<StockPrice>{
 
 	List<StockPrice> findPageInfo(Map<String, Object> params);
 
+	Integer insertList(List<StockPrice> list);
+
 }

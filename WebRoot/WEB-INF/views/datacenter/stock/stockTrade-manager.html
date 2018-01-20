@@ -5,7 +5,7 @@ $('#upload_file').uploadifive({
        'fileObjName' : 'files',
        'buttonText' : '上传附件',
        'queueID' : 'tip-queue',
-       'fileType' : '*',//'image/*',
+       'fileType' : '.txt',//'image/*',
        'multi' : false,
        'fileSizeLimit'   : 5242880,
        'uploadLimit' : 10,
@@ -106,8 +106,8 @@ $('#upload_file').uploadifive({
 				                        	<div id="tip-queue"></div>
 				                <input type="hidden" name="fileUrl" id="fileUrl">
 								</td>
-								<td style="text-align: center;">
-								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span>
+								<!-- <td style="text-align: center;">
+								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span> -->
 								</tr>
 							</table>
 							<div>

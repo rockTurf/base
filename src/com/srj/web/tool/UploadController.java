@@ -74,6 +74,7 @@ public class UploadController {
 		int  startIndex =fileName.lastIndexOf(".");
 		String suffix =fileName.substring(startIndex);//文件类型
 	    String filePath = SysConstant.TempUrl();//文件上传路径 (后加随机文件夹)
+	    fileName = fileName.substring(0, startIndex);
 	    //文件真实路径:temp文件夹下
 	    String fileUrl = UUIDUtils.getUUID()+suffix;
 	    File targetFile = new File(filePath, fileUrl);
@@ -86,7 +87,8 @@ public class UploadController {
         } catch (Exception e) {  
             e.printStackTrace();  
         }  
-        return fileUrl;
+        map.put(fileName, fileUrl);
+        return JSON.toJSONString(map);
 	}
 
 }

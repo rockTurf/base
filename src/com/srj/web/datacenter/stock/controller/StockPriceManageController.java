@@ -65,9 +65,9 @@ public class StockPriceManageController {
 	 * @return
 	 */
 	@RequestMapping(value = "addStockPrice")
-	public @ResponseBody Integer addByExcel(@RequestParam String fileUrl,Model model) throws IOException, ParseException{
+	public @ResponseBody Integer addByExcel(@RequestParam String filedata,Model model) throws IOException, ParseException{
 		
-		return stockPriceService.saveFile(fileUrl);
+		return stockPriceService.saveTxt(filedata);
 	}
 	
 	
