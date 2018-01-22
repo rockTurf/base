@@ -22,9 +22,9 @@
 	</select>
 	
 	<insert id="insertList">
-		INSERT INTO stock_trade (time,price,deal,count,bs,stock_id) values
+		INSERT INTO stock_trade (trade_date,trade_time,price,deal,count,bs,stock_id) values
 		<foreach collection="list" index="index" item="command" separator=",">
-			('${command.time}','${command.price}','${command.deal}','${command.count}',
+			('${command.trade_date}','${command.trade_time}','${command.price}','${command.deal}','${command.count}',
 			'${command.bs}','${command.stock_id}')
 		</foreach>
 	</insert>

@@ -1,19 +1,33 @@
 <script type="text/javascript">
+var fileMap = new Map();
 $('#upload_file').uploadifive({
        'auto' : true,
        'uploadScript' : '${ctxPath}/upload/uploadTemp',
        'fileObjName' : 'files',
        'buttonText' : '上传附件',
        'queueID' : 'tip-queue',
-       'fileType' : '.txt',//'image/*',
-       'multi' : false,
+       'fileTypeExts' : '.txt',//'image/*',
+       'multi' : true,
        'fileSizeLimit'   : 5242880,
        'uploadLimit' : 10,
        'queueSizeLimit'  : 10,   
        'onUploadComplete' : function(file, data) {
-           $("#fileUrl").val(data);
+           fileMap.put(data);//添加到附件map
+           $("#filedata").val(fileMap);
        },
-       
+      onCancel : function(file) {
+           $data    = $(this).data('uploadifive'),
+           settings = $data.settings;
+           settings.uploadLimit++;
+           /* $.ajax({
+			 type: "POST",
+			 url:"upload/deleteFile",
+			 dataType: 'JSON',
+			 data:"filename="+fileMap.get(file.name),
+			});  */
+           fileMap.remove(file.name);//删除附件map
+           $("#filedata").val(fileMap);
+	   },
        onFallback : function() {
            alert("该浏览器无法使用!");
            location.reload();
@@ -82,30 +96,13 @@ $('#upload_file').uploadifive({
 								action="${ctxPath!}/stockTrade/addStockTrade" method="post">
 							<table class="table table-bordered">
 								<tr>
-									<td>
-									<div>
-										<label class="control-label">选择股票：</label>
-										<select name="stock_id" class="selectpicker show-tick form-control" id="stock_id">
-										@for(item in stockList){
-									      <option value="${item.id}">${item.code}-${item.name}-${item.industry}-${item.area}</option>
-										@}
-									</select>
-									</div>
-									</td>
-									<td>
-									</div>
-									<label class="control-label">选择日期：</label>
-									<input size="16" type="text" name="trade_time" readonly class="form_datetime" id="pick_time">
-									<span class="add-on"><i class="fa fa-th"></i></span>
-									</td>
-								</tr>
-								<tr>
 								<td>
 				                <input id="upload_file" type="file">
 				                            <input type="hidden" name="filepath" id="filepath">
 				                        	<div id="tip-queue"></div>
-				                <input type="hidden" name="fileUrl" id="fileUrl">
+				                <input type="hidden" name="filedata" id="filedata">
 								</td>
+								<td>例：20170818_603603.txt</td>
 								<!-- <td style="text-align: center;">
 								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span> -->
 								</tr>

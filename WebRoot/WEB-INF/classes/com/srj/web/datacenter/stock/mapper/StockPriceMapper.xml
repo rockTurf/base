@@ -18,7 +18,26 @@
 		</if>
 		</where>
 		ORDER BY
-			a.create_time DESC
+			a.price_date DESC
 	</select>
+	
+	<insert id="insertList">
+		INSERT IGNORE INTO stock_price (price_date,rise,present_price,rise_full,buy_price,sale_price,total_hand,
+		now_hand,rising_speed,turnover,open,highest,lowest,prev_close,prowave,total_amount,qrr,stock_id,create_time) values
+		<foreach collection="list" index="index" item="command" separator=",">
+			('${command.price_date}','${command.rise}','${command.present_price}','${command.rise_full}',
+			'${command.buy_price}','${command.sale_price}','${command.total_hand}','${command.now_hand}',
+			'${command.rising_speed}','${command.turnover}','${command.open}','${command.highest}',
+			'${command.lowest}','${command.prev_close}','${command.prowave}','${command.total_amount}',
+			'${command.qrr}','${command.stock_id}','${command.create_time}')
+		</foreach>
+	</insert>
+	<!-- <insert id="insertList">
+		INSERT INTO stock_price (price_date,rise,present_price,stock_id,create_time) values
+		<foreach collection="list" index="index" item="command" separator=",">
+			('${command.price_date}','${command.rise}','${command.present_price}','${command.stock_id}','${command.create_time}')
+		</foreach>
+	</insert> -->
+	
 	
 </mapper>

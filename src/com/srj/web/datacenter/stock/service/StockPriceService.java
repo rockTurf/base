@@ -38,6 +38,7 @@ import com.srj.web.datacenter.stock.model.Stock;
 import com.srj.web.datacenter.stock.model.StockPrice;
 import com.srj.web.util.DateUtils;
 import com.srj.web.util.StringUtil;
+import com.srj.web.util.TxtUtil;
 import com.srj.web.util.UpAndDownUtils;
 
 @Service("stockPriceService")
@@ -61,7 +62,7 @@ public class StockPriceService {
 		return new PageInfo<StockPrice>(list);
 	}
 	
-	//模板加载
+	/*//模板加载
 	public Integer saveFile(String filedata) throws IOException,
 	FileNotFoundException{
 		int count = 0;
@@ -162,7 +163,7 @@ public class StockPriceService {
 			}
 		}
 		return count;
-	}
+	}*/
 	
 	// 模板加载
 	public Integer saveTxt(String filedata) throws IOException,FileNotFoundException {
@@ -187,8 +188,8 @@ public class StockPriceService {
 			Stock stock = new Stock();
 			//读取行
 			while ((strTxt = bufferedReader.readLine()) != null) {
-				if(StringUtil.isNumeric(strTxt.substring(0, 1))){
-					String linetxt = getLineTxt(strTxt);
+				if(StringUtil.isNumeric(strTxt.substring(0, 1))){//第一个字符是数字，说明是股票代码，此行数据有效
+					String linetxt = TxtUtil.getLineTxt(strTxt);
 					String[] txt = linetxt.split(",");//将txt文本按逗号分割成数组，分别处理
 					String code=txt[0];//股票代码
 					String stockName = txt[1];//股票名称
@@ -265,17 +266,5 @@ public class StockPriceService {
 		str = str.substring(str.length()-8, str.length());
 		return str;
 	}
-	//处理txt字符串(将tab替换为逗号并去空格返回字符串)
-	public static String getLineTxt(String str){
-		String[] lineArr = str.split("\\t");			
-		String newline="";
-		for (int i = 0; i < lineArr.length; i++){
-		    if (i<lineArr.length){
-		        newline+=lineArr[i]+",";
-		    }else{
-		    	newline+=newline+lineArr[i];
-		    }
-		}
-		return newline.replaceAll("\\s*", "");
-	}
+	
 }
