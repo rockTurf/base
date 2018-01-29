@@ -30,6 +30,9 @@ public class SysConstant {
 	public static String UploadUrl(){
 		return SysConstant.getValue("upload.rootPath");
 	}
+	public static String TempUrl(){
+		return SysConstant.getValue("temp.rootPath");
+	}
 	public static String DownloadUrl(){
 		return SysConstant.getValue("download.rootPath");
 	}

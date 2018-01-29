@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class StringUtil {
@@ -286,6 +287,27 @@ public class StringUtil {
 		}
 		return true;
 	}
+	
+	// Json生成Map  
+    public static Map<String, String> jsonToMap(String jsonString){  
+        //JSONObject必须以"{"开头  
+    	 Map<String, String> resultMap = new HashMap<String, String>();  
+    	try{
+	        JSONObject jsonObject = new JSONObject(jsonString);  
+	        Iterator<String> iter = jsonObject.keys();  
+	        String key=null;  
+	        String value=null;  
+	        while (iter.hasNext()) {  
+	            key=iter.next();  
+	            value=jsonObject.get(key).toString();  
+	            resultMap.put(key, value);  
+	        }  
+    	}catch (JSONException e) {
+			e.printStackTrace();
+		}
+        return resultMap;  
+    }  
+    
 }
 	
 

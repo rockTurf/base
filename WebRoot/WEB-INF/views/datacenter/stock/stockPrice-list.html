@@ -1,6 +1,6 @@
 <div class="widget">
 <div class="widget-head">
-	<div class="pull-left">文档列表</div>
+	<div class="pull-left">行情列表</div>
 	<div class="widget-icons pull-right">
 		<a href="#" class="wminimize"><i class="icon-chevron-up"></i>
 		</a> <a href="#" class="wclose"><i class="icon-remove"></i>
@@ -14,6 +14,7 @@
 			<tr>
 				<th>编码</th>
 				<th>名称</th>
+				<th>日期</th>
 				<th>涨幅</th>
 				<th>现价</th>
 				<th>涨跌</th>
@@ -35,8 +36,9 @@
 		@for(item in page.list){
 		<tbody>
 			<tr>
-				<td>${item.code!}</td>
-				<td>${item.name!}</td>
+				<td>${item.stockCode!}</td>
+				<td>${item.stockName!}</td>
+				<td>${item.priceDate!}</td>
 				<td>${item.rise!}</td>
 				<td>${item.presentPrice!}</td>
 				<td>${item.riseFull!}</td>
@@ -53,14 +55,6 @@
 				<td>${item.prowave!}</td>
 				<td>${item.totalAmount!}</td>
 				<td>${item.qrr!}</td>
-				<td>
-				<button class="btn btn-xs btn-danger" data-mode="del" data-title="删除"
-							data-msg="你确定删除此数据吗?"
-							data-url="${ctxPath}/stock/delete"
-							data-data="{id:'${item.id}'}">
-				<i class="fa fa-remove"></i>
-				</button>
-				</td>
 			</tr>
 			@}
 		</tbody>

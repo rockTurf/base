@@ -1,23 +1,39 @@
 <script type="text/javascript">
-$('#excelKey').uploadify({
-     'swf': '${ctxPath}/static/uploadify/scripts/uploadify.swf',
-     'uploader':"${ctxPath}/stockPrice/upload",
-	'fileObjName' : 'excel',
-	'buttonText' : '请选择上传文件', //控件上显示的内容
-	'auto' : false, //选定文件后是否自动上传，默认false
-	'fileTypeDesc' : 'xlsx文件或xls文件', //出现在上传对话框中的文件类型描述
-	'fileTypeExts' : '*.xlsx;*.xls', //控制可上传文件的扩展名，启用本项时需同时声明fileDesc
-	'sizeLimit': 86400, //控制上传文件的大小，单位byte
-	'uploadLimit' :1, //多文件上传时，同时上传文件数目限制
-	'onQueueComplete' : function(queueData) {  
-        alert(queueData.uploadsSuccessful + ' 个文件上传成功');  
-        $("#search-form").getPageList({'submitBtnId':'search-btn'});
-        location.reload();
-    },
-    'onUploadSuccess' : function(data){
-    	alert(data);  
-    }
-});
+var fileMap = new Map();
+$('#upload_file').uploadifive({
+       'auto' : true,
+       'uploadScript' : '${ctxPath}/upload/uploadTemp',
+       'fileObjName' : 'files',
+       'buttonText' : '上传附件',
+       'queueID' : 'tip-queue',
+       'fileTypeExts' : '.txt',//'image/*',
+       'multi' : true,
+       'fileSizeLimit'   : 5242880,
+       'uploadLimit' : 10,
+       'queueSizeLimit'  : 10,   
+       'onUploadComplete' : function(file, data) {
+           fileMap.put(data);//添加到附件map
+           $("#filedata").val(fileMap);
+       },
+      onCancel : function(file) {
+           $data    = $(this).data('uploadifive'),
+           settings = $data.settings;
+           settings.uploadLimit++;
+           /* $.ajax({
+			 type: "POST",
+			 url:"upload/deleteFile",
+			 dataType: 'JSON',
+			 data:"filename="+fileMap.get(file.name),
+			});  */
+           fileMap.remove(file.name);//删除附件map
+           $("#filedata").val(fileMap);
+	   },
+       onFallback : function() {
+           alert("该浏览器无法使用!");
+           location.reload();
+       },
+      
+   });
 </script>
 
 <div>
@@ -53,11 +69,10 @@ $('#excelKey').uploadify({
 											<input type="text" name="name" /> 
 											<label class="control-label">编码：</label>
 											<input type="text" name="code" /> 
-												<input type="text"
-													onclick="getTotalList('search-form','search-btn')"
-													class="btn btn-success" value="全部" readonly /> <input
-													type="text" id="search-btn" class="btn btn-success"
-													value="条件查询" readonly />
+											<button type="button" class="btn btn-success" 
+											onclick="getTotalList('search-form','search-btn')"	readonly>全部</button>
+											<button type="button" class="btn btn-success" id="search-btn"
+											readonly>查询</button>
 											</div>
 										</div>
 									</form>
@@ -77,22 +92,28 @@ $('#excelKey').uploadify({
 					</div>
 					<div class="widget-content">
 						<div class="padd">
+						<form class="form-horizontal" role="form" id="save-form"
+								action="${ctxPath!}/stockPrice/addStockPrice" method="post">
 							<table class="table table-bordered">
 								<tr>
 								<td style="width: 80%">
-								<input type="file" size="30" id="excelKey" />
-								<a href="javascript:$('#excelKey').uploadify('upload','*')">
-								<style>
-					            .uploadify-button{background:green;color:#fff}
-					            .uploadify:hover .uploadify-button{background:transparent;color:red}
-					            </style>
-								 <span class="btn btn-info btn-sm width-100 bigger-120">开始上传</span> 
-								</a>
+				                <input id="upload_file" type="file">
+				                            <input type="hidden" name="filepath" id="filepath">
+				                        	<div id="tip-queue"></div>
+				                <input type="hidden" name="filedata" id="filedata">
 								</td>
-								<td style="width: 20%;text-align: center;padding-top: 26px;">
-								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span>
+								<!-- <td style="width: 20%;text-align: center;padding-top: 26px;">
+								<span class="glyphicon glyphicon-download-alt btn btn-success" onclick="downloadModel()">下载模板</span> -->
 								</tr>
 							</table>
+							<div>
+									<span class="btn btn-info btn-block " 
+										style="background-color:#f8ac59" id="save-btn">保 存</span>
+								</div>
+								<#save isHide="yes" subBtnId="save-btn" formId="save-form"
+									 config="true">
+								</#save>
+							</form>
 						</div>
 					</div>
 					<div class="widget-foot">

@@ -12,4 +12,6 @@ public interface StockMapper extends Mapper<Stock>{
 
 	String findStockIdByCode(String code);
 
+	List<Stock> getAll();
+
 }

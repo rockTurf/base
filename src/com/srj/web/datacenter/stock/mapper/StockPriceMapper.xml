@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.srj.web.datacenter.stock.mapper.StockPriceMapper">
-	<!--查询用户列表-->
+	<!--查询列表-->
 	<select id="findPageInfo" parameterType="com.srj.web.datacenter.stock.model.StockPrice" resultType="com.srj.web.datacenter.stock.model.StockPrice">
 		SELECT
-			*
+			a.*,b.name as stock_name,b.code as stock_code
 		FROM
-			stock_price
-		GROUP BY
-			id DESC
+			stock_price a
+			LEFT JOIN stock b ON a.stock_id = b.id
+		<where>
+		1 = 1
+		<if test="@Ognl@isNotBlank(stock_id)">
+	 		and a.stock_id = #{stock_id}
+	    </if>
+	    <if test="@Ognl@isNotBlank(code)">
+		 	and b.code = #{code}
+		</if>
+		</where>
+		ORDER BY
+			a.price_date DESC
 	</select>
+	
+	<insert id="insertList">
+		INSERT IGNORE INTO stock_price (price_date,rise,present_price,rise_full,buy_price,sale_price,total_hand,
+		now_hand,rising_speed,turnover,open,highest,lowest,prev_close,prowave,total_amount,qrr,stock_id,create_time) values
+		<foreach collection="list" index="index" item="command" separator=",">
+			('${command.price_date}','${command.rise}','${command.present_price}','${command.rise_full}',
+			'${command.buy_price}','${command.sale_price}','${command.total_hand}','${command.now_hand}',
+			'${command.rising_speed}','${command.turnover}','${command.open}','${command.highest}',
+			'${command.lowest}','${command.prev_close}','${command.prowave}','${command.total_amount}',
+			'${command.qrr}','${command.stock_id}','${command.create_time}')
+		</foreach>
+	</insert>
+	<!-- <insert id="insertList">
+		INSERT INTO stock_price (price_date,rise,present_price,stock_id,create_time) values
+		<foreach collection="list" index="index" item="command" separator=",">
+			('${command.price_date}','${command.rise}','${command.present_price}','${command.stock_id}','${command.create_time}')
+		</foreach>
+	</insert> -->
+	
 	
 </mapper>
