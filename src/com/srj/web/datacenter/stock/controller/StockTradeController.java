@@ -18,6 +18,7 @@ import com.github.pagehelper.PageInfo;
 import com.srj.common.utils.SysUserUtil;
 import com.srj.web.datacenter.stock.model.Stock;
 import com.srj.web.datacenter.stock.model.StockTrade;
+import com.srj.web.datacenter.stock.service.StockDataService;
 import com.srj.web.datacenter.stock.service.StockService;
 import com.srj.web.datacenter.stock.service.StockTradeService;
 import com.srj.web.sys.model.SysUser;
@@ -31,6 +32,8 @@ public class StockTradeController {
 	private StockService stockService;
 	@Resource
 	private StockTradeService stockTradeService;
+	@Resource
+	private StockDataService stockDataService;
 	
 	/**
 	 * 跳转到页面
@@ -66,8 +69,11 @@ public class StockTradeController {
 	 */
 	@RequestMapping(value = "addStockTrade")
 	public @ResponseBody Integer addByExcel(@RequestParam String filedata,Model model) throws IOException, ParseException{
+		int count = stockTradeService.saveTxt(filedata);
+		//如果成功，执行计算的存储过程
+		stockDataService.CallProcedure();
 		
-		return stockTradeService.saveTxt(filedata);
+		return count;
 	}
 	
 	

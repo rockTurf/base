@@ -10,5 +10,7 @@ public interface StockDataMapper extends Mapper<StockData>{
 
 	List<StockData> findPageInfo(Map<String, Object> params);
 
+	void CallProcedure();
+
 
 }

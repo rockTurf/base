@@ -28,4 +28,10 @@ public class StockDataService {
 		List<StockData> list = stockDataMapper.findPageInfo(params);
 		return new PageInfo<StockData>(list);
 	}
+
+	//执行计算存储过程
+	public void CallProcedure() {
+		stockDataMapper.CallProcedure();
+		
+	}
 }

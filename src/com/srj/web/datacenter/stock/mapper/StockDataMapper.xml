@@ -21,5 +21,9 @@
 			a.data_time DESC
 	</select>
 	
+	<update id="CallProcedure">
+		CALL stock_calculate
+	</update>
+	
 	
 </mapper>
