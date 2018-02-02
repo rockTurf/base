@@ -11,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.srj.web.datacenter.stock.mapper.StockMapper;
 import com.srj.web.datacenter.stock.model.Stock;
+import com.srj.web.datacenter.stock.model.StockSet;
 
 @Service("stockService")
 public class StockService {
@@ -44,5 +45,19 @@ public class StockService {
 		List<Stock> list = stockMapper.getAll();
 		return list;
 	}
+	/*
+	 * 设置股票交易的大中小单数
+	 * */
+	public Integer updateStockSet(Map<String, Object> params){
+		return stockMapper.updateStockSet(params);
+	}
+	//根据id取出单支股票信息
+	public Stock SelectRecordById(Long id) {
+		return stockMapper.selectByPrimaryKey(id);
+	}
+	public StockSet SelectSettingById(Long id) {
+		return stockMapper.selectSettingById(id);
+	}
+	
 	
 }

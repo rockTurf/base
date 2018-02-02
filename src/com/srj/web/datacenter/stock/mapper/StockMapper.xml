@@ -32,4 +32,23 @@
 		select * FROM stock
 	</select>
 	
+	<!-- <update id="updateStockSet">
+		update stock_set set huge = #{huge},large=#{large},middle=#{middle},small=#{small}
+		<where>
+			stock_id = #{stock_id}
+		</where>
+	</update> -->
+	<!-- 设置大中小单的值，不存在则插入存在则更新 -->
+	<update id="updateStockSet">
+		INSERT INTO stock_set (stock_id,huge,large,middle,small) VALUES (#{id},#{huge},#{large},#{middle},#{small})
+        ON DUPLICATE KEY UPDATE huge = #{huge},large=#{large},middle=#{middle},small=#{small}
+	</update>
+	
+	<select id="selectSettingById" resultType="com.srj.web.datacenter.stock.model.StockSet">
+		SELECT * from stock_set
+		<where>
+			stock_id = #{_parameter}
+		</where>
+	</select>
+	
 </mapper>

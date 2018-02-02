@@ -27,6 +27,11 @@
 				<td>${item.industry!}</td>
 				<td>${item.area!}</td>
 				<td>
+				<button class="btn btn-xs btn-warning" data-mode="page" data-title="编辑"
+							data-url="${ctxPath}/stock/setting"
+							data-data="{id:'${item.id}'}" data-height="85%" data-width="60%">
+				<i class="fa fa-pencil"></i>
+				</button>
 				<button class="btn btn-xs btn-danger" data-mode="del" data-title="删除"
 							data-msg="你确定删除此数据吗?"
 							data-url="${ctxPath}/stock/delete"

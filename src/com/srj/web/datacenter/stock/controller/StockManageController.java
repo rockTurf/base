@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
 import com.srj.common.utils.SysUserUtil;
 import com.srj.web.datacenter.stock.model.Stock;
+import com.srj.web.datacenter.stock.model.StockSet;
 import com.srj.web.datacenter.stock.service.StockService;
 import com.srj.web.sys.model.SysUser;
 
@@ -67,5 +68,25 @@ public class StockManageController {
 		//删除文章
 		int count = stockService.deleteRecord(id);
 		return count;
+	}
+	/**
+	 * 跳转到设置大中小单页面
+	 */
+	@RequestMapping(value = "setting")
+	public String toSettingPage(@RequestParam Long id,Model model,HttpServletRequest request,HttpServletResponse response){
+		//股票详情
+		Stock stock = stockService.SelectRecordById(id);
+		//大中小单值
+		StockSet stockSet = stockService.SelectSettingById(id);
+		model.addAttribute("stock", stock);
+		model.addAttribute("stockSet", stockSet);
+		return "datacenter/stock/stock-setting";
+	}
+	/**
+	 * 设置大中小单
+	 */
+	@RequestMapping(value = "updateSet")
+	public @ResponseBody Integer updateStockSet(@RequestParam Map<String, Object> params){
+		return stockService.updateStockSet(params);
 	}
 }

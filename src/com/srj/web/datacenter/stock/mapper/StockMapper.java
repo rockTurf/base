@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.abel533.mapper.Mapper;
 import com.srj.web.datacenter.stock.model.Stock;
+import com.srj.web.datacenter.stock.model.StockSet;
 
 public interface StockMapper extends Mapper<Stock>{
 
@@ -13,5 +14,10 @@ public interface StockMapper extends Mapper<Stock>{
 	String findStockIdByCode(String code);
 
 	List<Stock> getAll();
+
+	Integer updateStockSet(Map<String, Object> params);
+
+	StockSet selectSettingById(Long id);
+
 
 }

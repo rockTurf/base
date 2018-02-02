@@ -16,6 +16,8 @@ public class StockData extends BaseEntity implements Serializable{
 	private String total_all;//全部
 	private String total_B;//全部买
 	private String total_S;//全部卖
+	private String huge_B;//特大单买
+	private String huge_S;//特大单卖
 	private String large_B;//大单买
 	private String large_S;//大单卖
 	private String middle_B;//中单买
@@ -55,6 +57,12 @@ public class StockData extends BaseEntity implements Serializable{
 	}
 	public String getTotal_B() {
 		return this.getString("totalB");
+	}
+	public String getHuge_B() {
+		return this.getString("hugeB");
+	}
+	public String getHuge_S() {
+		return this.getString("hugeS");
 	}
 	public String getTotal_S() {
 		return this.getString("totalS");
