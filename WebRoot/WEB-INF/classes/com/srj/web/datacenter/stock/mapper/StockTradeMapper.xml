@@ -28,5 +28,20 @@
 			'${command.bs}','${command.stock_id}')
 		</foreach>
 	</insert>
+	<!-- 验证交易数据完整性 -->
+	<select id="checkTradeData" resultType="java.lang.String">
+		SELECT DISTINCT detail_date FROM stock_detail WHERE
+			detail_date NOT IN (
+				SELECT DISTINCT trade_date FROM stock_trade WHERE
+					stock_id = #{_parameter}
+			)
+		AND stock_id = #{_parameter}
+		AND detail_date >= (
+			SELECT DISTINCT trade_date FROM stock_trade
+			WHERE
+				stock_id = #{_parameter}
+			ORDER BY trade_date LIMIT 1
+		)	
+	</select>
 	
 </mapper>

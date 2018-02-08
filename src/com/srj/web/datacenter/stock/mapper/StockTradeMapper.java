@@ -12,4 +12,6 @@ public interface StockTradeMapper extends Mapper<StockTrade>{
 
 	Integer insertList(List<StockTrade> list);
 
+	List<String> checkTradeData(String id);
+
 }

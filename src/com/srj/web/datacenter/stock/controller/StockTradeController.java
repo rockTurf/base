@@ -75,6 +75,17 @@ public class StockTradeController {
 		
 		return count;
 	}
-	
+	/**
+	 * 检查数据完整性
+	 * 
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "checkTradeData")
+	public @ResponseBody List<String> checkTradeData(@RequestParam String id){
+		List<String> list = stockTradeService.checkTradeData(id);
+		return list;
+	}
 	
 }

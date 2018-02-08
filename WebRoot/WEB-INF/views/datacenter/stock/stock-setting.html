@@ -1,0 +1,77 @@
+
+<div class="widget wgreen">
+	<div class="widget-content">
+		<div class="padd">
+			<!-- Form starts.  -->
+			<form class="form-horizontal" role="form"
+				action="${ctxPath!}/stock/updateSet" method="post" id="setting-save">
+				<div class="form-group">
+					<label class="col-lg-4 control-label">股票编码:</label>
+					<input type="text" value="${stock.id!}" name="id"  id="stockId" hidden="hidden">
+					<div class="col-lg-3">
+						<input type="text" value="${stock.code!}" class="form-control" readonly="readonly">
+					</div>
+					<label class="col-lg-4 control-label">股票名称:</label>
+					<div class="col-lg-3">
+						<input type="text" value="${stock.name!}" class="form-control" readonly="readonly">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-4 control-label">特大单数</label>
+					<div class="col-lg-8">
+						<input type="text" name="huge" value="${stockSet.huge!}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-4 control-label">大单数</label>
+					<div class="col-lg-8">
+						<input type="text" name="large" value="${stockSet.large!}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-4 control-label">中单数</label>
+					<div class="col-lg-8">
+						<input type="text" name="middle" value="${stockSet.middle!}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-4 control-label">小单数</label>
+					<div class="col-lg-8">
+						<input type="text" name="small" value="${stockSet.small!}" class="form-control">
+					</div>
+				</div>
+				<#save formId="setting-save" />
+			</form>
+			<div>验证单日交易数据完整性：
+			<button type="submit" class="btn btn-primary" onclick="checkTradeData()">验证</button></div>
+			<div id="checkData"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function checkTradeData(){
+	var stockId = document.getElementById("stockId").value;
+	$.ajax({//获取审核人
+		url : 'stockTrade/checkTradeData',
+   		type: "POST",
+   		dataType : 'json',
+   		data : { 
+   			id:stockId
+   		},
+   		success : function(data) {
+   			$("#checkData").html('');
+   			if(data.length==0){
+   				$("#checkData").append("<div>数据完整！</div>");
+   			}else{
+   				$.each(data,function(index,item){
+   	   				$("#checkData").append("<div>"+item+"</div>");
+   	   			});
+   			}
+   		}
+	});
+	
+	
+}
+
+
+</script>

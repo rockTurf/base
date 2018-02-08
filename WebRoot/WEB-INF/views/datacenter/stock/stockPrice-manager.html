@@ -9,8 +9,6 @@ $('#upload_file').uploadifive({
        'fileTypeExts' : '.txt',//'image/*',
        'multi' : true,
        'fileSizeLimit'   : 5242880,
-       'uploadLimit' : 10,
-       'queueSizeLimit'  : 10,   
        'onUploadComplete' : function(file, data) {
            fileMap.put(data);//添加到附件map
            $("#filedata").val(fileMap);
