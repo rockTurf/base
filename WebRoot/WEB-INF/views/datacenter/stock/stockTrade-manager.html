@@ -40,7 +40,6 @@ $('#upload_file').uploadifive({
 		</li>
 		<li><a href="#addUser" data-toggle="tab">导入交易</a></li>
 	</ul>
-
 	<div class="matter">
 		<div id="myTabContent" class="tab-content">
 			<div class="tab-pane fade in active" id="home">
@@ -121,6 +120,8 @@ $('#upload_file').uploadifive({
 			</div>
 		</div>
 	</div>
+	<!-- <div class="progress progress-striped active">
+    <div class="progress-bar" style="width:70%">70%</div> -->
 </div>
 <script>
 $("#search-form").getPageList({'submitBtnId':'search-btn'});
@@ -138,4 +139,20 @@ $('#stock_id').selectpicker({
 function downloadModel(){
 	window.open("download/model?model=stockTrade").focus();
 }
+var ref = "";//设置定时器
+var per = "";//cookie值
+function progress(){//读取cookie
+	per = getCookie('stock_trade_progress');
+	if("100%"==per){
+	  clearInterval(ref);
+	}
+	console.info("per="+per)
+}
+function proStart(){
+	ref = setInterval(function(){  
+		progress();  
+	},2000);
+	//clearInterval(ref);
+}
+
  </script>

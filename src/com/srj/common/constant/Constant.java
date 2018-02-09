@@ -71,4 +71,9 @@ public class Constant {
 	 */
 	public static final String FILE_FLAG_ARTICLE = "article";//文档附件
 	
+	/**
+	 *cookie存放
+	 */
+	public static final String STOCK_TRADE_PROGRESS = "stock_trade_progress";//单日交易批量文件上传进度条
+	
 }

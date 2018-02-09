@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,8 +70,8 @@ public class StockTradeController {
 	 * @return
 	 */
 	@RequestMapping(value = "addStockTrade")
-	public @ResponseBody Integer addByExcel(@RequestParam String filedata,Model model) throws IOException, ParseException{
-		int count = stockTradeService.saveTxt(filedata);
+	public @ResponseBody Integer addByExcel(@RequestParam String filedata,Model model,HttpServletResponse res) throws IOException, ParseException{
+		int count = stockTradeService.saveTxt(filedata,res);
 		//如果成功，执行计算的存储过程
 		stockDataService.CallProcedure();
 		

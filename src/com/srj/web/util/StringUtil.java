@@ -1,5 +1,7 @@
 package com.srj.web.util;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -307,6 +309,14 @@ public class StringUtil {
 		}
         return resultMap;  
     }  
+    
+    //两个整数除，保留N位小数，并转换成百分数
+    public static String getPercent(int count,int total,int n){
+    	float num = (float)count/total;
+    	NumberFormat nt = NumberFormat.getPercentInstance();
+    	nt.setMinimumFractionDigits(n);//不保留小数
+    	return nt.format(num);
+    }
     
 }
 	

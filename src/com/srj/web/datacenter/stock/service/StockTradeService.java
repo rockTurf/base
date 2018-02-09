@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -21,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.srj.common.constant.Constant;
 import com.srj.common.excel.template.ExcelUtils;
 import com.srj.common.utils.SysConstant;
 import com.srj.web.datacenter.stock.mapper.StockMapper;
@@ -28,6 +33,7 @@ import com.srj.web.datacenter.stock.mapper.StockTradeMapper;
 import com.srj.web.datacenter.stock.model.Stock;
 import com.srj.web.datacenter.stock.model.StockPrice;
 import com.srj.web.datacenter.stock.model.StockTrade;
+import com.srj.web.util.CookieUtils;
 import com.srj.web.util.DateUtils;
 import com.srj.web.util.StringUtil;
 import com.srj.web.util.TxtUtil;
@@ -47,12 +53,13 @@ public class StockTradeService {
 		List<StockTrade> list = stockTradeMapper.findPageInfo(params);
 		return new PageInfo<StockTrade>(list);
 	}
-	public Integer saveTxt(String filedata) throws IOException,FileNotFoundException {
+	public Integer saveTxt(String filedata,HttpServletResponse res) throws IOException,FileNotFoundException {
 		int result = 0;
 		List<String> filelist = StringUtil.String2List(filedata);
 		String[] array = null;
 		// 循环取得文件名和地址
-		for (String vo : filelist) {
+		for(int i=0;i<filelist.size();i++){
+			String vo = filelist.get(i);
 			array = vo.split("=");
 			String fileName = array[0];
 			String fileUrl = array[1];
@@ -99,6 +106,8 @@ public class StockTradeService {
 				}
 			}
 			result = stockTradeMapper.insertList(list);
+			//进度条
+			res.addCookie(new Cookie(Constant.STOCK_TRADE_PROGRESS,StringUtil.getPercent(i+1,filelist.size(),0)));
 		}
 		return result;
 	}
