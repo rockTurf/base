@@ -53,9 +53,12 @@ public class StockTradeService {
 		List<StockTrade> list = stockTradeMapper.findPageInfo(params);
 		return new PageInfo<StockTrade>(list);
 	}
-	public Integer saveTxt(String filedata,HttpServletResponse res) throws IOException,FileNotFoundException {
+	public Integer saveTxt(String filedata,HttpServletRequest req) throws IOException,FileNotFoundException {
 		int result = 0;
 		List<String> filelist = StringUtil.String2List(filedata);
+		HttpSession session = req.getSession();
+		//先把进度条置为0%
+		session.setAttribute(Constant.STOCK_TRADE_PROGRESS,"0%");
 		String[] array = null;
 		// 循环取得文件名和地址
 		for(int i=0;i<filelist.size();i++){
@@ -107,12 +110,21 @@ public class StockTradeService {
 			}
 			result = stockTradeMapper.insertList(list);
 			//进度条
-			res.addCookie(new Cookie(Constant.STOCK_TRADE_PROGRESS,StringUtil.getPercent(i+1,filelist.size(),0)));
+			session.setAttribute(Constant.STOCK_TRADE_PROGRESS,StringUtil.getPercent(i,filelist.size(),0));
+			//res.addCookie(new Cookie(Constant.STOCK_TRADE_PROGRESS,StringUtil.getPercent(i+1,filelist.size(),0)));
 		}
+		//全部完成是100%
+		session.setAttribute(Constant.STOCK_TRADE_PROGRESS,StringUtil.getPercent(1,1,0));
 		return result;
 	}
 
 	public List<String> checkTradeData(String id){
 		return stockTradeMapper.checkTradeData(id);
+	}
+	
+	//进度条session
+	public String getProgress(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		return session.getAttribute(Constant.STOCK_TRADE_PROGRESS).toString();
 	}
 }

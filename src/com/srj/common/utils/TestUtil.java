@@ -11,4 +11,8 @@ public class TestUtil {
 		System.out.println(StringUtil.getPercent(1, 45,2));
 	}
 
+	@Test
+	public void test2(){
+		System.out.println("".toString());
+	}
 }

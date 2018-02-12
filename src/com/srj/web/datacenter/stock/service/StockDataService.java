@@ -31,6 +31,7 @@ public class StockDataService {
 
 	//执行计算存储过程
 	public void CallProcedure() {
+		System.out.println("执行存储过程CallProcedure");
 		stockDataMapper.CallProcedure();
 		
 	}

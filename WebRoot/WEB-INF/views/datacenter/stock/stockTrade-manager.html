@@ -106,7 +106,7 @@ $('#upload_file').uploadifive({
 							</table>
 							<div>
 									<span class="btn btn-info btn-block " 
-										style="background-color:#f8ac59" id="save-btn">保 存</span>
+										style="background-color:#f8ac59" id="save-btn" onclick="proStart()">保 存</span>
 								</div>
 								<#save isHide="yes" subBtnId="save-btn" formId="save-form"
 									 config="true">
@@ -120,6 +120,7 @@ $('#upload_file').uploadifive({
 			</div>
 		</div>
 	</div>
+	<div id="progress"></div>
 	<!-- <div class="progress progress-striped active">
     <div class="progress-bar" style="width:70%">70%</div> -->
 </div>
@@ -140,18 +141,24 @@ function downloadModel(){
 	window.open("download/model?model=stockTrade").focus();
 }
 var ref = "";//设置定时器
-var per = "";//cookie值
-function progress(){//读取cookie
-	per = getCookie('stock_trade_progress');
-	if("100%"==per){
-	  clearInterval(ref);
-	}
-	console.info("per="+per)
+function progress(){//ajax读取进度条
+	$.ajax({
+		url : 'stockTrade/getProgress',
+   		type: "POST",
+   		success : function(data) {
+   			$("#progress").html('');
+   			$("#progress").append("<div class='progress progress-striped active'><div class='progress-bar' style='width:"+data+"'>"+data+"</div>");
+   			if(data=='100%'){
+   				clearInterval(ref);
+   				$("#progress").html('');
+   			}
+   		}
+	});
 }
 function proStart(){
 	ref = setInterval(function(){  
 		progress();  
-	},2000);
+	},1000);
 	//clearInterval(ref);
 }
 

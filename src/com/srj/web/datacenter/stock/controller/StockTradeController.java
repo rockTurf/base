@@ -70,10 +70,10 @@ public class StockTradeController {
 	 * @return
 	 */
 	@RequestMapping(value = "addStockTrade")
-	public @ResponseBody Integer addByExcel(@RequestParam String filedata,Model model,HttpServletResponse res) throws IOException, ParseException{
-		int count = stockTradeService.saveTxt(filedata,res);
+	public @ResponseBody Integer addByExcel(@RequestParam String filedata,Model model,HttpServletRequest req) throws IOException, ParseException{
+		int count = stockTradeService.saveTxt(filedata,req);
 		//如果成功，执行计算的存储过程
-		stockDataService.CallProcedure();
+		//stockDataService.CallProcedure();
 		
 		return count;
 	}
@@ -88,6 +88,17 @@ public class StockTradeController {
 	public @ResponseBody List<String> checkTradeData(@RequestParam String id){
 		List<String> list = stockTradeService.checkTradeData(id);
 		return list;
+	}
+	/**
+	 * 读取session数据（进度条）
+	 * 
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "getProgress")
+	public @ResponseBody String getProgress(HttpServletRequest req){
+		return stockTradeService.getProgress(req);
 	}
 	
 }
