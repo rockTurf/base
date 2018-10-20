@@ -14,6 +14,7 @@ public class News extends BaseEntity implements Serializable{
 	private String content;//内容
 	private String source;//来源
 	private String author;//作者
+	private String news_time;//新闻时间
 	private String create_time;//创建时间
 	public String getTitle() {
 		return this.getString("title");
@@ -45,9 +46,12 @@ public class News extends BaseEntity implements Serializable{
 	public void setCreate_time(String create_time) {
 		this.set("createTime",create_time);
 	}
-	
-	
-	
-	
-	
+
+	public String getNews_time() {
+		return this.getString("news_time");
+	}
+
+	public void setNews_time(String news_time) {
+		this.set("newsTime",news_time);
+	}
 }
