@@ -28,4 +28,9 @@ public class NewsService {
 		return new PageInfo<News>(list);
 	}
 
+      public void insertList(List<News> newsList) {
+		for(News news:newsList){
+			newsMapper.insert(news);
+		}
+      }
 }

@@ -3,8 +3,13 @@ package com.srj.web.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.srj.common.utils.HTMLSpirit;
 import com.srj.web.datacenter.news.model.News;
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +26,7 @@ public class SpiderUtils {
 
     protected static final Logger logger = LoggerFactory.getLogger(SpiderUtils.class);
 
-    private static String IFENG_URL = "http://finance.ifeng.com/stock/";
+    private static String IFENG_URL = "http://finance.ifeng.com/listpage/110/1/list.shtml";
 
 
     /**
@@ -106,37 +111,37 @@ public class SpiderUtils {
      * 获取凤凰网的股票新闻JSON
      *
      */
-    public static JSONObject getifeng() {
+    public static List<JSONObject> getifeng() {
+        //返回值
+        List<JSONObject> list = new ArrayList<>();
+
         String url = IFENG_URL;
         //开爬
         String string = getSourceFormHtml(url, "UTF-8");
         if (StringUtils.isNotBlank(string)) {
-            //处理返回的字符串，把头尾去掉,只保留stockNewsList里面的内容
-            int n = string.indexOf("stockNewsList");
-            String str = string.substring(n,string.length());
-            str = str.replace("stockNewsList","");
-            //去掉尾巴
-            int m = str.indexOf("newsTab");
-            str = str.substring(2, m);
-            str = str.trim();
-            str = str.substring(0,str.length()-2);
-            //转化为JSONArray
-            JSONArray array = JSONArray.parseArray(str);
-            List<News> list = new ArrayList<>();
-            for(int i=0;i<array.size();i++){
-            	JSONObject obj = array.getJSONObject(i); // 遍历 jsonarray 数组，把每一个对象转成 json 对象
-            	//放入实体类
-            	News item = new News();
-            	item.setAuthor(obj.getString("author"));
-            	item.setTitle(obj.getString("title"));
-            	item.setSource(obj.getString("source"));
-            	item.setNews_time(obj.getString("newsTime"));
-            	list.add(item);
-            	System.out.println(item);
+            Document doc = Jsoup.parse(string);
+            if (doc != null) {
+                Elements elements = doc.select("span[class=txt01]");
+                for(Element el:elements){
+                    String title = el.text();
+                    String link = el.select("a").attr("href").toString();
+                    //文章链接
+                    String string_article = getSourceFormHtml(link, "UTF-8");
+                    Document doc2 = Jsoup.parse(string_article);
+                    String content = "";
+                    String newsTime = "";
+                    if (doc2 != null) {
+                        Element element = doc2.getElementById("main_content");
+                        newsTime = doc2.select("meta[name=og:time]").get(0).attr("content").toString();
+                        content = element.text();
+                    }
+                    JSONObject obj = new JSONObject();
+                    obj.put("title",title);
+                    obj.put("content",content);
+                    obj.put("newsTime",newsTime);
+                    list.add(obj);
+                }
             }
-            
-            
-
         }
         return null;
 
