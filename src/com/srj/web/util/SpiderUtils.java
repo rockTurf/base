@@ -3,7 +3,6 @@ package com.srj.web.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.srj.common.utils.HTMLSpirit;
 import com.srj.web.datacenter.news.model.News;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
@@ -143,7 +142,7 @@ public class SpiderUtils {
                 }
             }
         }
-        return null;
+        return list;
 
     }
 

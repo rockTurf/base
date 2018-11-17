@@ -33,4 +33,14 @@ public class NewsService {
 			newsMapper.insert(news);
 		}
       }
+
+    //增加
+	public int insertItem(News item) {
+		return newsMapper.insert(item);
+	}
+
+	//查找
+	public News getById(Long id) {
+		return newsMapper.selectByPrimaryKey(id);
+	}
 }

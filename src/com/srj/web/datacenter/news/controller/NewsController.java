@@ -14,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 import com.srj.common.utils.SysUserUtil;
 import com.srj.web.datacenter.news.model.News;
 import com.srj.web.datacenter.news.service.NewsService;
+import com.srj.web.sys.model.SysRole;
 import com.srj.web.sys.model.SysUser;
 
 
@@ -46,6 +47,21 @@ public class NewsController {
 		PageInfo<News> page = newsService.findPageInfo(params);
 		model.addAttribute("page", page);
 		return "datacenter/news/news-list";
+	}
+	
+	
+	/**
+	 * 跳转编辑角色页面
+	 * 
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "detail", method = RequestMethod.POST)
+	public String showDetail(Long id,@RequestParam Map<String, Object> params,Model model){
+		News news = newsService.getById(id);
+		model.addAttribute("news", news);
+		return "datacenter/news/news-detail";
 	}
 	
 }

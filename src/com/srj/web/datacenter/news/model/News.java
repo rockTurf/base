@@ -41,17 +41,17 @@ public class News extends BaseEntity implements Serializable{
 		this.set("author",author);
 	}
 	public String getCreate_time() {
-		return this.getString("create_time");
+		return this.getString("createTime");
 	}
 	public void setCreate_time(String create_time) {
-		this.set("createTime",create_time);
+		this.set("create_time",create_time);
 	}
 
 	public String getNews_time() {
-		return this.getString("news_time");
+		return this.getString("newsTime");
 	}
 
 	public void setNews_time(String news_time) {
-		this.set("newsTime",news_time);
+		this.set("news_time",news_time);
 	}
 }

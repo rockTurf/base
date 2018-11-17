@@ -8,6 +8,8 @@
         </element>
       </element>
       <element id="javaee-facet-resources" facet="base/web/Web" />
+      <element id="library" level="project" name="lib" />
+      <element id="library" level="project" name="servlet-api" />
     </root>
   </artifact>
 </component>
