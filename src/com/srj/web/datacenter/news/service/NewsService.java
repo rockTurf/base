@@ -1,5 +1,6 @@
 package com.srj.web.datacenter.news.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,5 +43,10 @@ public class NewsService {
 	//查找
 	public News getById(Long id) {
 		return newsMapper.selectByPrimaryKey(id);
+	}
+
+	//取出某网站最新一条记录
+	public News selectBySource(String source) {
+		return newsMapper.selectBySource(source);
 	}
 }

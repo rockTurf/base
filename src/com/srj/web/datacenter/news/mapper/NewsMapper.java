@@ -10,5 +10,7 @@ public interface NewsMapper extends Mapper<News>{
 
 	List<News> findPageInfo(Map<String, Object> params);
 
+	News selectBySource(String source);
+
 
 }
