@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-11-23 21:24:40
+Date: 2018-11-29 19:12:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,5 +24,10 @@ CREATE TABLE `new_keyword` (
   `new_id` bigint(20) DEFAULT NULL,
   `keyword_id` bigint(20) DEFAULT NULL,
   `create_time` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique` (`new_id`,`keyword_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of new_keyword
+-- ----------------------------
