@@ -16,4 +16,26 @@
 		ORDER BY
 			create_time DESC
 	</select>
+	<!--取出新闻总数量-->
+	<select id="totalNewsNumber">
+		SELECT count(*) from news
+	</select>
+
+	<!-- 插入new_keyword中间表 -->
+	<insert id="insertNewKeyword">
+		insert IGNORE into new_keyword (new_id,keyword_id,create_time) values
+		<foreach collection="newKeys" index="index" item="newKey" separator=",">
+			(#{nid},#{kid,jdbcType=NUMERIC},#{createTime})
+		</foreach>
+	</insert>
+
+	<!-- 一千条循环取新闻 -->
+	<select id="getPageNewsOneK" resultType="com.srj.web.datacenter.news.model.News">
+		SELECT * FROM news limit #{start},#{size}
+	</select>
+
+	<!-- 根据new_id,keyword_id-->
+	<select id="selectByNewIdAndKeyId" resultType="java.lang.Long">
+		SELECT id from new_keyword where new_id=#{new_id} and keyword_id=#{keyword_id}
+	</select>
 </mapper>
