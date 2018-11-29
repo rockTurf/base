@@ -17,4 +17,6 @@ public interface NewsMapper extends Mapper<News>{
 	List<News> getPageNewsOneK(Map<String, Object> params);
 
 	Long selectByNewIdAndKeyId(Map<String, Object> map);
+
+	News selectBySource(String source);
 }
