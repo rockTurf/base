@@ -48,6 +48,11 @@ public class NewsService {
 		return newsMapper.selectByPrimaryKey(id);
 	}
 
+	//取出某网站最新一条记录
+	public News selectBySource(String source) {
+		return newsMapper.selectBySource(source);
+	}
+
 	//取出新闻总量
       public int getTotalNewsNumber() {
             return newsMapper.totalNewsNumber();
