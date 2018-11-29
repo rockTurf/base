@@ -25,16 +25,14 @@
 			news_time DESC limit 1
 	</select>
 	<!--取出新闻总数量-->
-	<select id="totalNewsNumber">
+	<select id="totalNewsNumber" resultType="java.lang.Integer">
 		SELECT count(*) from news
 	</select>
 
 	<!-- 插入new_keyword中间表 -->
 	<insert id="insertNewKeyword">
 		insert IGNORE into new_keyword (new_id,keyword_id,create_time) values
-		<foreach collection="newKeys" index="index" item="newKey" separator=",">
-			(#{nid},#{kid,jdbcType=NUMERIC},#{createTime})
-		</foreach>
+			(#{new_id},#{keyword_id},#{createTime})
 	</insert>
 
 	<!-- 一千条循环取新闻 -->

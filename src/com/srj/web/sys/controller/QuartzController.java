@@ -62,6 +62,9 @@ public class QuartzController {
 
 
       //新闻关键词和标题关联
+      //@RequestMapping(value = "/newkey")
+      @Scheduled(cron = "0 0 2 * * ?")
+      @ResponseBody
       public void newsTitleGetKeyword(){
             List<Keyword> keywordList = keywordService.getAllKeyword();
             //计时器开始
@@ -83,7 +86,12 @@ public class QuartzController {
                               newsService.getInNewsKeyword(news,key);
                         }
                   }
-
+                  //阶段性结束的时间,超过执行10分钟就结束
+                  Long endTime = System.currentTimeMillis();
+                  if((endTime-startTime)>1000*60*10){
+                	  System.out.println("-----------新闻关键词和标题关联执行超过10分钟，共执行："+i+"千条");
+                	  return;
+                  }
             }
       }
 }
