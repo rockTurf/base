@@ -46,8 +46,8 @@ public class KeywordService {
 	 * */
 	public boolean checkKeyword(Map<String, Object> params) {
 		boolean b = true;
-		Long l = keyMapper.checkKeyword(params);
-		if(l!=null){
+		Keyword key = keyMapper.checkKeyword(params);
+		if(key!=null){
 			b = false;
 		}
 		return b;

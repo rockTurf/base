@@ -9,12 +9,28 @@
 			news
 		<where>
 		1 = 1
-		<if test="@Ognl@isNotBlank(title)">
+		<!--<if test="@Ognl@isNotBlank(title)">
 	 		and title = #{title}
-	    </if>
+	    </if>-->
 		</where>
 		ORDER BY
 			news_time DESC
+	</select>
+
+	<!--查询列表-->
+	<select id="findPageInfoByKeyWord" parameterType="com.srj.web.datacenter.news.model.News" resultType="com.srj.web.datacenter.news.model.News">
+		SELECT
+		a.*
+		FROM
+		news a LEFT JOIN new_keyword b ON a.id = b.new_id
+		<where>
+			1 = 1
+			<if test="@Ognl@isNotBlank(key_id)">
+				and b.keyword_id = #{key_id}
+			</if>
+		</where>
+		ORDER BY
+		a.news_time DESC
 	</select>
 	
 	<!-- 按照来源倒叙排列 -->

@@ -10,7 +10,7 @@ public interface KeywordMapper extends Mapper<Keyword>{
 
 	List<Keyword> findPageInfo(Map<String, Object> params);
 
-	Long checkKeyword(Map<String, Object> params);
+	Keyword checkKeyword(Map<String, Object> params);
 
 	List<Keyword> getAllKeyword();
 

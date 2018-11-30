@@ -123,9 +123,13 @@ public class StringUtil {
 			return true;
 		return false;			
 	}
-	
-	public static boolean isNotEmpty(String str){
-		return !isEmpty(str);
+
+	public static boolean isNullOrEmpty(String str) {
+		if (str == null) {
+			return true;
+		} else {
+			return "".equals(str.trim());
+		}
 	}
 	
 	public static String firstCharToUpper(String str){

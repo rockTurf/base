@@ -10,6 +10,8 @@ public interface NewsMapper extends Mapper<News>{
 
 	List<News> findPageInfo(Map<String, Object> params);
 
+	List<News> findPageInfoByKeyWord(Map<String, Object> params);
+
 	int insertNewKeyword(Map<String, Object> params);
 
 	int totalNewsNumber();
@@ -19,4 +21,6 @@ public interface NewsMapper extends Mapper<News>{
 	Long selectByNewIdAndKeyId(Map<String, Object> map);
 
 	News selectBySource(String source);
+
+
 }

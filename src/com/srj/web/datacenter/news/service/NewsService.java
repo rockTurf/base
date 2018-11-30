@@ -7,8 +7,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.srj.web.datacenter.article.mapper.KeywordMapper;
 import com.srj.web.datacenter.article.model.Keyword;
 import com.srj.web.util.DateUtils;
+import com.srj.web.util.StringUtil;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -23,13 +25,26 @@ public class NewsService {
 
 	@Resource
 	private NewsMapper newsMapper;
+	@Resource
+	private KeywordMapper keywordMapper;
 	/*
 	 * 分页显示列表
 	 * */
 	public PageInfo<News> findPageInfo(Map<String, Object> params) {
-		PageHelper.startPage(params);
-		List<News> list = newsMapper.findPageInfo(params);
-		return new PageInfo<News>(list);
+		if(!StringUtil.isNullOrEmpty((String)params.get("title"))){
+			//检索标题不为空，检索标题
+			Keyword key = keywordMapper.checkKeyword(params);
+			params.put("key_id",key.getId());
+			////检索标题不为空，检索标题
+			PageHelper.startPage(params);
+			List<News> list = newsMapper.findPageInfoByKeyWord(params);
+			return new PageInfo<News>(list);
+		}else{
+			////检索标题不为空，检索标题
+			PageHelper.startPage(params);
+			List<News> list = newsMapper.findPageInfo(params);
+			return new PageInfo<News>(list);
+		}
 	}
 
       public void insertList(List<News> newsList) {
