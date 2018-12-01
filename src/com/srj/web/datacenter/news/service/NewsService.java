@@ -1,5 +1,6 @@
 package com.srj.web.datacenter.news.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,18 +32,24 @@ public class NewsService {
 	 * 分页显示列表
 	 * */
 	public PageInfo<News> findPageInfo(Map<String, Object> params) {
+		//返回list
+		List<News> list = new ArrayList<>();
 		if(!StringUtil.isNullOrEmpty((String)params.get("title"))){
 			//检索标题不为空，检索标题
 			Keyword key = keywordMapper.checkKeyword(params);
+			//关键词为空，则返回空
+			if(key==null){
+				return new PageInfo<News>(list);
+			}
 			params.put("key_id",key.getId());
 			////检索标题不为空，检索标题
 			PageHelper.startPage(params);
-			List<News> list = newsMapper.findPageInfoByKeyWord(params);
+			list = newsMapper.findPageInfoByKeyWord(params);
 			return new PageInfo<News>(list);
 		}else{
 			////检索标题不为空，检索标题
 			PageHelper.startPage(params);
-			List<News> list = newsMapper.findPageInfo(params);
+			list = newsMapper.findPageInfo(params);
 			return new PageInfo<News>(list);
 		}
 	}

@@ -24,7 +24,7 @@
 	<select id="checkKeyword" parameterType="com.srj.web.datacenter.article.model.Keyword" resultType="com.srj.web.datacenter.article.model.Keyword">
 		SELECT id,name FROM keyword
 		<where>
-			name = #{name}
+			name = #{title}
 		</where>
 	</select>
 	
