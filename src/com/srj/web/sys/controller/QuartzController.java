@@ -1,6 +1,7 @@
 package com.srj.web.sys.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.srj.common.constant.Constant;
 import com.srj.web.datacenter.article.model.Keyword;
 import com.srj.web.datacenter.article.service.KeywordService;
 import com.srj.web.datacenter.news.model.News;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,43 +29,88 @@ public class QuartzController {
       @Autowired
       KeywordService keywordService;
 
-      //新闻爬虫
+      //凤凰网新闻爬虫
       @Scheduled(cron = "0 0 1/1 ? * *")
       //@RequestMapping(value = "/news")
       @ResponseBody
-      public void getNews(){
+      public void getiFengNews(){
             List<JSONObject> list = SpiderUtils.getifeng();
             List<News> newsList = new ArrayList<>();
             if(list.size()<=0){
             	System.out.println("------------------什么都没爬到");
             }
-            //取出第一条凤凰网财经的记录
-            News first = newsService.selectBySource("凤凰网财经");
+            //取出40条凤凰网财经的记录
+            List<News> dataList = newsService.selectBySource(Constant.NEWS_SOURCE_IFENG);
 
             for(JSONObject obj:list){
+            	  boolean b = true;	
+             		
                   News news = new News();
                   news.setTitle(obj.getString("title"));
                   news.setContent(obj.getString("content"));
                   news.setNews_time(obj.getString("newsTime"));
                   news.setCreate_time(DateUtils.getDateTime());
-                  news.setSource("凤凰网财经");
+                  news.setSource(Constant.NEWS_SOURCE_IFENG);
 
-                  if(first!=null){
-                	  if(first.getTitle().equals(obj.getString("title"))){
-                    	  break;
-                      }
+                  for(News item:dataList){
+                	  if(item.getTitle().equals(obj.getString("title"))){
+                		  //System.out.println("----去除重复新闻,标题："+obj.getString("title")+","+DateUtils.formatDateTime(new Date()));
+                		  b=false;
+                	  }
                   }
-
-                  newsList.add(news);
+                  
+                  if(b==true){
+                	  newsList.add(news);
+                  }
+                  
             }
             newsService.insertList(newsList);
             System.out.println("增加"+newsList.size());
       }
 
+      //中国证券网新闻爬虫
+      @Scheduled(cron = "0 30 1/1 ? * *")
+      //@RequestMapping(value = "/news")
+      @ResponseBody
+      public void getCsStockNews(){
+            List<JSONObject> list = SpiderUtils.getCsStock();
+            List<News> newsList = new ArrayList<>();
+            if(list.size()<=0){
+            	System.out.println("------------------什么都没爬到");
+            }
+            //取出40条凤凰网财经的记录
+            List<News> dataList = newsService.selectBySource(Constant.NEWS_SOURCE_CSSTOCK);
+
+            for(JSONObject obj:list){
+            	  boolean b = true;	
+             		
+                  News news = new News();
+                  news.setTitle(obj.getString("title"));
+                  news.setContent(obj.getString("content"));
+                  news.setNews_time(obj.getString("newsTime"));
+                  news.setAuthor(obj.getString("author"));
+                  news.setCreate_time(DateUtils.getDateTime());
+                  news.setSource(Constant.NEWS_SOURCE_CSSTOCK);
+
+                  for(News item:dataList){
+                	  if(item.getTitle().equals(obj.getString("title"))){
+                		  //System.out.println("----去除重复新闻,标题："+obj.getString("title")+","+DateUtils.formatDateTime(new Date()));
+                		  b=false;
+                	  }
+                  }
+                  
+                  if(b==true){
+                	  newsList.add(news);
+                  }
+                  
+            }
+            newsService.insertList(newsList);
+            System.out.println("增加"+newsList.size());
+      }
 
       //新闻关键词和标题关联
       //@RequestMapping(value = "/newkey")
-      @Scheduled(cron = "0 0 2 * * ?")
+      @Scheduled(cron = "0 10 3 * * ?")
       @ResponseBody
       public void newsTitleGetKeyword(){
             List<Keyword> keywordList = keywordService.getAllKeyword();

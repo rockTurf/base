@@ -38,7 +38,7 @@
 		SELECT * from news 
 		where source = #{source}
 		ORDER BY
-			news_time DESC limit 1
+			news_time DESC limit 40
 	</select>
 	<!--取出新闻总数量-->
 	<select id="totalNewsNumber" resultType="java.lang.Integer">

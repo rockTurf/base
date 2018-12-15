@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import com.srj.web.datacenter.article.mapper.KeywordMapper;
 import com.srj.web.datacenter.article.model.Keyword;
+import com.srj.web.sys.model.SysUser;
 import com.srj.web.util.DateUtils;
 import com.srj.web.util.StringUtil;
 import org.springframework.stereotype.Service;
@@ -71,7 +72,7 @@ public class NewsService {
 	}
 
 	//取出某网站最新一条记录
-	public News selectBySource(String source) {
+	public List<News> selectBySource(String source) {
 		return newsMapper.selectBySource(source);
 	}
 
@@ -101,5 +102,13 @@ public class NewsService {
 			}
 		}
 
+	}
+
+	//新增
+	public int saveArticle(News record, SysUser u) {
+		record.setCreate_time(DateUtils.formatDateTime(new Date()));
+		//来源
+		record.setSource(u.getName()+"-手动添加");
+		return newsMapper.insertSelective(record);
 	}
 }

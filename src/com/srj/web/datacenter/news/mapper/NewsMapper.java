@@ -20,7 +20,7 @@ public interface NewsMapper extends Mapper<News>{
 
 	Long selectByNewIdAndKeyId(Map<String, Object> map);
 
-	News selectBySource(String source);
+	List<News> selectBySource(String source);
 
 
 }

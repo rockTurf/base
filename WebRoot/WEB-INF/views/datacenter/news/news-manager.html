@@ -2,7 +2,7 @@
 	<ul id="myTab" class="nav nav-tabs">
 		<li class="active"><a href="#home" data-toggle="tab">新闻列表</a>
 		</li>
-		<!--<li><a href="#add" data-toggle="tab">新闻抓取</a></li>-->
+		<li><a href="#add" data-toggle="tab">新增新闻</a></li>
 	</ul>
 
 	<div class="matter">
@@ -47,26 +47,41 @@
 			<div class="tab-pane fade" id="add">
 				<div class="widget wgreen">
 					<div class="widget-head">
-						<div class="pull-left">新闻抓取</div>
+						<div class="pull-left">新增新闻</div>
 						<div class="clearfix"></div>
 					</div>
 					<div class="widget-content">
 						<div class="padd">
 							<!-- Form starts.  -->
 							<form class="form-horizontal" role="form" id="save-form"
-								action="${ctxPath!}/article/save" method="post">
+								action="${ctxPath!}/news/save" method="post">
 								<div class="form-group">
 									<label class="col-lg-4 control-label">标 题</label>
 									<div class="col-lg-8">
 										<input type="text" name="title" id="name" datatype="*"
-											nullmsg="此项必填！" class="form-control" onblur="checkKeyword()">
+											nullmsg="此项必填！"  placeholder="请输入新闻标题" class="form-control">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-lg-4 control-label">摘 要</label>
+									<label class="col-lg-4 control-label">内容</label>
+									  <div class="col-lg-8">
+                                   	  <textarea class="form-control" name="content" datatype="*"
+											nullmsg="此项必填！" rows="3" placeholder="请输入新闻内容"></textarea>
+                                  </div>
+								</div>
+								<div class="form-group">
+									<label class="col-lg-4 control-label">新闻时间</label>
+									<div class="form-group">
+						                <div class="input-group date form_date col-md-5" data-link-field="dtp_input2">
+						                    <input class="form-control" size="16" type="text" name="news_time" readonly>
+						                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+						                </div>
+						            </div>
+								</div>
+								<div class="form-group">
+									<label class="col-lg-4 control-label">作者</label>
 									<div class="col-lg-8">
-										<input type="text" name="introduction" datatype="*"
-											class="form-control">
+										<input type="text" name="author" class="form-control">
 									</div>
 								</div>
 								<div>
@@ -90,43 +105,16 @@
 <script>
 $("#search-form").getPageList({'submitBtnId':'search-btn'});
 
-var val = 1;
-var fileArray = new Array();
-var fileMap = new Map();
-$('#upload_file').uploadifive({
-       'auto' : true,
-       'uploadScript' : '${ctxPath}/upload/uploadFile',
-       'fileObjName' : 'files',
-       'buttonText' : '上传附件',
-       'queueID' : 'tip-queue',
-       'fileType' : '*',//'image/*',
-       'multi' : false,
-       'fileSizeLimit'   : 5242880,
-       'uploadLimit' : 10,
-       'queueSizeLimit'  : 10,   
-       'onUploadComplete' : function(file, data) {
-         fileMap.put(data);//添加到附件map
-       	 $("#filepath").val(fileMap);
+$('.form_date').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:  'cn',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 0,
+		minView: 2,
+		forceParse: 0
+});
 
-       },
-       onCancel : function(file) {
-           $data    = $(this).data('uploadifive'),
-           settings = $data.settings;
-           settings.uploadLimit++;
-           $.ajax({
-			 type: "POST",
-			 url:"upload/deleteFile",
-			 dataType: 'JSON',
-			 data:"fileUrl="+fileMap.get(file.name),
-		}); 
-           fileMap.remove(file.name);//删除附件map
-            $("#filepath").val(fileMap);
-       },
-       onFallback : function() {
-           alert("该浏览器无法使用!");
-       },
-       onUpload : function(file) {
-   	
-       },
-   });
  </script>

@@ -26,6 +26,7 @@ public class SpiderUtils {
     protected static final Logger logger = LoggerFactory.getLogger(SpiderUtils.class);
 
     private static String IFENG_URL = "http://finance.ifeng.com/listpage/110/1/list.shtml";
+    private static String CSSTOCK_URL = "http://www.cnstock.com/";
 
 
     /**
@@ -143,7 +144,49 @@ public class SpiderUtils {
             }
         }
         return list;
-
     }
 
+    
+    /**
+     * 获取中国证券网的股票新闻JSON
+     *
+     */
+    public static List<JSONObject> getCsStock() {
+        //返回值
+        List<JSONObject> list = new ArrayList<>();
+        String url = CSSTOCK_URL;
+        //开爬
+        String string = getSourceFormHtml(url, "UTF-8");
+        if (StringUtils.isNotBlank(string)) {
+        	Document doc = Jsoup.parse(string);
+            if (doc != null) {
+            	Elements elements = doc.select("li[class=newslist]");
+                for(Element el:elements){
+                	String title = el.select("a").attr("title").toString();
+                	String link = el.select("a").attr("href").toString();
+                	/*System.out.println("title="+title+",link="+link);*/
+                	//文章链接
+                    String string_article = getSourceFormHtml(link, "GBK");
+                    Document doc2 = Jsoup.parse(string_article);
+                    String content = "";
+                    String newsTime = "";
+                    String author = "";
+                    if (doc2 != null) {
+                        Element element = doc2.getElementById("qmt_content_div");
+                        newsTime = doc2.select("span[class=timer]").get(0).text();
+                        content = element.text();
+                        author = doc2.select("span[class=author]").get(0).text();
+                    }
+                    JSONObject obj = new JSONObject();
+                    obj.put("title",title);
+                    obj.put("content",content);
+                    obj.put("newsTime",newsTime);
+                    obj.put("author",author);
+                    list.add(obj);
+                    //System.out.println(obj);
+                }
+            }
+        }
+        return list;
+    }
 }

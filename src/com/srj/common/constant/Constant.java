@@ -75,5 +75,10 @@ public class Constant {
 	 *session存放
 	 */
 	public static final String STOCK_TRADE_PROGRESS = "stock_trade_progress";//单日交易批量文件上传进度条
+	/**
+	 *新闻来源
+	 */
+	public static final String NEWS_SOURCE_IFENG = "凤凰网财经";
+	public static final String NEWS_SOURCE_CSSTOCK = "中国证券网";
 	
 }
