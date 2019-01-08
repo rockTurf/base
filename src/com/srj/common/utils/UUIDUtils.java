@@ -81,17 +81,22 @@ public class UUIDUtils {
     
     /*
      * 2016-10-20 shiruojiang
-     * 生成随机数字
+     * 生成随机数字转换为Long型
      * */
     public static String getRandomInteger(int length) { //length表示生成字符串的长度  
-        String base = "0123456789";     
+        String base = "1234567890";     
         Random random = new Random();     
         StringBuffer sb = new StringBuffer();     
-        for (int i = 0; i < length; i++) {     
-            int number = random.nextInt(base.length());     
+        for (int i = 0; i < length; i++) {
+        	int count = base.length();
+        	//第一个数字不能为0
+        	if(i==0){
+        		count = base.length()-1;
+        	}
+            int number = random.nextInt(count);     
             sb.append(base.charAt(number));     
-        }     
-        return sb.toString();     
+        }
+        return sb.toString();    
      }  
     
     

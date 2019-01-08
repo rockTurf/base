@@ -12,5 +12,7 @@ public interface StockDataMapper extends Mapper<StockData>{
 
 	void CallProcedure();
 
+	int insertList(List<StockData> list);
+
 
 }

@@ -25,5 +25,13 @@
 		CALL stock_calculate
 	</update>
 	
+	<insert id="insertList">
+		INSERT IGNORE INTO stock_data (stock_id,data_time,rise,price,turnover,inflow,day_huge,day_large,day_middle,day_small) values
+		<foreach collection="list" index="index" item="command" separator=",">
+			('${command.stock_id}','${command.data_time}','${command.rise}','${command.price}',
+			'${command.turnover}','${command.inflow}','${command.day_huge}','${command.day_large}',
+			'${command.day_middle}','${command.day_small}')
+		</foreach>
+	</insert>
 	
 </mapper>

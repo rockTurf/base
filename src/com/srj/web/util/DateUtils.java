@@ -346,16 +346,19 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 			return null;
 		}
 
-	/*
-	 * 2017/01/23 shiruojiang
-	 * 如果现在时间是早8点以前，输入昨天的日期yy-MM-dd格式
-	 * */
-	public static String getDateBy8(){
-		Date date= new Date();
-		int h = date.getHours();
-		if(h<8){
-			date=new Date(date.getTime()-24*60*60*1000);
-		}
-		return new SimpleDateFormat("yyyy-MM-dd").format(date);
+	//把yyyyMMdd格式转换成yyyy-MM-dd格式
+	public static String formatDateFromYYYYmmDD(String strDate){
+		String resultStr = "";//返回结果
+		
+		SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sDateFormat=new SimpleDateFormat("yyyy-MM-dd"); //加上时间
+        //捕获异常
+        try {
+            Date date=simpleDateFormat.parse(strDate);
+            resultStr = formatDate(date,null);
+        } catch(ParseException px) {
+            px.printStackTrace();
+        }
+        return resultStr;
 	}
 }

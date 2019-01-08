@@ -1,5 +1,7 @@
 package com.srj.web.datacenter.stock.controller;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.srj.common.utils.SysUserUtil;
@@ -50,6 +53,19 @@ public class StockDataController {
 		PageInfo<StockData> page = stockDataService.findPageInfo(params);
 		model.addAttribute("page", page);
 		return "datacenter/stock/stockData-list";
+	}
+	
+	/**
+	 * 通过上传的添加数据
+	 * 
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "addStockData")
+	public @ResponseBody Integer addByExcel(@RequestParam String filedata,Model model) throws IOException, ParseException{
+		
+		return stockDataService.saveTxt(filedata);
 	}
 	
 }
