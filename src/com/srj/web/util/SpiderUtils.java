@@ -131,15 +131,22 @@ public class SpiderUtils {
                     String content = "";
                     String newsTime = "";
                     if (doc2 != null) {
-                        Element element = doc2.getElementById("main_content");
-                        newsTime = doc2.select("meta[name=og:time]").get(0).attr("content").toString();
-                        content = element.text();
+                        Element element = doc2.getElementById("main_content-LcrEruCc");
+                        //判断一下，不为空并长度大于0
+                        if(doc2.select("span[class=time-hm3v7ddj]")!=null){
+                        	if(doc2.select("span[class=time-hm3v7ddj]").size()>0){
+                        		newsTime = doc2.select("span[class=time-hm3v7ddj]").get(0).text();
+                        	}
+                        }
+                        if(element!=null){
+                        	content = element.text();
+                        	JSONObject obj = new JSONObject();
+                            obj.put("title",title);
+                            obj.put("content",content);
+                            obj.put("newsTime",newsTime);
+                            list.add(obj);
+                        }
                     }
-                    JSONObject obj = new JSONObject();
-                    obj.put("title",title);
-                    obj.put("content",content);
-                    obj.put("newsTime",newsTime);
-                    list.add(obj);
                 }
             }
         }
@@ -173,16 +180,31 @@ public class SpiderUtils {
                     String author = "";
                     if (doc2 != null) {
                         Element element = doc2.getElementById("qmt_content_div");
-                        newsTime = doc2.select("span[class=timer]").get(0).text();
-                        content = element.text();
-                        author = doc2.select("span[class=author]").get(0).text();
+                        Elements elScripts = doc.getElementsByTag("script");
+                        //判断一下，不为空并长度大于0
+                        if(doc2.select("span[class=timer]")!=null){
+                        	if(doc2.select("span[class=timer]").size()>0){
+                        		newsTime = doc2.select("span[class=timer]").get(0).text();
+                        	}
+                        	
+                        }
+                        
+                        //判断一下，不为空并长度大于0
+                        if(doc2.select("span[class=author]")!=null){
+                        	if(doc2.select("span[class=author]").size()>0){
+                        		author = doc2.select("span[class=author]").get(0).text();
+                        	}
+                        }
+                        if(element!=null){
+                        	content = element.text();
+                        	JSONObject obj = new JSONObject();
+                            obj.put("title",title);
+                            obj.put("content",content);
+                            obj.put("newsTime",newsTime);
+                            obj.put("author",author);
+                            list.add(obj);
+                        }
                     }
-                    JSONObject obj = new JSONObject();
-                    obj.put("title",title);
-                    obj.put("content",content);
-                    obj.put("newsTime",newsTime);
-                    obj.put("author",author);
-                    list.add(obj);
                     //System.out.println(obj);
                 }
             }
