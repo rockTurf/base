@@ -1,1 +1,0 @@
-ALTER TABLE news ADD news_time  VARCHAR (80) NULL COMMENT '新闻时间' ;
