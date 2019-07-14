@@ -1,0 +1,227 @@
+<div class="page-head">
+  <h2 class="pull-left"><i class="fa fa-bar-chart"></i>统计图</h2>
+  <div class="clearfix"></div>
+</div>
+<div class="matter">
+  <div class="container">
+    <div class="widget">
+      <div class="widget-head">
+        <div class="form-group">
+          <div class="col-lg-9">
+            <label class="control-label">股票名称：</label>
+            <select id="stockSelect">
+              @for(item in stockList){
+              <option value="${item.id}">${item.name}</option>
+              @}
+            </select>
+            <label class="control-label">时间：</label>
+            <input size="16" type="text" readonly class="form_datetime" id="search_time">
+            <label class="control-label">选择维度：</label>
+            <select id="SelectType">
+              <option value="1">量价交易</option>
+            </select>
+            <button type="button" class="btn btn-success" id="draw-button"
+                    readonly>查询</button>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="widget">
+      <div class="widget-head">
+        <div class="pull-left">图表显示</div>
+        <div class="clearfix"></div>
+      </div>
+          <div id="container" style="height: 100%"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+    //日期控件
+    $(".form_datetime").datetimepicker({
+        format: 'yyyy-mm-dd',
+        autoclose:true,
+        minView:2,
+        bootcssVer:3,
+        todayBtn : true,
+        language : 'zh-CN'
+    });
+    //下拉框
+    $('#stockSelect').selectpicker({
+        width : 200
+    });
+    $('#SelectType').selectpicker({
+        width : 150
+    });
+    $("#draw-button").click(function(){
+        stock_id = $('#stockSelect').val();//股票
+        search_time = $('#search_time').val();//时间
+        type = $('#SelectType').val();//图形类型
+        $.ajax({
+            type: "POST",
+            url: '${ctxPath}/stockDraw/draw',
+            data: {
+                stock_id:stock_id,
+                search_time:search_time,
+                type:type
+            },
+            dataType:'json',
+            cache: true,
+            success: function(data){
+                drawChar1(data);
+            }
+        });
+    });
+
+
+
+
+    function drawChar1(data){
+        var priceArray = data.priceArray;
+        var BArray = data.BArray;
+        var SArray = data.SArray;
+        var dom = document.getElementById("container");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        app.title = '柱状图框选';
+
+        var xAxisData = [];
+        var data1 = [];
+        var data2 = [];
+
+        for (var i = 0; i < priceArray.length; i++) {
+            xAxisData.push(priceArray[i]);
+            data1.push(BArray[i]);
+            data2.push(-SArray[i]);
+        }
+
+        var itemStyle = {
+            normal: {
+            },
+            emphasis: {
+                barBorderWidth: 1,
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                shadowColor: 'rgba(0,0,0,0.5)'
+            }
+        };
+
+        option = {
+            backgroundColor: '#eee',
+            legend: {
+                data: ['买入', '卖出'],
+                align: 'left',
+                left: 10
+            },
+            brush: {
+                toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
+                xAxisIndex: 0
+            },
+            toolbox: {
+                feature: {
+                    magicType: {
+                        type: ['stack', 'tiled']
+                    },
+                    dataView: {}
+                }
+            },
+            tooltip: {},
+            xAxis: {
+                data: xAxisData,
+                name: 'X Axis',
+                silent: false,
+                axisLine: {onZero: true},
+                splitLine: {show: false},
+                splitArea: {show: false}
+            },
+            yAxis: {
+                inverse: true,
+                splitArea: {show: false}
+            },
+            grid: {
+                left: 100
+            },
+            visualMap: {
+                type: 'continuous',
+                dimension: 1,
+                text: ['High', 'Low'],
+                inverse: true,
+                itemHeight: 200,
+                calculable: true,
+                min: -2,
+                max: 6,
+                top: 60,
+                left: 10,
+                inRange: {
+                    colorLightness: [0.4, 0.8]
+                },
+                outOfRange: {
+                    color: '#bbb'
+                },
+                controller: {
+                    inRange: {
+                        color: '#2f4554'
+                    }
+                }
+            },
+            series: [
+                {
+                    name: '买入',
+                    type: 'bar',
+                    stack: 'one',
+                    itemStyle: itemStyle,
+                    data: data1
+                },
+                {
+                    name: '卖出',
+                    type: 'bar',
+                    stack: 'one',
+                    itemStyle: itemStyle,
+                    data: data2
+                }
+            ]
+        };
+
+        myChart.on('brushSelected', renderBrushed);
+
+        myChart.resize({
+            height : '600'
+        })
+
+        function renderBrushed(params) {
+            var brushed = [];
+            var brushComponent = params.batch[0];
+
+            for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {
+                var rawIndices = brushComponent.selected[sIdx].dataIndex;
+                brushed.push('[Series ' + sIdx + '] ' + rawIndices.join(', '));
+            }
+
+            myChart.setOption({
+                title: {
+                    backgroundColor: '#333',
+                    text: 'SELECTED DATA INDICES: \n' + brushed.join('\n'),
+                    bottom: 0,
+                    right: 0,
+                    width: 100,
+                    textStyle: {
+                        fontSize: 12,
+                        color: '#fff'
+                    }
+                }
+            });
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+
+
+</script>

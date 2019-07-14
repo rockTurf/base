@@ -318,10 +318,10 @@ $(document).ready(function() {
 
 /* CL Editor */
 
-$(".cleditor").cleditor({
+/*$(".cleditor").cleditor({
     width: "auto",
     height: "auto"
-});
+});*/
 
 /* Modal fix */
 

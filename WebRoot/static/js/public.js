@@ -372,7 +372,8 @@ function getTotalList(formid,searchbtn){
 	 $("#"+formid).getPageList({'submitBtnId':searchbtn});
 }
 //分页
-function paging(formId,pageNo){
+function
+paging(formId,pageNo){
 	var $form = $("#"+formId),$target = $("#"+$form.attr('target')),spinner;
 	var pageNoInput = $form.find('input[name="pageNum"]');
 	var pageSize = $form.find('input[name="pageSize"]');

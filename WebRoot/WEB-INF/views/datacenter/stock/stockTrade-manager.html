@@ -126,12 +126,14 @@ $('#upload_file').uploadifive({
 </div>
 <script>
 $("#search-form").getPageList({'submitBtnId':'search-btn'});
+//日期控件
 $(".form_datetime").datetimepicker({
 	format: 'yyyy-mm-dd',
 	autoclose:true,
 	minView:2,
 	bootcssVer:3,
-	todayBtn : true
+	todayBtn : true,
+    language : 'zh-CN'
 });
 $('#stock_id').selectpicker({
    liveSearch: true,
