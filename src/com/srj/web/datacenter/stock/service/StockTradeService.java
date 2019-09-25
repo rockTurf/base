@@ -127,4 +127,13 @@ public class StockTradeService {
 		HttpSession session = req.getSession();
 		return session.getAttribute(Constant.STOCK_TRADE_PROGRESS).toString();
 	}
+
+	/**
+	 * 取出交易表最新日期的一条记录，做页面初始化参数来用
+	 * */
+    public StockTrade getNewestRecord() {
+
+    	return stockTradeMapper.selectNewestRecord();
+
+    }
 }
