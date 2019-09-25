@@ -50,4 +50,8 @@
 		trade_date = #{search_time} and stock_id = #{stock_id}
 	</select>
 
+	<!-- 取出交易表最新日期的一条记录，做页面初始化参数来用 -->
+	<select id="selectNewestRecord" resultType="com.srj.web.datacenter.stock.model.StockTrade">
+		SELECT stock_id,trade_date from stock_trade ORDER BY trade_date desc limit 1
+	</select>
 </mapper>

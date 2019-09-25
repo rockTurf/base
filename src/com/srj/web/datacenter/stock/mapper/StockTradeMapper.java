@@ -15,4 +15,6 @@ public interface StockTradeMapper extends Mapper<StockTrade>{
 	List<String> checkTradeData(String id);
 
 	List<StockTrade> selectList(Map<String, Object> params);
+
+    StockTrade selectNewestRecord();
 }
