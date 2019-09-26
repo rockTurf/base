@@ -110,7 +110,7 @@ public class QuartzController {
 
       //新闻关键词和标题关联
       //@RequestMapping(value = "/newkey")
-      @Scheduled(cron = "0 10 3 * * ?")
+      @Scheduled(cron = "0 25 1/1 ? * *")
       @ResponseBody
       public void newsTitleGetKeyword(){
             List<Keyword> keywordList = keywordService.getAllKeyword();
