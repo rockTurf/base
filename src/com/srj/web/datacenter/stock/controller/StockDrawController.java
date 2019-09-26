@@ -44,15 +44,15 @@ public class StockDrawController {
 		List<Stock> stockList = stockService.getAllStock();
 		//取出最新的单只股票的单日交易情况
 		//1.先取出库里最新记录日期和股票id
-		StockTrade lastOne = stockTradeService.getNewestRecord();
+		/*StockTrade lastOne = stockTradeService.getNewestRecord();
 		//这条记录的股票id
 		String stock_id = lastOne.getStock_id().toString();
 		String trade_date = lastOne.getTrade_date();
 		//绘制初始化图案(按照默认量价交易【值为1】来计算
-		JSONObject obj = stockDrawService.selectDraw(stock_id,"1",trade_date);
+		JSONObject obj = stockDrawService.selectDraw(stock_id,"1",trade_date);*/
 
 		model.addAttribute("stockList", stockList);
-		model.addAttribute("obj",obj);
+		//model.addAttribute("obj",obj);
 		return "datacenter/stock/stock-draw";
 	}
 
@@ -76,7 +76,6 @@ public class StockDrawController {
 		//量价交易
 		obj = stockDrawService.selectDraw(stock_id,type,search_time);
 		obj.put("search_time",search_time);
-		obj.put("success","true");
 		return obj;
 	}
 }

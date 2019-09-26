@@ -36,6 +36,11 @@ public class StockDrawService {
 		params.put("stock_id",stock_id);
 		params.put("search_time",search_time);
 		List<StockTrade> list = stockTradeMapper.selectList(params);
+		//list判空
+        if(list.size()<=0){
+            obj.put("success","false");
+            return obj;
+        }
 		//取出不重复的价值
 		for(StockTrade item : list){
 			priceArray.add(item.getPrice().toString());
@@ -57,12 +62,12 @@ public class StockDrawService {
 					}
 				}
 			}
-			B_Array.add(totalB.toString());
-			S_Array.add(totalS.toString());
+			B_Array.add(String.valueOf(totalB));
+			S_Array.add(String.valueOf(0-totalS));
 		}
 		obj.put("BArray",B_Array);
 		obj.put("SArray",S_Array);
-
+        obj.put("success","true");
 		return obj;
 	}
 
