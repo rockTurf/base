@@ -42,6 +42,7 @@
 </div>
 
 <script>
+
     //日期控件
     $(".form_datetime").datetimepicker({
         format: 'yyyy-mm-dd',
@@ -73,6 +74,9 @@
             dataType:'json',
             cache: true,
             success: function(data){
+                //更新日期
+                $('#search_time').val(data.search_time);
+                $('#form_datetime').datetimepicker('update');
                 drawChar1(data);
             }
         });

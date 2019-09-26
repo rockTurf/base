@@ -65,4 +65,15 @@ public class StockDrawService {
 
 		return obj;
 	}
+
+	//找到该股票最近一天的日期
+	public String selectLastTradeDate(String stock_id) {
+		StockTrade record = stockTradeMapper.selectLastTradeDate(stock_id);
+		//判空
+		if(record==null){
+			return null;
+		}
+		return record.getTrade_date();
+
+	}
 }

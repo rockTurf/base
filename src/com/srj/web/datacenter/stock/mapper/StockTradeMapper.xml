@@ -54,4 +54,9 @@
 	<select id="selectNewestRecord" resultType="com.srj.web.datacenter.stock.model.StockTrade">
 		SELECT stock_id,trade_date from stock_trade ORDER BY trade_date desc limit 1
 	</select>
+
+	<select id="selectLastTradeDate" resultType="com.srj.web.datacenter.stock.model.StockTrade">
+		select trade_date from stock_trade where
+		stock_id = #{_parameter} ORDER BY trade_date desc limit 1
+	</select>
 </mapper>
