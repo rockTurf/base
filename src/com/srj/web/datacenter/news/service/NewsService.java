@@ -87,7 +87,7 @@ public class NewsService {
 	}
 
 	//新闻和关键词进行匹配，插库
-	public void getInNewsKeyword(News news, Keyword key) {
+	public Integer getInNewsKeyword(News news, Keyword key) {
 		//判断标题是否包含此关键词
 		if(news.getTitle().indexOf(key.getName())!=-1){
 			//如果包含，先查询下中间表是否已含有
@@ -98,10 +98,10 @@ public class NewsService {
 			if(id==null){
 				//如果没有就插入
 				map.put("createTime", DateUtils.formatDateTime(new Date()));
-				newsMapper.insertNewKeyword(map);
+				return newsMapper.insertNewKeyword(map);
 			}
 		}
-
+		return 0;
 	}
 
 	//新增
