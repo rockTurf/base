@@ -110,7 +110,7 @@ public class QuartzController {
 
       //新闻关键词和标题关联
       //@RequestMapping(value = "/newkey")
-      @Scheduled(cron = "0 10 1/1 ? * *")
+      @Scheduled(cron = "0 35 1/1 ? * *")
       @ResponseBody
       public void newsTitleGetKeyword(){
             List<Keyword> keywordList = keywordService.getAllKeyword();
@@ -130,7 +130,7 @@ public class QuartzController {
                   map.put("start",i*size);
                   map.put("size",size);
                   List<News> newsList = newsService.getPageNewsOneK(map);
-                  System.out.println("-----------第 "+i+" 次循环，取到新闻条数： "+newsList.size());
+                  System.out.println("-----------第 "+(i+1)+" 次循环，取到新闻条数： "+newsList.size());
                   int total = 0;//统计插入的数量
                   for(News news:newsList){
                         //取到之后，用新闻标题循环比对关键词，插库
@@ -141,13 +141,16 @@ public class QuartzController {
                               }
                         }
                   }
-                  System.out.println("-----------第 "+i+" 次循环，插入数据库的记录数： "+total);
+                  Long currentTime = System.currentTimeMillis();
+                  System.out.println("-----------第 "+(i+1)+" 次循环，插入数据库的记录数： "+total+"，耗时："+(currentTime-startTime));
                   //阶段性结束的时间,超过执行20分钟就结束
-                  Long endTime = System.currentTimeMillis();
+                /*  Long endTime = System.currentTimeMillis();
                   if((endTime-startTime)>2000*60*10){
-                	  System.out.println("-----------新闻关键词和标题关联执行超过10分钟，共执行："+i+"千条");
+                	  System.out.println("-----------新闻关键词和标题关联执行超过10分钟，共执行："+(i+1)+"千条");
                 	  return;
-                  }
+                  }*/
             }
+            Long endTime = System.currentTimeMillis();
+            System.out.println("-----------新闻关键词和标题关联执行结束，共计耗时:"+(endTime-startTime));
       }
 }
