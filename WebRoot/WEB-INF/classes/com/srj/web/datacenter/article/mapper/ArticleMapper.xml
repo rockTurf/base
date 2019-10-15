@@ -26,7 +26,7 @@
 		    and a.introduction like concat('%',#{introduction} ,'%')
 		    </if>
 		</where>
-		GROUP BY a.id DESC
+		GROUP BY a.id
 		ORDER BY a.id DESC
 	</select>
 	

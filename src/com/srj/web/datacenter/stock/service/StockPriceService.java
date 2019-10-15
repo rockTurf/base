@@ -28,7 +28,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.srj.common.excel.template.ExcelUtils;
 import com.srj.common.utils.SysConstant;
 import com.srj.common.utils.UUIDUtils;
