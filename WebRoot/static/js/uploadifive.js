@@ -76,7 +76,7 @@ function insertTr(){
       html+='</td>';
       html+='<td class="center" ><input type="button" value="删除" onclick="deleteTr(this)" title="点击删除本记录"/></td>';
       html+='</tr>';
-      html+='<script src="static/js/jquery.uploadifive.min.js" type="text/javascript"><\/script>';
+      html+='<script src="static/js/jquery.uploadifive.min.js" charset="utf-8" type="text/javascript"><\/script>';
       $("#table_people").append(html);
      // $("#"+val+"_address").selectCity("#"+val+"_selectItem");
       

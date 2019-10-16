@@ -35,13 +35,15 @@ public class DownloadController {
 	
 	//附件下载
 	@RequestMapping("file")
-	public void downLoadFile(String fileUrl,HttpServletResponse response,HttpServletRequest request) throws Exception{
+	public void downLoadFile(String fileName,String fileUrl,
+			HttpServletResponse response,HttpServletRequest request) throws Exception{
 		File previewFile = new File(SysConstant.UploadUrl()+fileUrl); 
 		//取得文件名
-		String temp[] = fileUrl.replaceAll("\\\\","/").split("/"); 
-		if (temp.length > 1) { 
-			fileUrl = temp[temp.length - 1]; 
-		}
+		/*
+		 * String temp[] = fileUrl.replaceAll("\\\\","/").split("/"); if (temp.length >
+		 * 1) { fileUrl = temp[temp.length - 1]; }
+		 */
+		fileUrl = fileName;
 		FileUtil.downloadFile(fileUrl, response, previewFile); 
 	}
 

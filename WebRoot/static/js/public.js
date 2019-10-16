@@ -269,8 +269,8 @@ $(function(){
 })(jQuery);
 
 //文件下载
-function doloadfile(fileUrl){
- 	var url = "download/file?fileUrl="+fileUrl;
+function doloadfile(fileName,fileUrl){
+ 	var url = "download/file?fileUrl="+fileUrl+"&fileName="+fileName;
  	window.open(url).focus();
 }
 

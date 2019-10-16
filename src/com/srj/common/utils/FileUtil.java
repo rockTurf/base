@@ -781,8 +781,7 @@ public class FileUtil extends org.apache.commons.io.FileUtils {
 		InputStream is = new FileInputStream(previewFile); 
 		response.reset(); 
 		response.setContentType("application/xls;charset=UTF-8"); 
-		String header = ("attachment") + ";filename="
-				+ new String(fileUrl.getBytes(), "ISO8859-1");
+		String header = ("attachment") + ";filename="+ new String(fileUrl.getBytes("GB2312"), "ISO_8859_1");
 		response.addHeader("Content-Disposition", header);
 		byte[] b = new byte[1024]; 
 		int len; 
