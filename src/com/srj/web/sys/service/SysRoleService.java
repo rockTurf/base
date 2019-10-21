@@ -33,7 +33,7 @@ public class SysRoleService {
 	}
 	//修改角色
 	public int editRole(SysRole record) {
-		return 0;
+		return sysRoleMapper.updateByPrimaryKey(record);
 	}
 	//根据id取出角色和其对应权限
 	public SysRole getRoleById(Long id) {

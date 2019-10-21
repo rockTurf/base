@@ -1,7 +1,9 @@
 package com.srj.web.sys.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
+import com.srj.common.base.ZTreeNode;
 import com.srj.common.utils.SysUserUtil;
 import com.srj.web.sys.model.SysResource;
 import com.srj.web.sys.model.SysUser;
@@ -44,6 +46,8 @@ public class MenuController{
 		//model.addAttribute("treeList", JSON.toJSONString(sysResourceService.getMenuTree()));
 		SysUser u = SysUserUtil.getSessionLoginUser();
 		List<SysResource> menuList = sysResourceService.getAllResourcesList();
+		//menuList另作处理，再返回
+		JSONArray menuArray = ZTreeNode.menu2zTree(menuList);
 		params.put("menuList", menuList);
 		model.addAttribute("params", params);
 		return "sys/menu/menu";

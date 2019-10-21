@@ -57,7 +57,7 @@ public class SysResource extends BaseEntity {
     }
 
 	public Long getPid() {
-		return this.getLong("pid");
+		return this.getLong("parentId");
 	}
 
 	public void setPid(Long pid) {

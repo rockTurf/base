@@ -9,11 +9,11 @@
 @var callBack = callBack!'';
 
 @if(isHide == "no"){
-<div class="width-100 clearfix" tag-save-btn style="bottom: 0px;left: 0px;position:absolute;">
-	<span class="btn btn-primary btn-sm bigger-110 width-50  pull-left"  id="${subBtnId}">
+<div class="width-100 clearfix" tag-save-btn style="width:100%;bottom: 0px;left: 0px;position:absolute;">
+	<span class="btn btn-primary btn-sm bigger-110 width-50  pull-left" style="width:50%" id="${subBtnId}">
 		<i class="ace-icon fa fa-floppy-o align-top bigger-125"></i> ${okText}
 	</span>
-	<span class="btn btn-yellow btn-sm bigger-110 width-50 pull-right" id="${formId}-cancel">
+	<span class="btn btn-yellow btn-sm bigger-110 width-50 pull-right" style="width:50%" id="${formId}-cancel">
 		<i class="ace-icon fa fa-times align-top  bigger-125"></i> 取 消
 	</span>
 </div>
