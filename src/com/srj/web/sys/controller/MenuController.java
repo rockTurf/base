@@ -47,7 +47,7 @@ public class MenuController{
 		SysUser u = SysUserUtil.getSessionLoginUser();
 		List<SysResource> menuList = sysResourceService.getAllResourcesList();
 		//menuList另作处理，再返回
-		JSONArray menuArray = ZTreeNode.menu2zTree(menuList);
+		JSONArray menuArray = ZTreeNode.menu2zTree(menuList,null);
 		params.put("menuList", menuList);
 		model.addAttribute("params", params);
 		return "sys/menu/menu";

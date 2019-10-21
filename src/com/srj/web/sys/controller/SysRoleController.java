@@ -1,6 +1,7 @@
 package com.srj.web.sys.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -8,6 +9,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSONArray;
+import com.srj.common.base.ZTreeNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,6 +35,8 @@ public class SysRoleController {
 
 	@Resource
 	private SysRoleService sysRoleService;
+	@Resource
+	private SysResourceService sysResourceService;
 	
 	/**
 	 * 跳转到页面
@@ -95,5 +100,25 @@ public class SysRoleController {
 		SysRole role = sysRoleService.getRoleById(id);
 		model.addAttribute("role", role);
 		return "sys/role/role-detail";
+	}
+
+	/**
+	 * 跳转编辑权限页面
+	 *
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "resource", method = RequestMethod.POST)
+	public String editResource(Long id,@RequestParam Map<String, Object> params,Model model){
+		SysUser u = SysUserUtil.getSessionLoginUser();
+		//返回已拥有的权限信息
+		List<Long> roleResList = sysRoleService.getRoleResourceById(id);
+		//返回所有权限树
+		List<SysResource> menuList = sysResourceService.getAllResourcesList();
+		//menuList另作处理，再返回
+		JSONArray menuArray = ZTreeNode.menu2zTree(menuList,roleResList);
+		model.addAttribute("menuList", menuArray);
+		return "sys/role/role-resource";
 	}
 }

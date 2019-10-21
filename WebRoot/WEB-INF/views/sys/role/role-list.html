@@ -25,10 +25,15 @@
 				<td>${item.name!}</td>
 				<td>${item.remark!}</td>
 				<td>
-				<button class="btn btn-xs btn-warning" data-mode="page" data-title="编辑"
+				<button class="btn btn-xs btn-warning" data-mode="page" data-title="基本信息编辑"
 							data-url="${ctxPath}/userRole/detail"
-							data-data="{id:'${item.id}'}" data-height="85%" data-width="60%">
+							data-data="{id:'${item.id}'}" data-height="45%" data-width="40%">
 				<i class="fa fa-pencil"></i>
+				</button>
+				<button class="btn btn-xs btn-primary" data-mode="page" data-title="权限编辑"
+						data-url="${ctxPath}/userRole/resource"
+						data-data="{id:'${item.id}'}" data-height="85%" data-width="80%">
+					<i class="fa fa-plus"></i>
 				</button>
 				</td>
 			</tr>

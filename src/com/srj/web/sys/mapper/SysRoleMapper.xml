@@ -27,4 +27,13 @@
 			sys_role
 	</select>
 	
+	<select id="getRoleResourceById" resultType="java.lang.Long">
+		SELECT
+			resource_id
+		FROM
+			sys_role_resource
+		where
+			role_id = #{_parameter}		
+	</select>
+	
 </mapper>

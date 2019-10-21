@@ -35,9 +35,14 @@ public class SysRoleService {
 	public int editRole(SysRole record) {
 		return sysRoleMapper.updateByPrimaryKey(record);
 	}
-	//根据id取出角色和其对应权限
+	//根据id取出角色信息
 	public SysRole getRoleById(Long id) {
 		return sysRoleMapper.selectByPrimaryKey(id);
 	}
-	
+	//返回已拥有的权限信息
+	public List<Long> getRoleResourceById(Long id) {
+		return sysRoleMapper.getRoleResourceById(id);
+	}
+
+
 }

@@ -13,5 +13,7 @@ public interface SysRoleMapper extends Mapper<SysRole>{
 	public List<SysRole> findPageInfo(Map<String, Object> params);
 
 	public List<SysRole> getAllRole();
+
+	public List<Long> getRoleResourceById(Long id);
 	
 }
