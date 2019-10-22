@@ -1,5 +1,6 @@
 package com.srj.web.sys.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -45,4 +46,13 @@ public class SysRoleService {
 	}
 
 
+	//保存角色的权限
+	public int saveRoleResource(Long id,String resIds) {
+		//先把逗号分隔为list
+		List<String> reslist = Arrays.asList(resIds.split(","));
+		//添加前先删除原先的权限
+		sysRoleMapper.deleteRoleResByRoleId(id);
+		//再添加新权限
+		return sysRoleMapper.insertRoleResource(id,reslist);
+	}
 }

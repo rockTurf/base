@@ -15,5 +15,8 @@ public interface SysRoleMapper extends Mapper<SysRole>{
 	public List<SysRole> getAllRole();
 
 	public List<Long> getRoleResourceById(Long id);
-	
+
+	int deleteRoleResByRoleId(Long id);
+
+	int insertRoleResource(Long id,List<String> list);
 }

@@ -112,6 +112,7 @@ public class SysRoleController {
 	@RequestMapping(value = "resource", method = RequestMethod.POST)
 	public String editResource(Long id,@RequestParam Map<String, Object> params,Model model){
 		SysUser u = SysUserUtil.getSessionLoginUser();
+		SysRole role = sysRoleService.getRoleById(id);
 		//返回已拥有的权限信息
 		List<Long> roleResList = sysRoleService.getRoleResourceById(id);
 		//返回所有权限树
@@ -119,6 +120,21 @@ public class SysRoleController {
 		//menuList另作处理，再返回
 		JSONArray menuArray = ZTreeNode.menu2zTree(menuList,roleResList);
 		model.addAttribute("menuList", menuArray);
+		model.addAttribute("role", role);
 		return "sys/role/role-resource";
+	}
+
+
+	/**
+	 * 保存角色的权限
+	 *
+	 * @param params
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/saveRes")
+	public @ResponseBody Integer saveRes(Long id,String resIds,Model model){
+		int count = sysRoleService.saveRoleResource(id,resIds);
+		return count;
 	}
 }
