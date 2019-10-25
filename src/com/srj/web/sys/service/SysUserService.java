@@ -54,4 +54,13 @@ public class SysUserService {
 		return count;
 	}
 
+	//根据id查找用户
+    public SysUser getUserById(Long id) {
+		return sysUserMapper.getUserById(id);
+    }
+
+    //修改用户
+	public int editUser(SysUser record) {
+		return sysUserMapper.updateByPrimaryKey(record);
+	}
 }

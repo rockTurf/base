@@ -5,6 +5,8 @@ import java.io.Serializable;
 import com.srj.common.base.BaseEntity;
 import com.srj.common.constant.Constant;
 
+import javax.persistence.Transient;
+
 public class SysUser  extends BaseEntity implements Serializable{
 	private String username ;
 	private String password;
@@ -12,12 +14,10 @@ public class SysUser  extends BaseEntity implements Serializable{
 	private String email;
 	private String phone;
 	private String delFlag;
-/*	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}*/
+
+	@Transient
+	private String roleId;//角色id
+
 	public String getUsername() {
 		return this.getString("username");
 	}
@@ -57,5 +57,13 @@ public class SysUser  extends BaseEntity implements Serializable{
 	}
 	public boolean isAdmin() {
 		return Constant.SUPER_ADMIN==(this.getId())?true:false;
+	}
+
+	public String getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
 }

@@ -33,4 +33,10 @@
 			and password = '${password}'
 		</where>
 	</select>
+
+	<select id="getUserById" resultType="com.srj.web.sys.model.SysUser">
+		SELECT a.*,b.role_id from sys_user a LEFT JOIN sys_user_role b
+		ON a.id = b.user_id where a.id = #{_parameter}
+
+	</select>
 </mapper>

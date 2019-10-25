@@ -1,0 +1,39 @@
+
+<div class="widget wgreen">
+	<div class="widget-content">
+		<div class="padd">
+			<!-- Form starts.  -->
+			<form class="form-horizontal" role="form"
+				action="${ctxPath!}/sysUser/edit" method="post" id="edit-form">
+				<input type="hidden" name="id" value="${user.id!}">
+				<div class="form-group">
+					<label class="col-lg-4 control-label">用户名</label>
+					<div class="col-lg-8">
+						<input type="text" name="name" value="${user.username!}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-4 control-label">姓名</label>
+					<div class="col-lg-8">
+						<input type="text" name="name" value="${user.name!}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-4 control-label">邮箱</label>
+					<div class="col-lg-8">
+						<input type="text" name="name" value="${user.email!}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-4 control-label">电话</label>
+					<div class="col-lg-8">
+						<input type="text" name="name" value="${user.phone!}" class="form-control">
+					</div>
+				</div>
+				<#save  formId="edit-form"
+				config="true">
+				</#save>
+			</form>
+		</div>
+	</div>
+</div>

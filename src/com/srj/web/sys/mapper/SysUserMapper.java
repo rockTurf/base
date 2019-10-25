@@ -15,7 +15,7 @@ public interface SysUserMapper extends Mapper<SysUser>{
 	public Long CheckPassword(Map<String, Object> params);
 
 	public List<SysUser> findPageInfo(Map<String, Object> params);
-	
 
-	
+
+    SysUser getUserById(Long id);
 }
