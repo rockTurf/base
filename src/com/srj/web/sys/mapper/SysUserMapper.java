@@ -10,12 +10,18 @@ import com.srj.web.sys.model.SysUser;
 
 public interface SysUserMapper extends Mapper<SysUser>{
 	
-	public SysUser CheckSysUser(Map<String,Object> map);
+	 SysUser CheckSysUser(Map<String,Object> map);
 
-	public Long CheckPassword(Map<String, Object> params);
+	 Long CheckPassword(Map<String, Object> params);
 
-	public List<SysUser> findPageInfo(Map<String, Object> params);
+	 List<SysUser> findPageInfo(Map<String, Object> params);
 
 
     SysUser getUserById(Long id);
+
+	 int deleteUserRole(Long id);
+
+	 int insertUserRole(Long id, String roleId);
+
+	int updateRecord(SysUser record);
 }

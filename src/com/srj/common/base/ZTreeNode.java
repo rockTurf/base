@@ -41,7 +41,7 @@ public class ZTreeNode {
 	}
 	
 	/**
-	 * 资源栏list转zTreeList 输出JSON格式
+	 * 资源栏list转zTreeList 输出JSON格式（带选项框）
 	 * menuList:树结构
 	 * checkedList:已选择的节点id
 	 * */
@@ -54,13 +54,36 @@ public class ZTreeNode {
 			obj.put("pId",item.getPid());
 			obj.put("name",item.getName());
 			obj.put("open", true);
-			//判断是否选中
-			if(checkedList.contains(item.getId())){
-				obj.put("checked",true);
+			
+			//判断是否需要判断选中
+			if(checkedList != null) {
+				//判断是否选中
+				if(checkedList.contains(item.getId())){
+					obj.put("checked",true);
+				}
 			}
+			
 			array.add(obj);
 		}
 		
+		return array;
+	}
+	
+	/**
+	 * 资源栏list转zTreeList 输出JSON格式（不带选项框）
+	 * menuList:树结构
+	 * */
+	public static JSONArray menu2zMenuTree(List<SysResource> menuList) {
+		JSONArray array = new JSONArray();
+		//循环
+		for(SysResource item:menuList) {
+			JSONObject obj = new JSONObject();
+			obj.put("id", item.getId());
+			obj.put("pId",item.getPid());
+			obj.put("name",item.getName());
+			obj.put("open", true);
+			array.add(obj);
+		}
 		return array;
 	}
 	

@@ -26,6 +26,8 @@ public class SysUserController {
 
 	@Resource
 	private SysUserService sysUserService;
+	@Resource
+	private SysRoleService sysRoleService;
 
 	/**
 	 * 跳转编辑页面
@@ -38,7 +40,10 @@ public class SysUserController {
 	public String showDetail(Long id,@RequestParam Map<String, Object> params,Model model){
 		SysUser u = SysUserUtil.getSessionLoginUser();
 		SysUser user = sysUserService.getUserById(id);
+		//角色列表
+		List<SysRole> roleList = sysRoleService.getAllRole();
 		model.addAttribute("user", user);
+		model.addAttribute("roleList", roleList);
 		return "sys/user/user-detail";
 	}
 

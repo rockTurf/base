@@ -61,6 +61,11 @@ public class SysUserService {
 
     //修改用户
 	public int editUser(SysUser record) {
-		return sysUserMapper.updateByPrimaryKey(record);
+		int count = sysUserMapper.updateRecord(record);
+		//删除用户-角色
+		sysUserMapper.deleteUserRole(record.getId());
+		//增加角色
+		sysUserMapper.insertUserRole(record.getId(),record.getRoleId());
+		return count;
 	}
 }
