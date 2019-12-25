@@ -98,4 +98,11 @@ public class SysResourceService {
 		return list;
 	}
 
+	/**
+	 * 新增菜单栏
+	 * */
+	public Integer saveRecord(SysResource record) {
+		return sysResourceMapper.insertSelective(record);
+	}
+
 }

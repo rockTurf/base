@@ -13,7 +13,7 @@
 					</div>
 					<form id="edit-res-form" role="form"
 						  action="${ctxPath!}/userRole/saveRes" method="post">
-						<input type="hidden" id="resIds" name="resIds">
+						<input type="hidden" id="resIds" name="resIds" value="${resIds}">
 						<input type="hidden" id="id" name="id" value="${role.id!}">
 					</form>
 				</div>
@@ -70,11 +70,12 @@
 		if(res_ids.length>0){
 			res_ids = res_ids.substr(0, res_ids.length - 1);
 		}
+		console.info('res_ids='+res_ids);
 		document.getElementById("resIds").value=res_ids;
 	}
 
 	function checkNode(e) {
-
+		console.info('');
 	}
 
 	function setAutoTrigger(e) {

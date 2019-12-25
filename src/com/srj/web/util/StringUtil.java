@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -243,19 +244,19 @@ public class StringUtil {
 		}
 	}
 	
-	public static String listToString(List<String> stringList){
-        if (stringList==null) {
+	public static <E> String list2String(List<E> list){
+        if (list==null) {
             return null;
         }
         StringBuilder result=new StringBuilder();
         boolean flag=false;
-        for (String string : stringList) {
+        for (E element : list) {
             if (flag) {
                 result.append(",");
             }else {
                 flag=true;
             }
-            result.append(string);
+            result.append(element.toString());
         }
         return result.toString();
   }
@@ -314,7 +315,9 @@ public class StringUtil {
         return resultMap;  
     }  
     
-    //两个整数除，保留N位小数，并转换成百分数
+    /**
+     	* 两个整数除，保留N位小数，并转换成百分数
+     * */
     public static String getPercent(int count,int total,int n){
     	float num = (float)count/total;
     	NumberFormat nt = NumberFormat.getPercentInstance();

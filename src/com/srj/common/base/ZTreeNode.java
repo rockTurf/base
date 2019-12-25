@@ -51,7 +51,7 @@ public class ZTreeNode {
 		for(SysResource item:menuList) {
 			JSONObject obj = new JSONObject();
 			obj.put("id", item.getId());
-			obj.put("pId",item.getPid());
+			obj.put("pId",item.getParent_id());
 			obj.put("name",item.getName());
 			obj.put("open", true);
 			
@@ -79,7 +79,7 @@ public class ZTreeNode {
 		for(SysResource item:menuList) {
 			JSONObject obj = new JSONObject();
 			obj.put("id", item.getId());
-			obj.put("pId",item.getPid());
+			obj.put("pId",item.getParent_id());
 			obj.put("name",item.getName());
 			obj.put("open", true);
 			array.add(obj);

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.srj.common.base.ZTreeNode;
 import com.srj.common.utils.SysUserUtil;
+import com.srj.web.datacenter.stock.model.Stock;
 import com.srj.web.sys.model.SysResource;
 import com.srj.web.sys.model.SysUser;
 import com.srj.web.sys.service.SysResourceService;
@@ -15,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -67,6 +70,16 @@ public class MenuController{
 		PageInfo<SysResource> page = sysResourceService.findPageInfo(params);
 		model.addAttribute("page", page);
 		return "sys/menu/menu-list";
+	}
+	
+	/**
+	 * 新增菜单
+	 */
+	@RequestMapping(value = "save")
+	public @ResponseBody Integer save(@ModelAttribute SysResource record,@RequestParam Map<String, Object> params,
+			Model model,HttpServletRequest request,HttpServletResponse response){
+		SysUser u = SysUserUtil.getSessionLoginUser();
+		return sysResourceService.saveRecord(record);
 	}
 
 }

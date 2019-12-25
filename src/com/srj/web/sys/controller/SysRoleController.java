@@ -28,6 +28,7 @@ import com.srj.web.sys.model.SysUser;
 import com.srj.web.sys.service.SysResourceService;
 import com.srj.web.sys.service.SysRoleService;
 import com.srj.web.sys.service.SysUserService;
+import com.srj.web.util.StringUtil;
 
 @Controller
 @RequestMapping("userRole")
@@ -119,8 +120,11 @@ public class SysRoleController {
 		List<SysResource> menuList = sysResourceService.getAllResourcesList();
 		//menuList另作处理，再返回
 		JSONArray menuArray = ZTreeNode.menu2zTree(menuList,roleResList);
+		//把初始权限id拼接起来的值赋过去
+		String resIds = StringUtil.list2String(roleResList);
 		model.addAttribute("menuList", menuArray);
 		model.addAttribute("role", role);
+		model.addAttribute("resIds",resIds);
 		return "sys/role/role-resource";
 	}
 
