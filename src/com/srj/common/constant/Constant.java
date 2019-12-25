@@ -34,6 +34,7 @@ public class Constant {
 	// 用户
 	public static final String SESSION_LOGIN_USER = "loginUser"; // session中的用户key
 	public static final Long SUPER_ADMIN = 1L; // 超级管理员ID
+	public static final String GUEST_ID = "1";//访客权限ID，sys_role表
 
 	// 缓存key
 	public static final String CACHE_SYS_RESOURCE = "sysResource_cache"; // 资源的缓存名称

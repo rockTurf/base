@@ -47,10 +47,12 @@ public class SysUserService {
 		u.setName((String) params.get("name"));
 		u.setEmail((String) params.get("email"));
 		u.setUsername((String) params.get("loginName"));
-		u.setPassword((String) params.get("password"));
+		u.setPassword(PasswordEncoder.Encoding((String)params.get("password"), (String)params.get("loginName")));
 		u.setPhone((String) params.get("phone"));
 		u.setDelFlag(Constant.DEL_FLAG_NORMAL);
 		int count = sysUserMapper.insertSelective(u);
+		//如果增加成功给个访客权限
+		sysUserMapper.insertUserRole(u.getId(),Constant.GUEST_ID);
 		return count;
 	}
 
