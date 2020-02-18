@@ -30,7 +30,7 @@ public class SysResource extends BaseEntity {
 
     private String name; //name <资源名称>
 
-    private Long pid; //parent_id <父级id>
+    private Long parent_id; //parent_id <父级id>
 
     private Integer sort; //sort <排序号>
 
@@ -56,12 +56,14 @@ public class SysResource extends BaseEntity {
 		this.set("name", name);
     }
 
-	public Long getPid() {
+	
+
+	public Long getParent_id() {
 		return this.getLong("parentId");
 	}
 
-	public void setPid(Long pid) {
-		this.set("pid", pid);
+	public void setParent_id(Long parent_id) {
+		this.set("parent_id", parent_id);
 	}
 
 	public Integer getSort() {

@@ -9,6 +9,7 @@
   <script src="${ctxPath}/static/js/jquery-1.10.2.js"></script>
   <script src="${ctxPath}/static/js/jquery.tips.js"></script>
   <script src="${ctxPath}/static/js/bootstrap.js"></script>
+  <script type="text/javascript" src="${ctxPath!}/static/layer/layer.js"></script>
   <!-- Stylesheets -->
   <link rel="stylesheet" href="${ctxPath}/static/style/bootstrap.css">
  <!--  <link rel="stylesheet" href="${ctxPath}/static/style/font-awesome.css"> -->
@@ -136,8 +137,9 @@ function register(){
 						});
 						$t.focus();
 				 }else{ 
-				 	 alert(data.success);
-					 window.location.href = "${ctxPath!}/index";
+					 layer.alert('注册成功！',1,'提示', function(){
+						 window.location.href = "${ctxPath!}/index";
+					 })
 				 }
 			}
 		});
