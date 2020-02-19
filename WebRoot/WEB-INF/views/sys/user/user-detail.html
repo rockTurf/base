@@ -9,7 +9,7 @@
 				<div class="form-group">
 					<label class="col-lg-4 control-label">用户名</label>
 					<div class="col-lg-8">
-						<input type="text" name="name" value="${user.username!}" class="form-control">
+						<input type="text" name="username" value="${user.username!}" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
@@ -21,13 +21,24 @@
 				<div class="form-group">
 					<label class="col-lg-4 control-label">邮箱</label>
 					<div class="col-lg-8">
-						<input type="text" name="name" value="${user.email!}" class="form-control">
+						<input type="text" name="email" value="${user.email!}" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-4 control-label">电话</label>
 					<div class="col-lg-8">
-						<input type="text" name="name" value="${user.phone!}" class="form-control">
+						<input type="text" name="phone" value="${user.phone!}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-4 control-label">角色</label>
+					<div class="col-lg-8">
+					<select name="roleId" datatype="*" class="selectpicker show-tick form-control" 
+					 	id="rolelist">
+						@for(item in roleList){
+					      <option value="${item.id}">${item.name}</option>
+						@}
+					</select>
 					</div>
 				</div>
 				<#save  formId="edit-form"
@@ -37,3 +48,10 @@
 		</div>
 	</div>
 </div>
+<script>
+$('#rolelist').selectpicker({
+   liveSearch: true,
+   width : 200
+});
+$('#rolelist').selectpicker('val', '${user.roleId!}');
+</script>
