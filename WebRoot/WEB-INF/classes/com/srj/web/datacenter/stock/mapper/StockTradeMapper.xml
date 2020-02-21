@@ -11,10 +11,10 @@
 		<where>
 		1 = 1
 		<if test="@Ognl@isNotBlank(name)">
-	 		and b.name like concat('%',#{name} ,'%')
+	 		and b.name = #{name}
 	    </if>
 	    <if test="@Ognl@isNotBlank(trade_time)">
-		 	and a.time like concat('%',#{trade_time} ,'%')
+		 	and a.time = #{trade_date}
 		</if>
 		</where>
 		ORDER BY
@@ -43,5 +43,20 @@
 			ORDER BY trade_date LIMIT 1
 		)	
 	</select>
-	
+
+	<!-- 取出当日所有交易 -->
+	<select id="selectList" resultType="com.srj.web.datacenter.stock.model.StockTrade">
+		SELECT * FROM stock_trade WHERE
+		trade_date = #{search_time} and stock_id = #{stock_id}
+	</select>
+
+	<!-- 取出交易表最新日期的一条记录，做页面初始化参数来用 -->
+	<select id="selectNewestRecord" resultType="com.srj.web.datacenter.stock.model.StockTrade">
+		SELECT stock_id,trade_date from stock_trade ORDER BY trade_date desc limit 1
+	</select>
+
+	<select id="selectLastTradeDate" resultType="com.srj.web.datacenter.stock.model.StockTrade">
+		select trade_date from stock_trade where
+		stock_id = #{_parameter} ORDER BY trade_date desc limit 1
+	</select>
 </mapper>

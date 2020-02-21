@@ -27,4 +27,26 @@
 			sys_role
 	</select>
 	
+	<select id="getRoleResourceById" resultType="java.lang.Long">
+		SELECT
+			resource_id
+		FROM
+			sys_role_resource
+		where
+			role_id = #{_parameter}		
+	</select>
+
+	<!-- 删除角色原先的权限 -->
+	<delete id="deleteRoleResByRoleId">
+		DELETE FROM sys_role_resource where role_id = #{_parameter}
+	</delete>
+
+	<!-- 添加新权限 -->
+	<insert id="insertRoleResource">
+		insert into sys_role_resource (role_id,resource_id) values
+		<foreach collection="param2" index="index" item="command" separator=",">
+			('${param1}','${command}')
+		</foreach>
+	</insert>
+	
 </mapper>

@@ -9,6 +9,7 @@
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
 		<!-- 基本属性 url、user、password -->
+		<property name="driverClassName" value="${connection.drivername}" />
 		<property name="url" value="${connection.url}" />
 		<property name="username" value="${connection.username}" />
 		<property name="password" value="${connection.password}" />
