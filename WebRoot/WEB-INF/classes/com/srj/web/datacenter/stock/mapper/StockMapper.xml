@@ -20,7 +20,7 @@
 		 	and name like concat('%',#{name} ,'%')
 		</if>
 		</where>
-		GROUP BY
+		ORDER BY
 			id DESC
 	</select>
 	

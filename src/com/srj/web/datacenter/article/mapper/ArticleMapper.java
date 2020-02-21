@@ -14,4 +14,6 @@ public interface ArticleMapper extends Mapper<Article>{
 
 	Integer deleteArticleKeyword(Long id);
 
+	List<Article> selectTop();
+
 }
