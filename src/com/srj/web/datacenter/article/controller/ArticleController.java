@@ -85,5 +85,15 @@ public class ArticleController {
 		int count = articleService.deleteArticle(id);
 		return count;
 	}
-
+	
+	/**
+	 * 推送文章
+	 */
+	@RequestMapping(value = "push")
+	public @ResponseBody List<Article> pushArticle(@RequestParam Long userId){
+		//根据用户id发出推送文章
+		List<Article> list = articleService.selectTop(userId);
+		
+		return list;
+	}
 }

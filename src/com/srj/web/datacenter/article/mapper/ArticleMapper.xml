@@ -44,5 +44,10 @@
 		where a_id = #{id}
 	</delete>
 	
+	<!-- 推送文章 -->
+	<select id="selectTop" resultType="com.srj.web.datacenter.article.model.Article">
+		select id,title,introduction,create_name,create_time FROM article order by id desc LIMIT 5 
+	</select>
+	
 
 </mapper>

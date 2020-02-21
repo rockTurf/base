@@ -66,5 +66,12 @@ public class ArticleService {
 		}
 		return count;
 	}
+	/**
+	 * 根据作者id推送5条文章
+	 * */
+	public List<Article> selectTop(Long userId) {
+		List<Article> list = articleMapper.selectTop();
+		return list;
+	}
 
 }
