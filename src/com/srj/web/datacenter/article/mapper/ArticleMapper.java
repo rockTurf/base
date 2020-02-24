@@ -16,4 +16,5 @@ public interface ArticleMapper extends Mapper<Article>{
 
 	List<Article> selectTop();
 
+	Article selectTopOne();
 }

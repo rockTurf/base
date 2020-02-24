@@ -69,6 +69,24 @@ $(function () {
         	$('#article').append(html);
         }
     });
+    var quartz = window.setInterval(getQuartz,2000);
+    function getQuartz(){
+        $.ajax({
+            type: "POST",
+            url: '${ctxPath}/article/lastst',
+            data: {
+                userId:1
+            },
+            dataType:'json',
+            cache: true,
+            success: function(data){
+                if(data!=0){
+
+                }
+                console.info(data);
+            }
+        })
+    }
 });</script>
 @}
 

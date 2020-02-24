@@ -74,4 +74,18 @@ public class ArticleService {
 		return list;
 	}
 
+	/**
+	 * 查看最新文章
+	 * */
+    public boolean checkArticle(Long userId) {
+		Article item = articleMapper.selectTopOne();
+		long last = DateUtils.StringToDate(item.getCreate_time(),"yyyy-MM-dd HH:mm:ss").getTime();
+		long now = System.currentTimeMillis();
+		long time = now-last;
+		System.out.println("现在时间："+DateUtils.getDate("yyyy-MM-dd HH:mm:ss")+",Time值："+time);
+		if(time<=20000){
+			return true;
+		}
+		return false;
+    }
 }

@@ -96,4 +96,17 @@ public class ArticleController {
 		
 		return list;
 	}
+
+	/**
+	 * 扫描最新文章
+	 */
+	@RequestMapping(value = "lastst")
+	public @ResponseBody Integer checkArticle(@RequestParam Long userId){
+		//根据用户id发出推送文章
+		boolean b = articleService.checkArticle(userId);
+		if(b==true){
+			return 1;
+		}
+		return 0;
+	}
 }
