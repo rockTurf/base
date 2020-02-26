@@ -69,6 +69,28 @@ $(function () {
         	$('#article').append(html);
         }
     });
+	quartz = window.setInterval(getQuartz,2000);
+	function getQuartz(){
+	   $.ajax({
+		   type: "POST",
+	        url: '${ctxPath}/article/info',
+	        data: {
+	            userId:1
+	        },
+	        dataType:'json',
+	        cache: true,
+	        success: function(data){
+	        	if(data!=0){
+	        		GrowlNotification.notify({
+	        			  description: '新文章！',
+	        			  position:'bottom-right',
+	        			  closeTimeout:5000
+	        			  
+	        		})
+	        	}
+	       	}
+	   });
+	}
 });</script>
 @}
 
