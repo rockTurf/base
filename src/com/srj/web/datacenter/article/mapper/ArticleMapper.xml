@@ -49,5 +49,10 @@
 		select id,title,introduction,create_name,create_time FROM article order by id desc LIMIT 5 
 	</select>
 	
+	<!-- 定时任务 -->
+	<select id="selectTopOne" resultType="com.srj.web.datacenter.article.model.Article">
+		select id,title,create_time FROM article order by id desc LIMIT 1
+	</select>
+	
 
 </mapper>

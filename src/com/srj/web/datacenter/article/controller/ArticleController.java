@@ -1,5 +1,6 @@
 package com.srj.web.datacenter.article.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -95,5 +96,25 @@ public class ArticleController {
 		List<Article> list = articleService.selectTop(userId);
 		
 		return list;
+	}
+	
+	/**
+	 * 扫描最新文章
+	 */
+	@RequestMapping(value = "lastst")
+	public @ResponseBody HashMap<String,Object> checkArticle(@RequestParam Long userId){
+		//根据用户id发出推送文章
+		Article item = articleService.checkArticle(userId);
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		if(item==null){
+			map.put("code",0);
+			return map;
+		}else {//有返回
+			map.put("code",1);
+			map.put("id",item.getId());
+			map.put("title",item.getTitle());
+			return map;
+		}
+		
 	}
 }

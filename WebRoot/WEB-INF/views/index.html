@@ -73,16 +73,16 @@ $(function () {
 	function getQuartz(){
 	   $.ajax({
 		   type: "POST",
-	        url: '${ctxPath}/article/info',
+	        url: '${ctxPath}/article/lastst',
 	        data: {
 	            userId:1
 	        },
 	        dataType:'json',
 	        cache: true,
 	        success: function(data){
-	        	if(data!=0){
+	        	if(data.code!=0){
 	        		GrowlNotification.notify({
-	        			  description: '新文章！',
+	        			  description: data.title,
 	        			  position:'bottom-right',
 	        			  closeTimeout:5000
 	        			  
