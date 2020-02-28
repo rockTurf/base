@@ -83,7 +83,7 @@ public class ArticleService {
 		long now = System.currentTimeMillis();
 		long time = now-last;
 		System.out.println("现在时间："+DateUtils.getDate("yyyy-MM-dd HH:mm:ss")+",Time值："+time);
-		if(time<=20000){
+		if(time<=2200){
 			return item;
 		}
 		return null;
