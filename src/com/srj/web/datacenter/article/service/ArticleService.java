@@ -77,15 +77,25 @@ public class ArticleService {
 	/**
 	 * 查看最新文章
 	 * */
+<<<<<<< HEAD
     public Article checkArticle(Long userId) {
+=======
+    public boolean checkArticle(Long userId) {
+>>>>>>> f215d969df182faa8e11df752c7ddc1197e2494f
 		Article item = articleMapper.selectTopOne();
 		long last = DateUtils.StringToDate(item.getCreate_time(),"yyyy-MM-dd HH:mm:ss").getTime();
 		long now = System.currentTimeMillis();
 		long time = now-last;
 		System.out.println("现在时间："+DateUtils.getDate("yyyy-MM-dd HH:mm:ss")+",Time值："+time);
 		if(time<=20000){
+<<<<<<< HEAD
 			return item;
 		}
 		return null;
+=======
+			return true;
+		}
+		return false;
+>>>>>>> f215d969df182faa8e11df752c7ddc1197e2494f
     }
 }

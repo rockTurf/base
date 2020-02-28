@@ -69,6 +69,7 @@ $(function () {
         	$('#article').append(html);
         }
     });
+<<<<<<< HEAD
 	quartz = window.setInterval(getQuartz,2000);
 	function getQuartz(){
 	   $.ajax({
@@ -91,6 +92,26 @@ $(function () {
 	       	}
 	   });
 	}
+=======
+    var quartz = window.setInterval(getQuartz,2000);
+    function getQuartz(){
+        $.ajax({
+            type: "POST",
+            url: '${ctxPath}/article/lastst',
+            data: {
+                userId:1
+            },
+            dataType:'json',
+            cache: true,
+            success: function(data){
+                if(data!=0){
+
+                }
+                console.info(data);
+            }
+        })
+    }
+>>>>>>> f215d969df182faa8e11df752c7ddc1197e2494f
 });</script>
 @}
 
