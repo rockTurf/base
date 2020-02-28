@@ -97,16 +97,11 @@ public class ArticleController {
 		
 		return list;
 	}
-<<<<<<< HEAD
 	
-=======
-
->>>>>>> f215d969df182faa8e11df752c7ddc1197e2494f
 	/**
 	 * 扫描最新文章
 	 */
 	@RequestMapping(value = "lastst")
-<<<<<<< HEAD
 	public @ResponseBody HashMap<String,Object> checkArticle(@RequestParam Long userId){
 		//根据用户id发出推送文章
 		Article item = articleService.checkArticle(userId);
@@ -121,14 +116,5 @@ public class ArticleController {
 			return map;
 		}
 		
-=======
-	public @ResponseBody Integer checkArticle(@RequestParam Long userId){
-		//根据用户id发出推送文章
-		boolean b = articleService.checkArticle(userId);
-		if(b==true){
-			return 1;
-		}
-		return 0;
->>>>>>> f215d969df182faa8e11df752c7ddc1197e2494f
 	}
 }
